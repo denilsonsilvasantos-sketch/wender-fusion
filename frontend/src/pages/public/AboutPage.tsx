@@ -1,6 +1,30 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle, ArrowRight, MapPin, Phone, Mail, Target, Eye, Heart } from 'lucide-react'
 import { Button } from '@/components/ui'
+
+function InstructorAvatar({ name, initial, photo }: { name: string; initial: string; photo: string }) {
+  const [src, setSrc] = useState<'jpg' | 'png' | 'failed'>('jpg')
+  if (src === 'failed') {
+    return (
+      <div className="w-20 h-20 rounded-full flex-shrink-0 flex items-center justify-center text-2xl font-black"
+        style={{ background: '#FF8C0020', color: '#FF8C00', border: '2px solid #FF8C0040' }}>
+        {initial}
+      </div>
+    )
+  }
+  return (
+    <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0"
+      style={{ border: '2px solid #FF8C0040' }}>
+      <img
+        src={`/${photo}.${src}`}
+        alt={name}
+        className="w-full h-full object-cover object-top"
+        onError={() => setSrc(s => s === 'jpg' ? 'png' : 'failed')}
+      />
+    </div>
+  )
+}
 
 const VALUES = [
   { icon: '🔥', title: 'Excelência', desc: 'Padrão máximo em ensino, infraestrutura e atendimento ao aluno.' },
@@ -16,6 +40,7 @@ const TEAM = [
     name: 'Tiago Andrade',
     role: 'Inspetor de Soldagem N1 — FBTS',
     initial: 'T',
+    photo: 'tiago-andrade',
     highlights: ['Certificação FBTS', 'ASME · AWS D1.1 · Normas Petrobras', 'SMAW · GTAW · FCAW'],
     paragraphs: [
       'Tiago Andrade é um profissional com sólida experiência na área de soldagem, atuando atualmente como Inspetor de Soldagem N1, além de possuir vasta trajetória como soldador em equipamentos de pequeno, médio e grande porte na região de São Paulo. Seu trabalho é norteado por altos padrões de qualidade, segurança e conformidade com normas técnicas nacionais e internacionais, como ASME, AWS D1.1 e as normas Petrobras, entre outras.',
@@ -28,6 +53,7 @@ const TEAM = [
     name: 'Kleberson Ferreira',
     role: 'Inspetor de Solda N1 — FBTS',
     initial: 'K',
+    photo: 'kleberson-ferreira',
     highlights: ['10+ anos de experiência', 'GTAW · SMAW · GMAW · FCAW', 'Caldeiras · Petrobras · Petroquímica'],
     paragraphs: [
       'Kleberson Felipe Soares Ferreira, conhecido como Índio, é atualmente Inspetor de Solda N1 qualificado pela FBTS (Fundação Brasileira de Tecnologia de Soldagem). Atua há mais de 10 anos em vários segmentos industriais, trabalhando com diversas normas e procedimentos. Formado em técnico de mecânica, analista da qualidade, com curso de Líquido Penetrante e Partícula Magnética. Encarregado de solda e montagem em cervejaria e fábrica de caldeiras.',
@@ -99,9 +125,9 @@ export function AboutPage() {
             <div className="grid grid-cols-2 gap-4">
               {[
                 { n: '12+', label: 'Anos formando profissionais', color: '#FF8C00' },
-                { n: '500+', label: 'Alunos certificados', color: '#00BFFF' },
+                { n: '500+', label: 'Alunos certificados', color: '#ffffff' },
                 { n: '98%', label: 'Taxa de empregabilidade', color: '#FF8C00' },
-                { n: '15+', label: 'Empresas parceiras', color: '#00BFFF' },
+                { n: '15+', label: 'Empresas parceiras', color: '#ffffff' },
               ].map(({ n, label, color }) => (
                 <div key={label} className="p-6 rounded-2xl text-center"
                   style={{ background: '#1A1A1A', border: `1px solid ${color}20` }}>
@@ -128,7 +154,7 @@ export function AboutPage() {
                 text: 'Transformar talentos em profissionais qualificados, conectando pessoas às melhores oportunidades no mercado de soldagem através de formação prática, personalizada e alinhada às exigências da indústria.',
               },
               {
-                icon: Eye, color: '#00BFFF', title: 'Visão',
+                icon: Eye, color: '#FF8C00', title: 'Visão',
                 text: 'Ser a escola de soldagem mais reconhecida do Sul do Brasil, referência nacional em qualidade de ensino, inovação pedagógica e empregabilidade dos nossos egressos até 2030.',
               },
               {
@@ -176,15 +202,12 @@ export function AboutPage() {
             <h2 className="text-4xl font-black text-white">Quem faz acontecer</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
-            {TEAM.map(({ name, role, initial, highlights, paragraphs }) => (
+            {TEAM.map(({ name, role, initial, photo, highlights, paragraphs }) => (
               <div key={name} className="p-7 rounded-2xl border"
                 style={{ background: '#1A1A1A', borderColor: '#FF8C0020' }}>
                 {/* Header */}
                 <div className="flex items-center gap-4 mb-5">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 text-2xl font-black"
-                    style={{ background: '#FF8C0020', color: '#FF8C00', border: '2px solid #FF8C0040' }}>
-                    {initial}
-                  </div>
+                  <InstructorAvatar name={name} initial={initial} photo={photo} />
                   <div>
                     <h3 className="font-black text-white text-xl">{name}</h3>
                     <p className="text-sm font-medium mt-0.5" style={{ color: '#FF8C00' }}>{role}</p>
@@ -223,7 +246,7 @@ export function AboutPage() {
           <div className="grid sm:grid-cols-3 gap-5 mb-10">
             {[
               { icon: MapPin, title: 'Endereço', lines: ['Rua Cesar Stamm, 55', 'Cordeiros — Itajaí, SC'], color: '#FF8C00' },
-              { icon: Phone, title: 'WhatsApp', lines: ['(47) 98878-6738', '(47) 9 8851-1768'], color: '#00BFFF' },
+              { icon: Phone, title: 'WhatsApp', lines: ['(47) 98878-6738', '(47) 9 8851-1768'], color: '#FF8C00' },
               { icon: Mail, title: 'E-mail', lines: ['escola.welderefusion@gmail.com'], color: '#FF8C00' },
             ].map(({ icon: Icon, title, lines, color }) => (
               <div key={title} className="p-5 rounded-2xl border"

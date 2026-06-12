@@ -13,8 +13,8 @@ const PROCESSES = [
     id: 'tig',
     code: 'TIG',
     norm: 'GTAW',
-    color: '#00BFFF',
-    colorBg: '#00BFFF12',
+    color: '#FF8C00',
+    colorBg: '#FF8C0012',
     title: 'Soldagem TIG',
     subtitle: 'Tungsten Inert Gas — Precisão como arte',
     description:
@@ -295,7 +295,7 @@ export function CoursesPage() {
                 {[
                   { name: 'Eletrodo Revestido', color: '#FFA500', dif: '⭐⭐', vel: '⭐⭐', qual: '⭐⭐⭐', sal: 'R$ 2.500–4.000' },
                   { name: 'MIG/MAG', color: '#FF8C00', dif: '⭐⭐⭐', vel: '⭐⭐⭐⭐', qual: '⭐⭐⭐⭐', sal: 'R$ 3.000–5.500' },
-                  { name: 'TIG', color: '#00BFFF', dif: '⭐⭐⭐⭐⭐', vel: '⭐⭐', qual: '⭐⭐⭐⭐⭐', sal: 'R$ 4.500–9.000+' },
+                  { name: 'TIG', color: '#FF8C00', dif: '⭐⭐⭐⭐⭐', vel: '⭐⭐', qual: '⭐⭐⭐⭐⭐', sal: 'R$ 4.500–9.000+' },
                 ].map(row => (
                   <tr key={row.name} className="border-t" style={{ borderColor: '#ffffff08' }}>
                     <td className="px-5 py-4">
