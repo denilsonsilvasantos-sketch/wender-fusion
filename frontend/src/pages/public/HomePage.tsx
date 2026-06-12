@@ -161,16 +161,15 @@ export function HomePage() {
         ))}
 
         {/* ── Conteúdo ── */}
-        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 pt-32">
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 pt-20">
           <div className="max-w-2xl">
 
             {/* Logo da escola acima do badge */}
-            <div className="mb-6">
+            <div className="mb-5">
               <img
                 src="/logo-hero.png"
                 alt="Welder & Fusion"
-                className="h-16 w-auto object-contain"
-                style={{ filter: 'drop-shadow(0 2px 16px rgba(255,140,0,0.35))' }}
+                style={{ height: 140, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 2px 20px rgba(255,140,0,0.4))' }}
               />
             </div>
 
