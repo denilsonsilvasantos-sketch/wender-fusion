@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { Instagram, Youtube, Phone, Mail, MapPin } from 'lucide-react'
-import { WFLogo } from '@/components/ui'
 
 export function Footer() {
   return (
@@ -10,7 +9,13 @@ export function Footer() {
 
           {/* Brand */}
           <div className="md:col-span-1">
-            <Link to="/"><WFLogo size="md" showSubtitle /></Link>
+            <Link to="/">
+              <img
+                src="/logo-hero2.png"
+                alt="Welder & Fusion"
+                style={{ height: 80, width: 'auto', objectFit: 'contain' }}
+              />
+            </Link>
             <p className="text-sm mt-4 leading-relaxed" style={{ color: '#6B7280' }}>
               Qualificação que Conecta o Seu Futuro.<br />
               Formando soldadores de excelência há mais de 12 anos.
