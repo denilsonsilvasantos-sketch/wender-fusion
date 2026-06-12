@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Award, Users, Clock, Flame, Zap, Shield, Star, CheckCircle, Briefcase, BookOpen, Phone, MapPin, Mail } from 'lucide-react'
-import { Button, WFLogo } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { supabase } from '@/lib/supabase'
 import type { Course } from '@/types'
 import { formatCurrency, LEVEL_LABELS } from '@/lib/utils'
@@ -85,181 +85,128 @@ export function HomePage() {
       `}</style>
 
       {/* ── HERO ──────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
-        {/* BG glows */}
-        <div className="glow-orb absolute -top-32 right-[5%] w-[600px] h-[600px] rounded-full"
-          style={{ background: 'radial-gradient(circle, #FF8C00 0%, transparent 70%)' }} />
-        <div className="glow-orb absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full"
-          style={{ background: 'radial-gradient(circle, #00BFFF 0%, transparent 70%)', animationDelay: '2s' }} />
+      <section className="relative min-h-[92vh] flex items-end overflow-hidden">
 
-        {/* Dot grid */}
-        <div className="absolute inset-0 opacity-[0.04]"
-          style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+        {/* ── Foto de fundo (salve como frontend/public/welder-bg.jpg) ── */}
+        <div className="absolute inset-0">
+          {!logoFailed ? (
+            <img
+              src="/welder-bg.jpg"
+              alt=""
+              className="w-full h-full object-cover object-center"
+              onError={() => setLogoFailed(true)}
+            />
+          ) : (
+            /* Fallback CSS quando a foto não existe */
+            <div className="w-full h-full" style={{
+              background: 'linear-gradient(135deg, #0a0a0a 0%, #1a0a00 40%, #2a1000 60%, #0f1520 100%)',
+            }}>
+              {/* Simula arco de solda no centro-direito */}
+              <div className="absolute" style={{ right: '15%', top: '30%', width: 320, height: 320 }}>
+                <div className="absolute inset-0 rounded-full blur-3xl"
+                  style={{ background: 'radial-gradient(circle, #FF8C00 0%, #FF4500 30%, transparent 70%)', opacity: 0.35 }} />
+                <div className="absolute inset-8 rounded-full blur-xl"
+                  style={{ background: 'radial-gradient(circle, #fff 0%, #00BFFF 40%, transparent 70%)', opacity: 0.5 }} />
+                {/* Spark rays */}
+                {[...Array(14)].map((_, i) => {
+                  const a = (i / 14) * 360
+                  const r = a * Math.PI / 180
+                  const len = 60 + (i % 3) * 30
+                  return (
+                    <div key={i} className="spark absolute rounded-full"
+                      style={{
+                        width: 3 + (i % 2), height: 3 + (i % 2),
+                        left: `calc(50% + ${Math.cos(r) * (80 + len)}px)`,
+                        top: `calc(50% + ${Math.sin(r) * (80 + len)}px)`,
+                        background: i % 3 === 0 ? '#FF8C00' : i % 3 === 1 ? '#FFA500' : '#00BFFF',
+                        animationDelay: `${(i * 0.22).toFixed(2)}s`,
+                        animationDuration: `${(2 + i * 0.18).toFixed(2)}s`,
+                      }} />
+                  )
+                })}
+              </div>
+              {/* Silhueta soldador estilizada */}
+              <div className="absolute" style={{ right: '18%', bottom: '8%', opacity: 0.12 }}>
+                <svg viewBox="0 0 200 340" width="200" height="340" fill="#FF8C00">
+                  {/* Helmet */}
+                  <ellipse cx="100" cy="60" rx="55" ry="55" />
+                  <rect x="55" y="85" width="90" height="30" rx="4" fill="#000" opacity="0.6"/>
+                  {/* Body */}
+                  <path d="M55 115 Q30 160 25 240 L175 240 Q170 160 145 115 Z" />
+                  {/* Arms */}
+                  <path d="M55 130 Q20 160 15 200 L35 205 Q45 175 65 148 Z" />
+                  <path d="M145 130 Q180 160 185 200 L165 205 Q155 175 135 148 Z" />
+                  {/* Legs */}
+                  <rect x="65" y="238" width="30" height="100" rx="8" />
+                  <rect x="105" y="238" width="30" height="100" rx="8" />
+                </svg>
+              </div>
+            </div>
+          )}
 
-        {/* Sparks (right side) */}
+          {/* Gradiente overlay: escuro à esquerda, transparente à direita */}
+          <div className="absolute inset-0" style={{
+            background: 'linear-gradient(to right, rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.80) 35%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.15) 100%)',
+          }} />
+          {/* Gradiente inferior */}
+          <div className="absolute inset-x-0 bottom-0 h-40" style={{
+            background: 'linear-gradient(to top, #1A1A1A, transparent)',
+          }} />
+        </div>
+
+        {/* Sparks animadas sobre a foto */}
         {SPARKS.map((s, i) => (
           <div key={i} className="spark absolute hidden lg:block rounded-full"
             style={{ top: s.top, left: s.left, width: s.size, height: s.size, background: s.color, animationDelay: s.delay, animationDuration: s.dur }} />
         ))}
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* ── Conteúdo ── */}
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 pt-32">
+          <div className="max-w-2xl">
 
-            {/* LEFT — copy */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-7 text-xs font-semibold uppercase tracking-widest"
-                style={{ borderColor: '#FF8C0033', background: '#FF8C0010', color: '#FF8C00' }}>
-                <Flame size={12} />
-                Qualificação que Conecta o Seu Futuro
-              </div>
-
-              <h1 className="font-black leading-[1.05] mb-6" style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)' }}>
-                <span className="text-white">Solde com</span>{' '}
-                <span style={{ color: '#FF8C00' }}>Precisão.</span>
-                <br />
-                <span className="text-white">Trabalhe com</span>{' '}
-                <span style={{ color: '#00BFFF' }}>Confiança.</span>
-              </h1>
-
-              <p className="text-lg mb-9 max-w-lg leading-relaxed" style={{ color: '#9CA3AF' }}>
-                Cursos presenciais de soldagem com metodologia prática e instrutores certificados.
-                Do iniciante ao profissional avançado — com certificado validado por QR code.
-              </p>
-
-              <div className="flex flex-wrap gap-4 mb-12">
-                <Link to="/cursos">
-                  <Button size="lg" rightIcon={<ArrowRight size={18} />}>
-                    Ver Cursos Disponíveis
-                  </Button>
-                </Link>
-                <Link to="/cadastro">
-                  <Button size="lg" variant="outline">Criar Conta Grátis</Button>
-                </Link>
-              </div>
-
-              {/* Mini stats */}
-              <div className="flex flex-wrap gap-x-8 gap-y-4">
-                {STATS.slice(0, 3).map(({ value, label }) => (
-                  <div key={label}>
-                    <p className="text-3xl font-black" style={{ color: '#FF8C00' }}>{value}</p>
-                    <p className="text-xs mt-0.5" style={{ color: '#6B7280' }}>{label}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6 text-xs font-semibold uppercase tracking-widest"
+              style={{ borderColor: '#FF8C0050', background: '#FF8C0018', color: '#FF8C00' }}>
+              <Flame size={12} />
+              Qualificação que Conecta o Seu Futuro
             </div>
 
-            {/* RIGHT — logo hero image */}
-            <div className="hidden lg:flex justify-center items-center relative">
-              <div className="relative">
-                {/* Glow behind visual */}
-                <div className="absolute inset-0 blur-3xl opacity-25 scale-90 pointer-events-none"
-                  style={{ background: 'radial-gradient(circle, #FF8C00 0%, #00BFFF 55%, transparent 80%)' }} />
+            <h1 className="font-black leading-[1.05] mb-6 drop-shadow-2xl"
+              style={{ fontSize: 'clamp(2.6rem, 6vw, 5rem)' }}>
+              <span className="text-white">Transforme sua</span>
+              <br />
+              <span style={{ color: '#FF8C00' }}>Habilidade</span>
+              <span className="text-white"> em</span>
+              <br />
+              <span style={{ color: '#FF8C00' }}>Oportunidades!</span>
+            </h1>
 
-                {/* ── Imagem real (salve como frontend/public/logo-hero.png) ── */}
-                {!logoFailed ? (
-                  <img
-                    src="/logo-hero.png"
-                    alt="Welder & Fusion"
-                    className="relative w-[500px] drop-shadow-2xl select-none"
-                    onError={() => setLogoFailed(true)}
-                  />
-                ) : (
-                  /* ── Fallback SVG enquanto a imagem não for adicionada ── */
-                  <div className="relative w-[460px] h-[340px] flex items-center justify-center">
-                    <svg viewBox="0 0 460 340" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      {/* Background dark panel */}
-                      <rect width="460" height="340" rx="24" fill="#111111"/>
-                      <rect x="1" y="1" width="458" height="338" rx="23" stroke="url(#border-grad)" strokeWidth="1.5"/>
+            <p className="text-lg mb-8 max-w-xl leading-relaxed" style={{ color: '#D1D5DB' }}>
+              Aprenda na prática com profissionais qualificados. Cursos de TIG, MIG/MAG e
+              Eletrodo Revestido — com certificado reconhecido pelo mercado nacional.
+            </p>
 
-                      {/* Outer glow ring */}
-                      <ellipse cx="230" cy="155" rx="180" ry="130" fill="url(#glow1)" opacity="0.15"/>
-
-                      {/* ── W letter ── */}
-                      <path d="M60 90 L90 200 L120 140 L150 200 L180 90"
-                        stroke="url(#silver)" strokeWidth="18" strokeLinecap="round" strokeLinejoin="round"/>
-
-                      {/* ── & ampersand ── */}
-                      <text x="200" y="195" fontFamily="Georgia, serif" fontSize="80" fontWeight="900"
-                        fill="url(#orange-grad)"> &amp;</text>
-
-                      {/* ── F letter ── */}
-                      <path d="M300 90 L380 90 M300 90 L300 205 M300 150 L370 150"
-                        stroke="url(#orange-grad)" strokeWidth="18" strokeLinecap="round" strokeLinejoin="round"/>
-
-                      {/* ── Sparks ── */}
-                      {[[370,95,'#FF8C00',6],[390,130,'#FFA500',4],[405,105,'#00BFFF',5],
-                        [385,80,'#FF8C00',3],[410,145,'#FFA500',4]].map(([x,y,c,r],i) => (
-                        <circle key={i} cx={x as number} cy={y as number} r={r as number}
-                          fill={c as string} opacity={0.8}/>
-                      ))}
-                      <line x1="380" y1="100" x2="400" y2="80" stroke="#FF8C00" strokeWidth="2" strokeLinecap="round" opacity="0.6"/>
-                      <line x1="385" y1="115" x2="412" y2="108" stroke="#FFA500" strokeWidth="2" strokeLinecap="round" opacity="0.5"/>
-                      <line x1="378" y1="125" x2="408" y2="138" stroke="#00BFFF" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
-
-                      {/* ── Bottom text ── */}
-                      <line x1="60" y1="228" x2="180" y2="228" stroke="url(#orange-grad)" strokeWidth="1.5" opacity="0.5"/>
-                      <text x="230" y="248" textAnchor="middle" fontFamily="Arial, sans-serif"
-                        fontSize="15" fontWeight="700" letterSpacing="5" fill="#FF8C00">WELDER &amp; FUSION</text>
-                      <line x1="280" y1="228" x2="400" y2="228" stroke="url(#orange-grad)" strokeWidth="1.5" opacity="0.5"/>
-                      <text x="230" y="270" textAnchor="middle" fontFamily="Arial, sans-serif"
-                        fontSize="9.5" fontWeight="500" letterSpacing="3.5" fill="#6B7280">
-                        ESCOLA PROFISSIONALIZANTE DE SOLDADORES
-                      </text>
-
-                      {/* Spark at bottom center */}
-                      <circle cx="230" cy="290" r="3" fill="#FF8C00" opacity="0.9"/>
-                      <line x1="218" y1="290" x2="210" y2="298" stroke="#FF8C00" strokeWidth="1.5" opacity="0.5"/>
-                      <line x1="242" y1="290" x2="250" y2="298" stroke="#FF8C00" strokeWidth="1.5" opacity="0.5"/>
-                      <line x1="230" y1="283" x2="224" y2="275" stroke="#FFA500" strokeWidth="1.5" opacity="0.4"/>
-                      <line x1="230" y1="283" x2="236" y2="275" stroke="#FFA500" strokeWidth="1.5" opacity="0.4"/>
-
-                      <defs>
-                        <linearGradient id="silver" x1="0%" y1="0%" x2="0%" y2="100%">
-                          <stop offset="0%" stopColor="#f0f0f0"/>
-                          <stop offset="50%" stopColor="#888888"/>
-                          <stop offset="100%" stopColor="#d8d8d8"/>
-                        </linearGradient>
-                        <linearGradient id="orange-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#FF8C00"/>
-                          <stop offset="50%" stopColor="#FFB347"/>
-                          <stop offset="100%" stopColor="#FF6B00"/>
-                        </linearGradient>
-                        <linearGradient id="border-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#FF8C00" stopOpacity="0.4"/>
-                          <stop offset="50%" stopColor="#333333" stopOpacity="0.2"/>
-                          <stop offset="100%" stopColor="#00BFFF" stopOpacity="0.3"/>
-                        </linearGradient>
-                        <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
-                          <stop offset="0%" stopColor="#FF8C00"/>
-                          <stop offset="100%" stopColor="transparent"/>
-                        </radialGradient>
-                      </defs>
-                    </svg>
-                  </div>
-                )}
-
-                {/* Floating badges */}
-                <div className="absolute -top-4 -left-6 bg-[#1A1A1A] border rounded-2xl px-4 py-3 shadow-2xl"
-                  style={{ borderColor: '#FF8C0040' }}>
-                  <p className="text-2xl font-black" style={{ color: '#FF8C00' }}>500+</p>
-                  <p className="text-xs" style={{ color: '#6B7280' }}>Alunos Formados</p>
-                </div>
-                <div className="absolute -bottom-4 -right-6 bg-[#1A1A1A] border rounded-2xl px-4 py-3 shadow-2xl"
-                  style={{ borderColor: '#00BFFF30' }}>
-                  <p className="text-2xl font-black" style={{ color: '#00BFFF' }}>98%</p>
-                  <p className="text-xs" style={{ color: '#6B7280' }}>Empregados em 3 meses</p>
-                </div>
-                <div className="absolute top-1/2 -right-14 -translate-y-1/2 bg-[#1A1A1A] border rounded-2xl px-3 py-2.5 shadow-2xl"
-                  style={{ borderColor: '#FF8C0030' }}>
-                  <div className="flex items-center gap-1.5 mb-0.5">
-                    <Award size={13} style={{ color: '#FF8C00' }} />
-                    <span className="text-xs font-bold text-white">Certificado</span>
-                  </div>
-                  <p className="text-[10px]" style={{ color: '#6B7280' }}>QR code validado</p>
-                </div>
-              </div>
+            <div className="flex flex-wrap gap-4 mb-10">
+              <Link to="/cursos">
+                <Button size="lg" rightIcon={<ArrowRight size={18} />}>
+                  Ver Cursos Disponíveis
+                </Button>
+              </Link>
+              <a href="https://wa.me/5547988786738" target="_blank" rel="noreferrer">
+                <Button size="lg" variant="outline">
+                  📲 Falar no WhatsApp
+                </Button>
+              </a>
             </div>
 
+            {/* Stats row */}
+            <div className="flex flex-wrap gap-x-8 gap-y-4 pt-6 border-t" style={{ borderColor: '#ffffff15' }}>
+              {STATS.map(({ value, label }) => (
+                <div key={label}>
+                  <p className="text-3xl font-black drop-shadow" style={{ color: '#FF8C00' }}>{value}</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#9CA3AF' }}>{label}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
