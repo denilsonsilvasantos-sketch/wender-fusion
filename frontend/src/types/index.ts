@@ -43,6 +43,7 @@ export interface Course {
   min_grade: number
   max_students?: number
   prerequisites?: string
+  enrolled_count?: number
   modules?: Module[]
   created_at: string
   updated_at: string
