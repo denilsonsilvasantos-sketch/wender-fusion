@@ -49,6 +49,7 @@ const TESTIMONIALS = [
 
 export function HomePage() {
   const [courses, setCourses] = useState<Course[]>([])
+  const [logoFailed, setLogoFailed] = useState(false)
 
   useEffect(() => {
     supabase
@@ -150,36 +151,111 @@ export function HomePage() {
             {/* RIGHT — logo hero image */}
             <div className="hidden lg:flex justify-center items-center relative">
               <div className="relative">
-                {/* Glow behind image */}
-                <div className="absolute inset-0 blur-3xl opacity-30 scale-90"
-                  style={{ background: 'radial-gradient(circle, #FF8C00 0%, #00BFFF 60%, transparent 80%)' }} />
+                {/* Glow behind visual */}
+                <div className="absolute inset-0 blur-3xl opacity-25 scale-90 pointer-events-none"
+                  style={{ background: 'radial-gradient(circle, #FF8C00 0%, #00BFFF 55%, transparent 80%)' }} />
 
-                {/* Logo image — save your logo as frontend/public/logo-hero.png */}
-                <img
-                  src="/logo-hero.png"
-                  alt="Welder & Fusion"
-                  className="relative w-[460px] drop-shadow-2xl"
-                  onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-                />
+                {/* ── Imagem real (salve como frontend/public/logo-hero.png) ── */}
+                {!logoFailed ? (
+                  <img
+                    src="/logo-hero.png"
+                    alt="Welder & Fusion"
+                    className="relative w-[500px] drop-shadow-2xl select-none"
+                    onError={() => setLogoFailed(true)}
+                  />
+                ) : (
+                  /* ── Fallback SVG enquanto a imagem não for adicionada ── */
+                  <div className="relative w-[460px] h-[340px] flex items-center justify-center">
+                    <svg viewBox="0 0 460 340" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {/* Background dark panel */}
+                      <rect width="460" height="340" rx="24" fill="#111111"/>
+                      <rect x="1" y="1" width="458" height="338" rx="23" stroke="url(#border-grad)" strokeWidth="1.5"/>
 
-                {/* Fallback shown when image not found */}
-                <div className="fallback-logo flex flex-col items-center gap-4 py-8">
-                  <WFLogo size="xl" showSubtitle />
-                  <p className="text-xs text-center max-w-xs" style={{ color: '#4B5563' }}>
-                    Salve o logo em <code className="text-[#FF8C00]">frontend/public/logo-hero.png</code>
-                  </p>
-                </div>
+                      {/* Outer glow ring */}
+                      <ellipse cx="230" cy="155" rx="180" ry="130" fill="url(#glow1)" opacity="0.15"/>
+
+                      {/* ── W letter ── */}
+                      <path d="M60 90 L90 200 L120 140 L150 200 L180 90"
+                        stroke="url(#silver)" strokeWidth="18" strokeLinecap="round" strokeLinejoin="round"/>
+
+                      {/* ── & ampersand ── */}
+                      <text x="200" y="195" fontFamily="Georgia, serif" fontSize="80" fontWeight="900"
+                        fill="url(#orange-grad)"> &amp;</text>
+
+                      {/* ── F letter ── */}
+                      <path d="M300 90 L380 90 M300 90 L300 205 M300 150 L370 150"
+                        stroke="url(#orange-grad)" strokeWidth="18" strokeLinecap="round" strokeLinejoin="round"/>
+
+                      {/* ── Sparks ── */}
+                      {[[370,95,'#FF8C00',6],[390,130,'#FFA500',4],[405,105,'#00BFFF',5],
+                        [385,80,'#FF8C00',3],[410,145,'#FFA500',4]].map(([x,y,c,r],i) => (
+                        <circle key={i} cx={x as number} cy={y as number} r={r as number}
+                          fill={c as string} opacity={0.8}/>
+                      ))}
+                      <line x1="380" y1="100" x2="400" y2="80" stroke="#FF8C00" strokeWidth="2" strokeLinecap="round" opacity="0.6"/>
+                      <line x1="385" y1="115" x2="412" y2="108" stroke="#FFA500" strokeWidth="2" strokeLinecap="round" opacity="0.5"/>
+                      <line x1="378" y1="125" x2="408" y2="138" stroke="#00BFFF" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+
+                      {/* ── Bottom text ── */}
+                      <line x1="60" y1="228" x2="180" y2="228" stroke="url(#orange-grad)" strokeWidth="1.5" opacity="0.5"/>
+                      <text x="230" y="248" textAnchor="middle" fontFamily="Arial, sans-serif"
+                        fontSize="15" fontWeight="700" letterSpacing="5" fill="#FF8C00">WELDER &amp; FUSION</text>
+                      <line x1="280" y1="228" x2="400" y2="228" stroke="url(#orange-grad)" strokeWidth="1.5" opacity="0.5"/>
+                      <text x="230" y="270" textAnchor="middle" fontFamily="Arial, sans-serif"
+                        fontSize="9.5" fontWeight="500" letterSpacing="3.5" fill="#6B7280">
+                        ESCOLA PROFISSIONALIZANTE DE SOLDADORES
+                      </text>
+
+                      {/* Spark at bottom center */}
+                      <circle cx="230" cy="290" r="3" fill="#FF8C00" opacity="0.9"/>
+                      <line x1="218" y1="290" x2="210" y2="298" stroke="#FF8C00" strokeWidth="1.5" opacity="0.5"/>
+                      <line x1="242" y1="290" x2="250" y2="298" stroke="#FF8C00" strokeWidth="1.5" opacity="0.5"/>
+                      <line x1="230" y1="283" x2="224" y2="275" stroke="#FFA500" strokeWidth="1.5" opacity="0.4"/>
+                      <line x1="230" y1="283" x2="236" y2="275" stroke="#FFA500" strokeWidth="1.5" opacity="0.4"/>
+
+                      <defs>
+                        <linearGradient id="silver" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stopColor="#f0f0f0"/>
+                          <stop offset="50%" stopColor="#888888"/>
+                          <stop offset="100%" stopColor="#d8d8d8"/>
+                        </linearGradient>
+                        <linearGradient id="orange-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#FF8C00"/>
+                          <stop offset="50%" stopColor="#FFB347"/>
+                          <stop offset="100%" stopColor="#FF6B00"/>
+                        </linearGradient>
+                        <linearGradient id="border-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#FF8C00" stopOpacity="0.4"/>
+                          <stop offset="50%" stopColor="#333333" stopOpacity="0.2"/>
+                          <stop offset="100%" stopColor="#00BFFF" stopOpacity="0.3"/>
+                        </linearGradient>
+                        <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stopColor="#FF8C00"/>
+                          <stop offset="100%" stopColor="transparent"/>
+                        </radialGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                )}
 
                 {/* Floating badges */}
-                <div className="absolute -top-4 -left-6 bg-[#242424] border rounded-xl px-4 py-3 shadow-2xl"
+                <div className="absolute -top-4 -left-6 bg-[#1A1A1A] border rounded-2xl px-4 py-3 shadow-2xl"
                   style={{ borderColor: '#FF8C0040' }}>
                   <p className="text-2xl font-black" style={{ color: '#FF8C00' }}>500+</p>
                   <p className="text-xs" style={{ color: '#6B7280' }}>Alunos Formados</p>
                 </div>
-                <div className="absolute -bottom-4 -right-6 bg-[#242424] border rounded-xl px-4 py-3 shadow-2xl"
+                <div className="absolute -bottom-4 -right-6 bg-[#1A1A1A] border rounded-2xl px-4 py-3 shadow-2xl"
                   style={{ borderColor: '#00BFFF30' }}>
                   <p className="text-2xl font-black" style={{ color: '#00BFFF' }}>98%</p>
                   <p className="text-xs" style={{ color: '#6B7280' }}>Empregados em 3 meses</p>
+                </div>
+                <div className="absolute top-1/2 -right-14 -translate-y-1/2 bg-[#1A1A1A] border rounded-2xl px-3 py-2.5 shadow-2xl"
+                  style={{ borderColor: '#FF8C0030' }}>
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <Award size={13} style={{ color: '#FF8C00' }} />
+                    <span className="text-xs font-bold text-white">Certificado</span>
+                  </div>
+                  <p className="text-[10px]" style={{ color: '#6B7280' }}>QR code validado</p>
                 </div>
               </div>
             </div>
