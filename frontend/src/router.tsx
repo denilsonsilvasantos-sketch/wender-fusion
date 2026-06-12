@@ -13,6 +13,8 @@ import { HomePage } from '@/pages/public/HomePage'
 import { CoursesPage } from '@/pages/public/CoursesPage'
 import { CourseDetailPage } from '@/pages/public/CourseDetailPage'
 import { CertificateValidationPage } from '@/pages/public/CertificateValidationPage'
+import { ArticlesPage } from '@/pages/public/ArticlesPage'
+import { AboutPage } from '@/pages/public/AboutPage'
 
 // Auth pages
 import { LoginPage } from '@/pages/auth/LoginPage'
@@ -84,6 +86,9 @@ export const router = createBrowserRouter([
       { path: '/', element: <HomePage /> },
       { path: '/cursos', element: <CoursesPage /> },
       { path: '/cursos/:id', element: <CourseDetailPage /> },
+      { path: '/calculadora', element: <CalculatorPage /> },
+      { path: '/artigos', element: <ArticlesPage /> },
+      { path: '/sobre', element: <AboutPage /> },
     ],
   },
 

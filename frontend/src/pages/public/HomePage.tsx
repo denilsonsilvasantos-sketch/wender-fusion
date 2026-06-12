@@ -164,6 +164,16 @@ export function HomePage() {
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 pt-32">
           <div className="max-w-2xl">
 
+            {/* Logo da escola acima do badge */}
+            <div className="mb-6">
+              <img
+                src="/logo-hero.png"
+                alt="Welder & Fusion"
+                className="h-16 w-auto object-contain"
+                style={{ filter: 'drop-shadow(0 2px 16px rgba(255,140,0,0.35))' }}
+              />
+            </div>
+
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6 text-xs font-semibold uppercase tracking-widest"
               style={{ borderColor: '#FF8C0050', background: '#FF8C0018', color: '#FF8C00' }}>
               <Flame size={12} />
