@@ -332,7 +332,7 @@ export function HomePage() {
       <section className="py-24" style={{ background: '#1A1A1A' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: '#00BFFF' }}>Como Funciona</p>
+            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: '#fff' }}>Como Funciona</p>
             <h2 className="text-4xl font-black text-white">Sua jornada do zero ao emprego</h2>
           </div>
 
@@ -397,76 +397,30 @@ export function HomePage() {
       <section className="py-24" style={{ background: '#1A1A1A' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: '#00BFFF' }}>Especialidades</p>
+            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: '#fff' }}>Especialidades</p>
             <h2 className="text-4xl font-black text-white">Processos que você vai dominar</h2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {[
-              { code: 'TIG', full: 'GTAW', color: '#00BFFF', desc: 'Soldagem de precisão com eletrodo de tungstênio. Ideal para aço inox, alumínio e titânio.' },
+              { code: 'TIG', full: 'GTAW', color: '#FF8C00', desc: 'Soldagem de precisão com eletrodo de tungstênio. Ideal para aço inox, alumínio e titânio.' },
               { code: 'MIG/MAG', full: 'GMAW', color: '#FF8C00', desc: 'Alta produtividade com arame contínuo. O processo mais usado na indústria metal-mecânica.' },
-              { code: 'Eletrodo', full: 'SMAW', color: '#FFA500', desc: 'Processo versátil com eletrodo revestido. Fundamental para manutenção e estruturas.' },
-              { code: 'Oxicorte', full: 'OFC', color: '#00BFFF', desc: 'Corte e conformação de peças metálicas com chama oxi-acetilênica. Base para caldeiraria.' },
+              { code: 'Eletrodo', full: 'SMAW', color: '#FF8C00', desc: 'Processo versátil com eletrodo revestido. Fundamental para manutenção e estruturas.' },
+              { code: 'Oxicorte', full: 'OFC', color: '#FF8C00', desc: 'Corte e conformação de peças metálicas com chama oxi-acetilênica. Base para caldeiraria.' },
             ].map(({ code, full, color, desc }) => (
               <div key={code} className="group p-6 rounded-2xl border text-center transition-all hover:-translate-y-1 cursor-default"
                 style={{ background: '#242424', borderColor: '#ffffff0d' }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = color + '50')}
                 onMouseLeave={e => (e.currentTarget.style.borderColor = '#ffffff0d')}>
-                <div className="w-16 h-16 rounded-2xl flex flex-col items-center justify-center mx-auto mb-4"
+                <div className="inline-flex flex-col items-center justify-center px-4 py-3 rounded-2xl mx-auto mb-4 min-w-[72px]"
                   style={{ background: color + '15' }}>
-                  <span className="text-lg font-black leading-none" style={{ color }}>{code}</span>
+                  <span className="text-base font-black leading-none whitespace-nowrap" style={{ color }}>{code}</span>
                   <span className="text-[9px] font-mono mt-0.5" style={{ color: color + 'aa' }}>{full}</span>
                 </div>
                 <h3 className="font-bold text-white mb-2">{code}</h3>
                 <p className="text-xs leading-relaxed" style={{ color: '#6B7280' }}>{desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SOBRE A ESCOLA ───────────────────────────────────────────── */}
-      <section className="py-24" style={{ background: '#242424' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: '#FF8C00' }}>Sobre Nós</p>
-              <h2 className="text-4xl font-black text-white mb-6">
-                Referência em formação de soldadores no Brasil
-              </h2>
-              <p className="text-base leading-relaxed mb-4" style={{ color: '#9CA3AF' }}>
-                A Welder & Fusion nasceu da necessidade do mercado por profissionais qualificados
-                em soldagem. Com mais de 12 anos formando soldadores, nossa metodologia une teoria,
-                prática intensiva e acompanhamento individualizado.
-              </p>
-              <p className="text-base leading-relaxed mb-8" style={{ color: '#9CA3AF' }}>
-                Todos os nossos instrutores possuem certificação AWS CWI (Certified Welding Inspector)
-                e experiência comprovada em indústrias como petroquímica, aeronáutica e siderurgia.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {['Certificação AWS', 'Normas ABNT/ISO', 'Equipamentos de Última Geração', 'Empregabilidade Garantida'].map(tag => (
-                  <span key={tag} className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full border"
-                    style={{ borderColor: '#FF8C0030', color: '#FF8C00', background: '#FF8C0010' }}>
-                    <CheckCircle size={12} /> {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { value: '12+', label: 'Anos formando profissionais', color: '#FF8C00' },
-                { value: '500+', label: 'Alunos certificados', color: '#00BFFF' },
-                { value: '98%', label: 'Taxa de empregabilidade', color: '#FF8C00' },
-                { value: '15+', label: 'Empresas parceiras', color: '#00BFFF' },
-              ].map(({ value, label, color }) => (
-                <div key={label} className="p-6 rounded-2xl text-center"
-                  style={{ background: '#1A1A1A', border: `1px solid ${color}20` }}>
-                  <p className="text-4xl font-black mb-2" style={{ color }}>{value}</p>
-                  <p className="text-sm" style={{ color: '#6B7280' }}>{label}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>

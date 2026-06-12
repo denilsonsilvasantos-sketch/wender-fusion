@@ -12,9 +12,20 @@ const VALUES = [
 ]
 
 const TEAM = [
-  { name: 'Equipe de Instrutores', role: 'Certificados AWS CWI', desc: 'Todos com experiência comprovada em indústrias como petroquímica, aeronáutica e siderurgia.', initial: 'I' },
-  { name: 'Coordenação Pedagógica', role: 'Gestão de Aprendizagem', desc: 'Acompanhamento individual de cada aluno, do nivelamento à certificação final.', initial: 'P' },
-  { name: 'Núcleo de Empregabilidade', role: 'Oportunidades de Carreira', desc: 'Time dedicado a conectar alunos formados com as empresas parceiras.', initial: 'E' },
+  {
+    name: 'Tiago Andrade',
+    role: 'Inspetor de Soldagem N1 — FBTS',
+    initial: 'T',
+    highlights: ['Certificação FBTS', 'Normas ASME / AWS D1.1 / Petrobras', 'SMAW · GTAW · FCAW'],
+    bio: 'Profissional com sólida experiência na área de soldagem, atua como Inspetor de Soldagem N1 com vasta trajetória em equipamentos de pequeno, médio e grande porte. Especializado em projetos para o setor de óleo e gás — principalmente Petrobras — participou ativamente de operações de soldagem e inspeção em tanques de armazenamento, vasos de pressão, caldeirarias, tubulações de alta pressão e estruturas metálicas para refinarias e projetos navais.',
+  },
+  {
+    name: 'Kleberson Ferreira',
+    role: 'Inspetor de Solda N1 — FBTS',
+    initial: 'K',
+    highlights: ['10+ anos de experiência', 'GTAW · SMAW · GMAW · FCAW', 'Caldeiras & Petroquímica'],
+    bio: 'Com mais de 10 anos atuando em vários segmentos industriais e trabalhando com diversas normas e procedimentos, é técnico em mecânica, analista da qualidade e especialista em líquido penetrante e partícula magnética. Teve seu primeiro contato com soldagem em 1996 e acumula experiência em fabricação de vagões, caldeiras, tanques de cerveja (dupla fusão inox), fabricação de amônia, fábricas de papel, refinarias de petróleo e plataformas estáticas e cilínicas.',
+  },
 ]
 
 export function AboutPage() {
@@ -149,22 +160,39 @@ export function AboutPage() {
 
       {/* ── EQUIPE ── */}
       <section className="py-20" style={{ background: '#242424' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: '#FF8C00' }}>Time</p>
+            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: '#FF8C00' }}>Fundadores &amp; Instrutores</p>
             <h2 className="text-4xl font-black text-white">Quem faz acontecer</h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {TEAM.map(({ name, role, desc, initial }) => (
-              <div key={name} className="p-6 rounded-2xl border text-center"
-                style={{ background: '#1A1A1A', borderColor: '#ffffff0d' }}>
-                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-black"
-                  style={{ background: '#FF8C0020', color: '#FF8C00' }}>
-                  {initial}
+          <div className="grid md:grid-cols-2 gap-8">
+            {TEAM.map(({ name, role, initial, highlights, bio }) => (
+              <div key={name} className="p-7 rounded-2xl border"
+                style={{ background: '#1A1A1A', borderColor: '#FF8C0020' }}>
+                {/* Header */}
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 text-2xl font-black"
+                    style={{ background: '#FF8C0020', color: '#FF8C00', border: '2px solid #FF8C0040' }}>
+                    {initial}
+                  </div>
+                  <div>
+                    <h3 className="font-black text-white text-xl">{name}</h3>
+                    <p className="text-sm font-medium mt-0.5" style={{ color: '#FF8C00' }}>{role}</p>
+                  </div>
                 </div>
-                <h3 className="font-bold text-white text-lg mb-1">{name}</h3>
-                <p className="text-sm font-medium mb-3" style={{ color: '#FF8C00' }}>{role}</p>
-                <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>{desc}</p>
+
+                {/* Highlights */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {highlights.map(h => (
+                    <span key={h} className="text-xs px-2.5 py-1 rounded-full border font-medium"
+                      style={{ borderColor: '#FF8C0030', color: '#FF8C00', background: '#FF8C0010' }}>
+                      {h}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Bio */}
+                <p className="text-sm leading-relaxed" style={{ color: '#9CA3AF' }}>{bio}</p>
               </div>
             ))}
           </div>
