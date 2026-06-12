@@ -16,15 +16,25 @@ const TEAM = [
     name: 'Tiago Andrade',
     role: 'Inspetor de Soldagem N1 — FBTS',
     initial: 'T',
-    highlights: ['Certificação FBTS', 'Normas ASME / AWS D1.1 / Petrobras', 'SMAW · GTAW · FCAW'],
-    bio: 'Profissional com sólida experiência na área de soldagem, atua como Inspetor de Soldagem N1 com vasta trajetória em equipamentos de pequeno, médio e grande porte. Especializado em projetos para o setor de óleo e gás — principalmente Petrobras — participou ativamente de operações de soldagem e inspeção em tanques de armazenamento, vasos de pressão, caldeirarias, tubulações de alta pressão e estruturas metálicas para refinarias e projetos navais.',
+    highlights: ['Certificação FBTS', 'ASME · AWS D1.1 · Normas Petrobras', 'SMAW · GTAW · FCAW'],
+    paragraphs: [
+      'Tiago Andrade é um profissional com sólida experiência na área de soldagem, atuando atualmente como Inspetor de Soldagem N1, além de possuir vasta trajetória como soldador em equipamentos de pequeno, médio e grande porte na região de São Paulo. Seu trabalho é norteado por altos padrões de qualidade, segurança e conformidade com normas técnicas nacionais e internacionais, como ASME, AWS D1.1 e as normas Petrobras, entre outras.',
+      'Especializado em projetos voltados ao setor de óleo e gás, principalmente com foco em equipamentos para a Petrobras, Tiago participou ativamente de operações de soldagem e inspeção em: tanques de armazenamento, vasos de pressão e caldeirarias industriais; tubulações de alta pressão e sistemas críticos; equipamentos e estruturas metálicas para refinarias e projetos navais.',
+      'Com domínio técnico em processos como SMAW (Eletrodo Revestido), GTAW (TIG) e FCAW (Arame Tubular), além de qualificação para leitura de EPS e realização de inspeções visuais e dimensionais, Tiago assegura a conformidade das juntas soldadas com os requisitos exigidos por projetos de alta complexidade.',
+      'Como Inspetor N1, atua na verificação de procedimentos, controle de qualidade de soldagem, rastreabilidade de materiais e acompanhamento técnico em campo, garantindo a integridade estrutural dos equipamentos e a segurança operacional dos sistemas inspecionados.',
+    ],
   },
   {
     name: 'Kleberson Ferreira',
     role: 'Inspetor de Solda N1 — FBTS',
     initial: 'K',
-    highlights: ['10+ anos de experiência', 'GTAW · SMAW · GMAW · FCAW', 'Caldeiras & Petroquímica'],
-    bio: 'Com mais de 10 anos atuando em vários segmentos industriais e trabalhando com diversas normas e procedimentos, é técnico em mecânica, analista da qualidade e especialista em líquido penetrante e partícula magnética. Teve seu primeiro contato com soldagem em 1996 e acumula experiência em fabricação de vagões, caldeiras, tanques de cerveja (dupla fusão inox), fabricação de amônia, fábricas de papel, refinarias de petróleo e plataformas estáticas e cilínicas.',
+    highlights: ['10+ anos de experiência', 'GTAW · SMAW · GMAW · FCAW', 'Caldeiras · Petrobras · Petroquímica'],
+    paragraphs: [
+      'Kleberson Felipe Soares Ferreira, conhecido como Índio, é atualmente Inspetor de Solda N1 qualificado pela FBTS (Fundação Brasileira de Tecnologia de Soldagem). Atua há mais de 10 anos em vários segmentos industriais, trabalhando com diversas normas e procedimentos. Formado em técnico de mecânica, analista da qualidade, com curso de Líquido Penetrante e Partícula Magnética. Encarregado de solda e montagem em cervejaria e fábrica de caldeiras.',
+      'Processos dominados como soldador: GTAW (TIG), SMAW (Eletrodo Revestido), GMAW (Arame Sólido) e FCAW (Arame Tubular). Primeiro emprego na área de solda em 1996, aos 17 anos. Primeiro fechamento como soldador em 1997. Primeiro contato com o processo SMAW e GMAW em fábrica de cama tubular no interior de São Paulo e, em 2000, início com GTAW (TIG) na área alimentícia em cervejaria e Coca-Cola.',
+      'Áreas em que já atuou: fabricação de vagão de trem; corrimões soldados em inox em linha alimentícia; fabricação de linha de amônia em cervejaria; tanques de cerveja em dupla fusão inox; usinas de açúcar inox e aço carbono; caldeiras de força e recuperação; tanques e vasos de pressão; fábricas de papel; refinarias de petróleo Petrobras; plataformas estáticas e cilíndricas — como soldador e como Inspetor de Solda N1.',
+      '"Conhecimento é tudo, mas nem sempre sabemos tudo — sempre há algo a aprender. Estou pronto para compartilhar meus conhecimentos e aprender com vocês. Com segurança, qualidade e saúde garantidas para você e para seus negócios."',
+    ],
   },
 ]
 
@@ -166,7 +176,7 @@ export function AboutPage() {
             <h2 className="text-4xl font-black text-white">Quem faz acontecer</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
-            {TEAM.map(({ name, role, initial, highlights, bio }) => (
+            {TEAM.map(({ name, role, initial, highlights, paragraphs }) => (
               <div key={name} className="p-7 rounded-2xl border"
                 style={{ background: '#1A1A1A', borderColor: '#FF8C0020' }}>
                 {/* Header */}
@@ -182,7 +192,7 @@ export function AboutPage() {
                 </div>
 
                 {/* Highlights */}
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-5">
                   {highlights.map(h => (
                     <span key={h} className="text-xs px-2.5 py-1 rounded-full border font-medium"
                       style={{ borderColor: '#FF8C0030', color: '#FF8C00', background: '#FF8C0010' }}>
@@ -191,8 +201,12 @@ export function AboutPage() {
                   ))}
                 </div>
 
-                {/* Bio */}
-                <p className="text-sm leading-relaxed" style={{ color: '#9CA3AF' }}>{bio}</p>
+                {/* Bio completa */}
+                <div className="space-y-3">
+                  {paragraphs.map((p, i) => (
+                    <p key={i} className="text-sm leading-relaxed" style={{ color: '#9CA3AF' }}>{p}</p>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
