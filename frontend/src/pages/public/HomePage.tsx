@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Award, Users, Clock, Flame, Zap, Shield, Star, CheckCircle, Briefcase, BookOpen } from 'lucide-react'
-import { Button } from '@/components/ui'
+import { ArrowRight, Award, Users, Clock, Flame, Zap, Shield, Star, CheckCircle, Briefcase, BookOpen, Phone, MapPin, Mail } from 'lucide-react'
+import { Button, WFLogo } from '@/components/ui'
 import { supabase } from '@/lib/supabase'
 import type { Course } from '@/types'
 import { formatCurrency, LEVEL_LABELS } from '@/lib/utils'
@@ -147,67 +147,39 @@ export function HomePage() {
               </div>
             </div>
 
-            {/* RIGHT — welding arc visual */}
+            {/* RIGHT — logo hero image */}
             <div className="hidden lg:flex justify-center items-center relative">
-              <div className="relative w-[420px] h-[420px]">
-                {/* Outer glow ring */}
-                <div className="absolute inset-0 rounded-full"
-                  style={{ background: 'conic-gradient(from 180deg, #FF8C0022, #00BFFF22, #FF8C0022)', filter: 'blur(2px)' }} />
+              <div className="relative">
+                {/* Glow behind image */}
+                <div className="absolute inset-0 blur-3xl opacity-30 scale-90"
+                  style={{ background: 'radial-gradient(circle, #FF8C00 0%, #00BFFF 60%, transparent 80%)' }} />
 
-                {/* Main circle */}
-                <div className="absolute inset-4 rounded-full border"
-                  style={{ background: '#1a1a1a', borderColor: '#FF8C0030' }} />
+                {/* Logo image — save your logo as frontend/public/logo-hero.png */}
+                <img
+                  src="/logo-hero.png"
+                  alt="Welder & Fusion"
+                  className="relative w-[460px] drop-shadow-2xl"
+                  onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+                />
 
-                {/* Arc center piece */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative">
-                    {/* Arc glow */}
-                    <div className="absolute inset-0 rounded-full blur-2xl" style={{ background: '#FF8C00', opacity: 0.2, width: 160, height: 160, top: -10, left: -10 }} />
-
-                    {/* SVG arc */}
-                    <svg width="140" height="140" viewBox="0 0 140 140" className="arc">
-                      {/* Electrode */}
-                      <line x1="70" y1="10" x2="70" y2="55" stroke="#9CA3AF" strokeWidth="6" strokeLinecap="round"/>
-                      {/* Arc rays */}
-                      {[...Array(8)].map((_, i) => {
-                        const angle = (i * 45) * Math.PI / 180
-                        const x1 = 70 + Math.cos(angle) * 20
-                        const y1 = 70 + Math.sin(angle) * 20
-                        const x2 = 70 + Math.cos(angle) * 50
-                        const y2 = 70 + Math.sin(angle) * 50
-                        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
-                          stroke={i % 2 === 0 ? '#FF8C00' : '#00BFFF'}
-                          strokeWidth={i % 2 === 0 ? 2 : 1.5}
-                          strokeLinecap="round" opacity={0.7} />
-                      })}
-                      {/* Arc center */}
-                      <circle cx="70" cy="70" r="12" fill="#FF8C00" opacity="0.9"/>
-                      <circle cx="70" cy="70" r="6" fill="white" opacity="0.95"/>
-                      {/* Weld pool */}
-                      <ellipse cx="70" cy="88" rx="16" ry="6" fill="#FF8C00" opacity="0.4"/>
-                      <ellipse cx="70" cy="88" rx="10" ry="4" fill="#FFA500" opacity="0.6"/>
-                    </svg>
-                  </div>
+                {/* Fallback shown when image not found */}
+                <div className="fallback-logo flex flex-col items-center gap-4 py-8">
+                  <WFLogo size="xl" showSubtitle />
+                  <p className="text-xs text-center max-w-xs" style={{ color: '#4B5563' }}>
+                    Salve o logo em <code className="text-[#FF8C00]">frontend/public/logo-hero.png</code>
+                  </p>
                 </div>
 
                 {/* Floating badges */}
-                <div className="absolute -top-2 -left-8 bg-[#242424] border rounded-xl px-4 py-3 shadow-2xl"
-                  style={{ borderColor: '#FF8C0030' }}>
+                <div className="absolute -top-4 -left-6 bg-[#242424] border rounded-xl px-4 py-3 shadow-2xl"
+                  style={{ borderColor: '#FF8C0040' }}>
                   <p className="text-2xl font-black" style={{ color: '#FF8C00' }}>500+</p>
                   <p className="text-xs" style={{ color: '#6B7280' }}>Alunos Formados</p>
                 </div>
-                <div className="absolute -bottom-2 -right-8 bg-[#242424] border rounded-xl px-4 py-3 shadow-2xl"
+                <div className="absolute -bottom-4 -right-6 bg-[#242424] border rounded-xl px-4 py-3 shadow-2xl"
                   style={{ borderColor: '#00BFFF30' }}>
                   <p className="text-2xl font-black" style={{ color: '#00BFFF' }}>98%</p>
-                  <p className="text-xs" style={{ color: '#6B7280' }}>Empregados</p>
-                </div>
-                <div className="absolute top-1/2 -right-12 -translate-y-1/2 bg-[#242424] border rounded-xl px-4 py-3 shadow-2xl"
-                  style={{ borderColor: '#FF8C0030' }}>
-                  <div className="flex items-center gap-2">
-                    <Award size={16} style={{ color: '#FF8C00' }} />
-                    <span className="text-sm font-semibold text-white">Certificado</span>
-                  </div>
-                  <p className="text-xs mt-0.5" style={{ color: '#6B7280' }}>QR Code validado</p>
+                  <p className="text-xs" style={{ color: '#6B7280' }}>Empregados em 3 meses</p>
                 </div>
               </div>
             </div>
@@ -383,6 +355,142 @@ export function HomePage() {
                 {/* quote mark */}
                 <span className="absolute top-5 right-6 text-6xl font-black leading-none select-none"
                   style={{ color: '#FF8C0015' }}>"</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TÉCNICAS DE SOLDAGEM ─────────────────────────────────────── */}
+      <section className="py-24" style={{ background: '#1A1A1A' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: '#00BFFF' }}>Especialidades</p>
+            <h2 className="text-4xl font-black text-white">Processos que você vai dominar</h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {[
+              { code: 'TIG', full: 'GTAW', color: '#00BFFF', desc: 'Soldagem de precisão com eletrodo de tungstênio. Ideal para aço inox, alumínio e titânio.' },
+              { code: 'MIG/MAG', full: 'GMAW', color: '#FF8C00', desc: 'Alta produtividade com arame contínuo. O processo mais usado na indústria metal-mecânica.' },
+              { code: 'Eletrodo', full: 'SMAW', color: '#FFA500', desc: 'Processo versátil com eletrodo revestido. Fundamental para manutenção e estruturas.' },
+              { code: 'Oxicorte', full: 'OFC', color: '#00BFFF', desc: 'Corte e conformação de peças metálicas com chama oxi-acetilênica. Base para caldeiraria.' },
+            ].map(({ code, full, color, desc }) => (
+              <div key={code} className="group p-6 rounded-2xl border text-center transition-all hover:-translate-y-1 cursor-default"
+                style={{ background: '#242424', borderColor: '#ffffff0d' }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = color + '50')}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = '#ffffff0d')}>
+                <div className="w-16 h-16 rounded-2xl flex flex-col items-center justify-center mx-auto mb-4"
+                  style={{ background: color + '15' }}>
+                  <span className="text-lg font-black leading-none" style={{ color }}>{code}</span>
+                  <span className="text-[9px] font-mono mt-0.5" style={{ color: color + 'aa' }}>{full}</span>
+                </div>
+                <h3 className="font-bold text-white mb-2">{code}</h3>
+                <p className="text-xs leading-relaxed" style={{ color: '#6B7280' }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SOBRE A ESCOLA ───────────────────────────────────────────── */}
+      <section className="py-24" style={{ background: '#242424' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: '#FF8C00' }}>Sobre Nós</p>
+              <h2 className="text-4xl font-black text-white mb-6">
+                Referência em formação de soldadores no Brasil
+              </h2>
+              <p className="text-base leading-relaxed mb-4" style={{ color: '#9CA3AF' }}>
+                A Welder & Fusion nasceu da necessidade do mercado por profissionais qualificados
+                em soldagem. Com mais de 12 anos formando soldadores, nossa metodologia une teoria,
+                prática intensiva e acompanhamento individualizado.
+              </p>
+              <p className="text-base leading-relaxed mb-8" style={{ color: '#9CA3AF' }}>
+                Todos os nossos instrutores possuem certificação AWS CWI (Certified Welding Inspector)
+                e experiência comprovada em indústrias como petroquímica, aeronáutica e siderurgia.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {['Certificação AWS', 'Normas ABNT/ISO', 'Equipamentos de Última Geração', 'Empregabilidade Garantida'].map(tag => (
+                  <span key={tag} className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full border"
+                    style={{ borderColor: '#FF8C0030', color: '#FF8C00', background: '#FF8C0010' }}>
+                    <CheckCircle size={12} /> {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { value: '12+', label: 'Anos formando profissionais', color: '#FF8C00' },
+                { value: '500+', label: 'Alunos certificados', color: '#00BFFF' },
+                { value: '98%', label: 'Taxa de empregabilidade', color: '#FF8C00' },
+                { value: '15+', label: 'Empresas parceiras', color: '#00BFFF' },
+              ].map(({ value, label, color }) => (
+                <div key={label} className="p-6 rounded-2xl text-center"
+                  style={{ background: '#1A1A1A', border: `1px solid ${color}20` }}>
+                  <p className="text-4xl font-black mb-2" style={{ color }}>{value}</p>
+                  <p className="text-sm" style={{ color: '#6B7280' }}>{label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ──────────────────────────────────────────────────────── */}
+      <section className="py-24" style={{ background: '#1A1A1A' }}>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: '#FF8C00' }}>Dúvidas Frequentes</p>
+            <h2 className="text-4xl font-black text-white">Perguntas Frequentes</h2>
+          </div>
+
+          <div className="space-y-3">
+            {[
+              { q: 'Preciso de experiência prévia para me matricular?', a: 'Não! Temos cursos para todos os níveis, do iniciante absoluto ao técnico avançado. Nossa metodologia é pensada para que qualquer pessoa aprenda soldagem na prática.' },
+              { q: 'O certificado é reconhecido pelo mercado?', a: 'Sim. Nossos certificados possuem QR code de validação online e são aceitos pelas principais indústrias do Brasil. Alguns cursos também preparam para as certificações AWS internacionais.' },
+              { q: 'Qual a duração dos cursos?', a: 'Varia por modalidade: cursos básicos têm de 40h a 80h; especializações chegam a 200h. Todos com opções de turno manhã, tarde ou noite para encaixar na sua rotina.' },
+              { q: 'Como funciona o portal do aluno?', a: 'Após a matrícula você acessa o portal online com material de apoio, agenda de aulas, frequência, notas, pagamentos e seu certificado digital — tudo num só lugar.' },
+              { q: 'Vocês têm parceria com empresas para emprego?', a: 'Sim! Mantemos um banco de talentos e parcerias com mais de 15 empresas do setor. Alunos certificados têm acesso exclusivo às vagas e podem cadastrar o currículo no portal.' },
+            ].map(({ q, a }, i) => (
+              <details key={i} className="group rounded-xl border overflow-hidden" style={{ borderColor: '#ffffff0d', background: '#242424' }}>
+                <summary className="flex items-center justify-between px-5 py-4 cursor-pointer list-none font-semibold text-white text-sm select-none">
+                  {q}
+                  <span className="text-xl leading-none ml-4 flex-shrink-0 transition-transform group-open:rotate-45" style={{ color: '#FF8C00' }}>+</span>
+                </summary>
+                <div className="px-5 pb-4 text-sm leading-relaxed" style={{ color: '#9CA3AF' }}>{a}</div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONTATO ──────────────────────────────────────────────────── */}
+      <section className="py-24" style={{ background: '#242424' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="text-sm font-semibold uppercase tracking-widest mb-2" style={{ color: '#FF8C00' }}>Localização</p>
+            <h2 className="text-4xl font-black text-white">Venha nos conhecer</h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { icon: MapPin, title: 'Endereço', lines: ['Rua das Indústrias, 1450', 'Distrito Industrial — SP', 'CEP 00000-000'], color: '#FF8C00' },
+              { icon: Phone, title: 'Telefone / WhatsApp', lines: ['(11) 99999-9999', '(11) 3333-4444', 'Seg a Sex, 8h–18h'], color: '#00BFFF' },
+              { icon: Mail, title: 'E-mail', lines: ['contato@welderfusion.com.br', 'matriculas@welderfusion.com.br', ''], color: '#FF8C00' },
+            ].map(({ icon: Icon, title, lines, color }) => (
+              <div key={title} className="p-6 rounded-2xl text-center border"
+                style={{ background: '#1A1A1A', borderColor: '#ffffff0d' }}>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
+                  style={{ background: color + '15' }}>
+                  <Icon size={24} style={{ color }} />
+                </div>
+                <h3 className="font-bold text-white mb-3">{title}</h3>
+                {lines.filter(Boolean).map(l => (
+                  <p key={l} className="text-sm" style={{ color: '#9CA3AF' }}>{l}</p>
+                ))}
               </div>
             ))}
           </div>

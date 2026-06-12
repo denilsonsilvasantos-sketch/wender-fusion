@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { Outlet, NavLink, Link } from 'react-router-dom'
 import {
   LayoutDashboard, BookOpen, Users, DollarSign, Award, ClipboardList,
-  CalendarCheck, Wrench, LogOut, Flame, Menu, ChevronLeft, Shield,
+  CalendarCheck, Wrench, LogOut, Menu, ChevronLeft, Shield,
   Briefcase, TrendingUp, Building2
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { Avatar } from '@/components/ui'
+import { Avatar, WFLogo } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -38,17 +38,12 @@ export function AdminLayout() {
         sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       )}>
         <div className="flex items-center justify-between px-5 h-16 border-b border-[var(--color-border)]">
-          <Link to="/admin" className="flex items-center gap-2 font-bold">
-            <div className="w-7 h-7 bg-[var(--color-primary)] rounded flex items-center justify-center">
-              <Flame size={14} className="text-black" />
-            </div>
-            <div>
-              <span className="text-sm">W<span className="text-[var(--color-primary)]">&amp;</span>F</span>
-              <div className="flex items-center gap-1">
-                <Shield size={10} className="text-[var(--color-secondary)]" />
-                <span className="text-[10px] text-[var(--color-secondary)] uppercase tracking-wider">Admin</span>
-              </div>
-            </div>
+          <Link to="/admin" className="flex items-center gap-2">
+            <WFLogo size="sm" showSubtitle />
+            <span className="flex items-center gap-1 ml-1">
+              <Shield size={10} className="text-[var(--color-secondary)]" />
+              <span className="text-[10px] text-[var(--color-secondary)] uppercase tracking-wider">Admin</span>
+            </span>
           </Link>
           <button className="md:hidden text-[var(--color-text-muted)]" onClick={() => setSidebarOpen(false)}>
             <ChevronLeft size={18} />

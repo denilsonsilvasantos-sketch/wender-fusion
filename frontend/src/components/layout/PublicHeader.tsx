@@ -1,8 +1,8 @@
 import { Link, NavLink } from 'react-router-dom'
-import { Flame, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
-import { Button } from '@/components/ui'
+import { Button, WFLogo } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
 export function PublicHeader() {
@@ -19,12 +19,7 @@ export function PublicHeader() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-            <div className="w-8 h-8 bg-[var(--color-primary)] rounded flex items-center justify-center">
-              <Flame size={18} className="text-black" />
-            </div>
-            <span className="text-[var(--color-text)]">Welder <span className="text-[var(--color-primary)]">&amp;</span> Fusion</span>
-          </Link>
+          <Link to="/"><WFLogo size="md" showSubtitle /></Link>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6">

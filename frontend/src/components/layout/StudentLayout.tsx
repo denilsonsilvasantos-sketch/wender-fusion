@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { Outlet, NavLink, Link } from 'react-router-dom'
 import {
   LayoutDashboard, BookOpen, User, CreditCard, Award, Calculator,
-  ClipboardList, CalendarCheck, LogOut, Flame, Menu, X, ChevronLeft,
+  ClipboardList, CalendarCheck, LogOut, Menu, X, ChevronLeft,
   Briefcase, Star
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { Avatar } from '@/components/ui'
+import { Avatar, WFLogo } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -40,12 +40,7 @@ export function StudentLayout() {
       )}>
         {/* Logo */}
         <div className="flex items-center justify-between px-5 h-16 border-b border-[var(--color-border)]">
-          <Link to="/" className="flex items-center gap-2 font-bold">
-            <div className="w-7 h-7 bg-[var(--color-primary)] rounded flex items-center justify-center">
-              <Flame size={14} className="text-black" />
-            </div>
-            <span className="text-sm">W<span className="text-[var(--color-primary)]">&amp;</span>F</span>
-          </Link>
+          <Link to="/"><WFLogo size="sm" showSubtitle /></Link>
           <button className="md:hidden text-[var(--color-text-muted)]" onClick={() => setSidebarOpen(false)}>
             <ChevronLeft size={18} />
           </button>
