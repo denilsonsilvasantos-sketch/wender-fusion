@@ -375,11 +375,10 @@ export function CoursesPage() {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                     <div className="absolute bottom-3 left-3 flex gap-2">
-                      <Badge variant="default"
-                        className="text-xs font-semibold"
-                        style={{ background: '#FF8C00', color: '#000', border: 'none' }}>
+                      <span className="text-xs font-semibold px-2.5 py-1 rounded-full"
+                        style={{ background: '#FF8C00', color: '#000' }}>
                         {LEVEL_LABELS[course.level as keyof typeof LEVEL_LABELS] ?? course.level}
-                      </Badge>
+                      </span>
                     </div>
                   </div>
 
