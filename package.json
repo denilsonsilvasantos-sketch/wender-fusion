@@ -12,7 +12,10 @@
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "build:frontend": "npm run build --workspace=frontend",
     "build:backend": "npm run build --workspace=backend",
-    "install:all": "npm install --workspaces"
+    "install:all": "npm install --workspaces",
+    "save": "bash scripts/save.sh",
+    "save:msg": "bash scripts/save.sh",
+    "deploy": "bash scripts/deploy.sh"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

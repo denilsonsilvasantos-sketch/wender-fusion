@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Outlet, NavLink, Link } from 'react-router-dom'
 import {
   LayoutDashboard, BookOpen, User, CreditCard, Award, Calculator,
-  ClipboardList, CalendarCheck, LogOut, Flame, Menu, X, ChevronLeft
+  ClipboardList, CalendarCheck, LogOut, Flame, Menu, X, ChevronLeft,
+  Briefcase, Star
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { Avatar } from '@/components/ui'
@@ -16,6 +17,8 @@ const navItems = [
   { to: '/aluno/certificados', label: 'Certificados', icon: Award },
   { to: '/aluno/pagamentos', label: 'Pagamentos', icon: CreditCard },
   { to: '/aluno/calculadora', label: 'Calculadora', icon: Calculator },
+  { to: '/aluno/vagas', label: 'Vagas de Emprego', icon: Briefcase },
+  { to: '/aluno/talento', label: 'Banco de Talentos', icon: Star },
   { to: '/aluno/perfil', label: 'Perfil', icon: User },
 ]
 
