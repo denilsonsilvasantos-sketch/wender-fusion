@@ -13,7 +13,7 @@ export function Footer() {
               <img
                 src="/logo-hero2.png"
                 alt="Welder & Fusion"
-                style={{ height: 80, width: 'auto', objectFit: 'contain' }}
+                style={{ height: 110, width: 'auto', objectFit: 'contain' }}
               />
             </Link>
             <p className="text-sm mt-4 leading-relaxed" style={{ color: '#6B7280' }}>
