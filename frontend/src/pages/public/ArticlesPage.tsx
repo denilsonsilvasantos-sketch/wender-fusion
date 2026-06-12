@@ -96,7 +96,7 @@ const ARTICLES = [
 ]
 
 const TAG_COLORS: Record<string, string> = {
-  'Técnica': '#00BFFF', 'Mercado': '#FF8C00', 'Segurança': '#EF4444',
+  'Técnica': '#FF8C00', 'Mercado': '#FF8C00', 'Segurança': '#EF4444',
   'Carreira': '#22C55E', 'Certificações': '#A855F7', 'Equipamentos': '#F59E0B',
 }
 

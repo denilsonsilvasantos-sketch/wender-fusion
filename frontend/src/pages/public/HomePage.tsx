@@ -464,7 +464,7 @@ export function HomePage() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { icon: MapPin, title: 'Endereço', lines: ['Rua Cesar Stamm, 55', 'Cordeiros — Itajaí, SC'], color: '#FF8C00' },
-              { icon: Phone, title: 'WhatsApp', lines: ['(47) 98878-6738', '(47) 9 8851-1768', 'Seg a Sex, 8h–18h'], color: '#00BFFF' },
+              { icon: Phone, title: 'WhatsApp', lines: ['(47) 98878-6738', '(47) 9 8851-1768', 'Seg a Sex, 8h–18h'], color: '#25D366' },
               { icon: Mail, title: 'E-mail', lines: ['escola.welderefusion@gmail.com', ''], color: '#FF8C00' },
             ].map(({ icon: Icon, title, lines, color }) => (
               <div key={title} className="p-6 rounded-2xl text-center border"

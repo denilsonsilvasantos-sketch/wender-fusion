@@ -5,21 +5,20 @@ import { Button } from '@/components/ui'
 
 function InstructorAvatar({ name, initial, photo }: { name: string; initial: string; photo: string }) {
   const [src, setSrc] = useState<'jpg' | 'png' | 'failed'>('jpg')
+  const size = 80
   if (src === 'failed') {
     return (
-      <div className="w-20 h-20 rounded-full flex-shrink-0 flex items-center justify-center text-2xl font-black"
-        style={{ background: '#FF8C0020', color: '#FF8C00', border: '2px solid #FF8C0040' }}>
+      <div style={{ width: size, height: size, borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FF8C0020', border: '2px solid #FF8C0050', fontSize: 28, fontWeight: 900, color: '#FF8C00' }}>
         {initial}
       </div>
     )
   }
   return (
-    <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0"
-      style={{ border: '2px solid #FF8C0040' }}>
+    <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '2px solid #FF8C0050' }}>
       <img
         src={`/${photo}.${src}`}
         alt={name}
-        className="w-full h-full object-cover object-top"
+        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
         onError={() => setSrc(s => s === 'jpg' ? 'png' : 'failed')}
       />
     </div>
