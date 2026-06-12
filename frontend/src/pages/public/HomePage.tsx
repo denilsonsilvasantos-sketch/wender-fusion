@@ -161,7 +161,7 @@ export function HomePage() {
         ))}
 
         {/* ── Conteúdo ── */}
-        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 pt-20">
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 pt-10">
           <div className="max-w-2xl">
 
             {/* Logo da escola acima do badge */}
@@ -169,7 +169,7 @@ export function HomePage() {
               <img
                 src="/logo-hero.png"
                 alt="Welder & Fusion"
-                style={{ height: 140, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 2px 20px rgba(255,140,0,0.4))' }}
+                style={{ height: 200, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 2px 24px rgba(255,140,0,0.45))' }}
               />
             </div>
 
