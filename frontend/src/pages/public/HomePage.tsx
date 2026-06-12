@@ -109,7 +109,7 @@ export function HomePage() {
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-7 text-xs font-semibold uppercase tracking-widest"
                 style={{ borderColor: '#FF8C0033', background: '#FF8C0010', color: '#FF8C00' }}>
                 <Flame size={12} />
-                Escola Profissionalizante de Soldadores
+                Qualificação que Conecta o Seu Futuro
               </div>
 
               <h1 className="font-black leading-[1.05] mb-6" style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)' }}>
@@ -477,9 +477,9 @@ export function HomePage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: MapPin, title: 'Endereço', lines: ['Rua das Indústrias, 1450', 'Distrito Industrial — SP', 'CEP 00000-000'], color: '#FF8C00' },
-              { icon: Phone, title: 'Telefone / WhatsApp', lines: ['(11) 99999-9999', '(11) 3333-4444', 'Seg a Sex, 8h–18h'], color: '#00BFFF' },
-              { icon: Mail, title: 'E-mail', lines: ['contato@welderfusion.com.br', 'matriculas@welderfusion.com.br', ''], color: '#FF8C00' },
+              { icon: MapPin, title: 'Endereço', lines: ['Rua Cesar Stamm, 55', 'Cordeiros — Itajaí, SC'], color: '#FF8C00' },
+              { icon: Phone, title: 'WhatsApp', lines: ['(47) 98878-6738', '(47) 9 8851-1768', 'Seg a Sex, 8h–18h'], color: '#00BFFF' },
+              { icon: Mail, title: 'E-mail', lines: ['escola.welderefusion@gmail.com', ''], color: '#FF8C00' },
             ].map(({ icon: Icon, title, lines, color }) => (
               <div key={title} className="p-6 rounded-2xl text-center border"
                 style={{ background: '#1A1A1A', borderColor: '#ffffff0d' }}>
