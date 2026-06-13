@@ -7,6 +7,7 @@ import { PublicLayout } from '@/components/layout/PublicLayout'
 import { StudentLayout } from '@/components/layout/StudentLayout'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 import { IndustrialLayout } from '@/components/layout/IndustrialLayout'
+import { InstructorLayout } from '@/components/layout/InstructorLayout'
 
 // Public pages
 import { HomePage } from '@/pages/public/HomePage'
@@ -21,6 +22,7 @@ import { PublicCalculatorPage } from '@/pages/public/PublicCalculatorPage'
 import { LoginPage } from '@/pages/auth/LoginPage'
 import { RegisterPage } from '@/pages/auth/RegisterPage'
 import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage'
+import { CallbackPage } from '@/pages/auth/CallbackPage'
 
 // Student pages
 import { StudentDashboardPage } from '@/pages/student/DashboardPage'
@@ -35,7 +37,7 @@ import { AttendancePage } from '@/pages/student/AttendancePage'
 import { JobsPage } from '@/pages/student/JobsPage'
 import { TalentPage } from '@/pages/student/TalentPage'
 
-// Admin pages
+// Admin — core pages
 import { AdminDashboardPage } from '@/pages/admin/DashboardPage'
 import { AdminCoursesPage } from '@/pages/admin/CoursesPage'
 import { AdminStudentsPage } from '@/pages/admin/StudentsPage'
@@ -49,6 +51,34 @@ import { AdminCRMPage } from '@/pages/admin/CRMPage'
 import { AdminConsultingPage } from '@/pages/admin/ConsultingPage'
 import { ArticlesAdminPage } from '@/pages/admin/ArticlesAdminPage'
 
+// Instructor pages
+import { InstructorDashboardPage } from '@/pages/instructor/DashboardPage'
+import { PresencaPage } from '@/pages/instructor/PresencaPage'
+import { AvaliacaoPraticaPage } from '@/pages/instructor/AvaliacaoPraticaPage'
+import {
+  TurmasPage, AgendaPage as InstrAgendaPage, AvaliacoesTeóricasPage, MateriaisPage,
+  CertificadosPage as InstrCertificadosPage, TalentosPage, RecomendacoesPage,
+  PareceresTecnicosPage, RelatoriosTurmasPage, RelatoriosAlunosPage,
+  RelatoriosDesempenhoPage, PerfilPage as InstrPerfilPage,
+} from '@/pages/instructor/_stubs'
+
+// Admin — Escola dashboards
+import { EscolaDashboardPage } from '@/pages/admin/escola/DashboardPage'
+
+// Admin — Industrial dashboards
+import { IndustrialDashboardPage as AdminIndustrialDashboardPage } from '@/pages/admin/industrial/DashboardPage'
+
+// Admin — Stubs (all "em desenvolvimento" pages)
+import {
+  EscolaLeadsPage, EscolaFunilPage, EscolaMatriculasPage, EscolaCampanhasPage,
+  EscolaTurmasPage, EscolaInstrutoresPage, EscolaMarketingPage,
+  IndustrialLeadsPage, IndustrialPropostasPage, IndustrialContratosPage,
+  IndustrialClientesPage, IndustrialOrcamentosPage, IndustrialProducaoPage,
+  IndustrialPortalPage, IndustrialFinanceiroPage,
+  FinanceiroGeralPage, AgendaPage, DocumentosPage, RelatoriosPage,
+  UsuariosPage, ConfiguracoesPage,
+} from '@/pages/admin/_stubs'
+
 // Industrial portal pages
 import { IndustrialDashboardPage } from '@/pages/industrial/DashboardPage'
 import { IndustrialServiceOrdersPage } from '@/pages/industrial/ServiceOrdersPage'
@@ -58,10 +88,15 @@ import { IndustrialFinancialPage } from '@/pages/industrial/FinancialPage'
 // Checkout
 import { CheckoutPage } from '@/pages/checkout/CheckoutPage'
 
-function ProtectedRoute({ adminOnly = false, industrialOnly = false }: { adminOnly?: boolean; industrialOnly?: boolean }) {
-  const { user, profile, loading } = useAuth()
+function ProtectedRoute({
+  adminOnly = false,
+  instructorOnly = false,
+  industrialOnly = false,
+}: { adminOnly?: boolean; instructorOnly?: boolean; industrialOnly?: boolean }) {
+  const { user, profile, loading, profileLoading } = useAuth()
 
-  if (loading) return (
+  // Aguarda sessão inicial E carregamento do profile
+  if (loading || (user && profileLoading)) return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--color-bg)]">
       <Spinner size="lg" />
     </div>
@@ -69,7 +104,13 @@ function ProtectedRoute({ adminOnly = false, industrialOnly = false }: { adminOn
 
   if (!user) return <Navigate to="/login" replace />
 
-  if (adminOnly && profile?.role !== 'admin' && profile?.role !== 'instructor') {
+  // Admin: somente role 'admin'
+  if (adminOnly && profile?.role !== 'admin') {
+    return <Navigate to="/aluno" replace />
+  }
+
+  // Instrutor: role 'instructor' OU 'admin' (admin pode supervisionar)
+  if (instructorOnly && profile?.role !== 'instructor' && profile?.role !== 'admin') {
     return <Navigate to="/aluno" replace />
   }
 
@@ -102,7 +143,7 @@ export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
   { path: '/cadastro', element: <RegisterPage /> },
   { path: '/recuperar-senha', element: <ForgotPasswordPage /> },
-  { path: '/auth/callback', element: <Navigate to="/aluno" replace /> },
+  { path: '/auth/callback', element: <CallbackPage /> },
 
   // Checkout
   { path: '/checkout/:courseId', element: <CheckoutPage /> },
@@ -137,7 +178,53 @@ export const router = createBrowserRouter([
       {
         element: <AdminLayout />,
         children: [
+          // ── ERP Root ──────────────────────────────────────────────────────
           { path: '/admin', element: <AdminDashboardPage /> },
+
+          // ── 🏫 ESCOLA ────────────────────────────────────────────────────
+          { path: '/admin/escola', element: <EscolaDashboardPage /> },
+          // Comercial
+          { path: '/admin/escola/leads', element: <EscolaLeadsPage /> },
+          { path: '/admin/escola/funil', element: <EscolaFunilPage /> },
+          { path: '/admin/escola/matriculas', element: <EscolaMatriculasPage /> },
+          { path: '/admin/escola/campanhas', element: <EscolaCampanhasPage /> },
+          // Módulos (apontam para páginas existentes)
+          { path: '/admin/escola/alunos', element: <AdminStudentsPage /> },
+          { path: '/admin/escola/cursos', element: <AdminCoursesPage /> },
+          { path: '/admin/escola/turmas', element: <EscolaTurmasPage /> },
+          { path: '/admin/escola/instrutores', element: <EscolaInstrutoresPage /> },
+          { path: '/admin/escola/certificados', element: <AdminCertificatesPage /> },
+          { path: '/admin/escola/empregabilidade', element: <AdminEmpregabilidadePage /> },
+          { path: '/admin/escola/financeiro', element: <AdminFinancialPage /> },
+          { path: '/admin/escola/marketing', element: <EscolaMarketingPage /> },
+
+          // ── 🏭 SERVIÇOS INDUSTRIAIS ───────────────────────────────────────
+          { path: '/admin/industrial', element: <AdminIndustrialDashboardPage /> },
+          // Comercial
+          { path: '/admin/industrial/leads', element: <IndustrialLeadsPage /> },
+          { path: '/admin/industrial/propostas', element: <IndustrialPropostasPage /> },
+          { path: '/admin/industrial/contratos', element: <IndustrialContratosPage /> },
+          { path: '/admin/industrial/crm', element: <AdminCRMPage /> },
+          // Módulos
+          { path: '/admin/industrial/clientes', element: <IndustrialClientesPage /> },
+          { path: '/admin/industrial/orcamentos', element: <IndustrialOrcamentosPage /> },
+          { path: '/admin/industrial/ordens', element: <AdminServicesPage /> },
+          { path: '/admin/industrial/producao', element: <IndustrialProducaoPage /> },
+          { path: '/admin/industrial/consultoria', element: <AdminConsultingPage /> },
+          { path: '/admin/industrial/portal', element: <IndustrialPortalPage /> },
+          { path: '/admin/industrial/financeiro', element: <IndustrialFinanceiroPage /> },
+
+          // ── 🌐 COMPARTILHADO ─────────────────────────────────────────────
+          { path: '/admin/crm', element: <AdminCRMPage /> },
+          { path: '/admin/financeiro-geral', element: <FinanceiroGeralPage /> },
+          { path: '/admin/agenda', element: <AgendaPage /> },
+          { path: '/admin/documentos', element: <DocumentosPage /> },
+          { path: '/admin/relatorios', element: <RelatoriosPage /> },
+          { path: '/admin/artigos', element: <ArticlesAdminPage /> },
+          { path: '/admin/usuarios', element: <UsuariosPage /> },
+          { path: '/admin/configuracoes', element: <ConfiguracoesPage /> },
+
+          // ── Rotas legadas mantidas ────────────────────────────────────────
           { path: '/admin/cursos', element: <AdminCoursesPage /> },
           { path: '/admin/alunos', element: <AdminStudentsPage /> },
           { path: '/admin/financeiro', element: <AdminFinancialPage /> },
@@ -146,15 +233,44 @@ export const router = createBrowserRouter([
           { path: '/admin/certificados', element: <AdminCertificatesPage /> },
           { path: '/admin/servicos', element: <AdminServicesPage /> },
           { path: '/admin/empregabilidade', element: <AdminEmpregabilidadePage /> },
-          { path: '/admin/crm', element: <AdminCRMPage /> },
           { path: '/admin/consultoria', element: <AdminConsultingPage /> },
-          { path: '/admin/artigos', element: <ArticlesAdminPage /> },
         ],
       },
     ],
   },
 
-  // Industrial portal routes
+  // Instructor routes
+  {
+    element: <ProtectedRoute instructorOnly />,
+    children: [
+      {
+        element: <InstructorLayout />,
+        children: [
+          { path: '/instrutor', element: <InstructorDashboardPage /> },
+          // Ensino
+          { path: '/instrutor/turmas', element: <TurmasPage /> },
+          { path: '/instrutor/agenda', element: <InstrAgendaPage /> },
+          { path: '/instrutor/presenca', element: <PresencaPage /> },
+          { path: '/instrutor/avaliacoes/teoricas', element: <AvaliacoesTeóricasPage /> },
+          { path: '/instrutor/avaliacoes/pratica', element: <AvaliacaoPraticaPage /> },
+          { path: '/instrutor/materiais', element: <MateriaisPage /> },
+          { path: '/instrutor/certificados', element: <InstrCertificadosPage /> },
+          // Empregabilidade
+          { path: '/instrutor/empregabilidade/talentos', element: <TalentosPage /> },
+          { path: '/instrutor/empregabilidade/recomendacoes', element: <RecomendacoesPage /> },
+          { path: '/instrutor/empregabilidade/pareceres', element: <PareceresTecnicosPage /> },
+          // Relatórios
+          { path: '/instrutor/relatorios/turmas', element: <RelatoriosTurmasPage /> },
+          { path: '/instrutor/relatorios/alunos', element: <RelatoriosAlunosPage /> },
+          { path: '/instrutor/relatorios/desempenho', element: <RelatoriosDesempenhoPage /> },
+          // Perfil
+          { path: '/instrutor/perfil', element: <InstrPerfilPage /> },
+        ],
+      },
+    ],
+  },
+
+  // Industrial portal routes (external client portal)
   {
     element: <ProtectedRoute industrialOnly />,
     children: [

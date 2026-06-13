@@ -56,7 +56,7 @@ export function PublicHeader() {
             {/* ── Auth (desktop) — lado direito ── */}
             <div className="hidden md:flex items-center gap-3 ml-auto">
               {user ? (
-                <Link to={profile?.role === 'admin' || profile?.role === 'instructor' ? '/admin' : '/aluno'}>
+                <Link to={profile?.role === 'admin' ? '/admin' : profile?.role === 'instructor' ? '/instrutor' : profile?.role === 'industrial_client' ? '/industrial' : '/aluno'}>
                   <Button size="sm">Meu Painel</Button>
                 </Link>
               ) : (
@@ -133,7 +133,7 @@ export function PublicHeader() {
             {/* Auth buttons */}
             <div className="p-4 border-t space-y-2" style={{ borderColor: '#ffffff0d' }}>
               {user ? (
-                <Link to={profile?.role === 'admin' || profile?.role === 'instructor' ? '/admin' : '/aluno'}
+                <Link to={profile?.role === 'admin' ? '/admin' : profile?.role === 'instructor' ? '/instrutor' : profile?.role === 'industrial_client' ? '/industrial' : '/aluno'}
                   className="block">
                   <Button className="w-full">Meu Painel</Button>
                 </Link>

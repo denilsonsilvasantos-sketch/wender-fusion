@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,22 +15,36 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
+function roleToPath(role?: string): string {
+  if (role === 'admin') return '/admin'
+  if (role === 'instructor') return '/instrutor'
+  if (role === 'industrial_client') return '/industrial'
+  return '/aluno'
+}
+
 export function LoginPage() {
-  const { signIn, signInWithGoogle } = useAuth()
+  const { signIn, signInWithGoogle, profile, profileLoading } = useAuth()
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) })
+
+  // Redireciona após profile carregado
+  useEffect(() => {
+    if (submitted && !profileLoading) {
+      navigate(roleToPath(profile?.role), { replace: true })
+    }
+  }, [submitted, profileLoading, profile, navigate])
 
   async function onSubmit(data: FormData) {
     setLoading(true)
     try {
       await signIn(data.email, data.password)
-      navigate('/aluno')
+      setSubmitted(true)
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : 'Erro ao entrar')
-    } finally {
       setLoading(false)
     }
   }

@@ -8,6 +8,7 @@ interface AuthContextType {
   session: Session | null
   profile: UserProfile | null
   loading: boolean
+  profileLoading: boolean
   isAdmin: boolean
   signIn: (email: string, password: string) => Promise<void>
   signUp: (email: string, password: string, name: string) => Promise<void>
@@ -23,14 +24,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [profileLoading, setProfileLoading] = useState(false)
 
   async function fetchProfile(userId: string) {
+    setProfileLoading(true)
     const { data } = await supabase
       .from('user_profiles')
       .select('*')
       .eq('id', userId)
       .single()
-    if (data) setProfile(data as UserProfile)
+    setProfile(data ? (data as UserProfile) : null)
+    setProfileLoading(false)
   }
 
   useEffect(() => {
@@ -45,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setSession(session)
       setUser(session?.user ?? null)
       if (session?.user) fetchProfile(session.user.id)
-      else setProfile(null)
+      else { setProfile(null); setProfileLoading(false) }
     })
 
     return () => subscription.unsubscribe()
@@ -89,11 +93,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setProfile(data as UserProfile)
   }
 
-  const isAdmin = profile?.role === 'admin' || profile?.role === 'instructor'
+  const isAdmin = profile?.role === 'admin'
+  const isInstructor = profile?.role === 'instructor'
 
   return (
     <AuthContext.Provider value={{
-      user, session, profile, loading, isAdmin,
+      user, session, profile, loading, profileLoading, isAdmin,
       signIn, signUp, signInWithGoogle, signOut, updateProfile,
     }}>
       {children}
