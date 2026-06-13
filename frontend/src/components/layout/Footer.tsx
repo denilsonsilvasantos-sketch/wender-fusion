@@ -164,9 +164,6 @@ export function Footer() {
           <p className="text-xs text-center" style={{ color: '#ffffff' }}>
             &copy; {new Date().getFullYear()} Welder &amp; Fusion — Escola Profissionalizante de Soldadores. Todos os direitos reservados.
           </p>
-          <p className="text-xs" style={{ color: '#ffffff' }}>
-            Itajaí, SC — Brasil
-          </p>
         </div>
       </div>
     </footer>
