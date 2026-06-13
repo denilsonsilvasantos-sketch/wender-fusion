@@ -24,7 +24,7 @@ const PROCESSES = [
       'Controle preciso do arco elétrico e poça de fusão',
       'Soldagem de aço inoxidável e ligas especiais',
       'Soldagem de alumínio e titânio',
-      'Aplicação de normas AWS D1.1 e ASME IX',
+      'Qualificação conforme normas ABNT NBR de soldagem',
       'Preparação de juntas e chanfros',
       'Leitura e interpretação de WPS',
     ],
@@ -158,7 +158,7 @@ export function CoursesPage() {
           <h1 className="text-5xl md:text-6xl font-black text-white mb-5">
             Cursos de <span style={{ color: '#FF8C00' }}>Soldagem</span>
           </h1>
-          <p className="text-xl max-w-2xl mx-auto" style={{ color: '#9CA3AF' }}>
+          <p className="text-xl max-w-2xl mx-auto" style={{ color: '#ffffff' }}>
             Do eletrodo revestido ao TIG de precisão — domine os processos mais exigidos
             pela indústria e transforme sua habilidade em oportunidade.
           </p>
@@ -213,12 +213,12 @@ export function CoursesPage() {
                   <h3 className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: proc.color }}>
                     Sobre o Processo
                   </h3>
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#9CA3AF' }}>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#ffffff' }}>
                     {proc.description}
                   </p>
                   <div className="p-4 rounded-xl text-sm" style={{ background: proc.color + '08', border: `1px solid ${proc.color}20` }}>
                     <p className="font-semibold text-white mb-1">Para quem é?</p>
-                    <p style={{ color: '#9CA3AF' }}>{proc.audience}</p>
+                    <p style={{ color: '#ffffff' }}>{proc.audience}</p>
                   </div>
                 </div>
 
@@ -229,7 +229,7 @@ export function CoursesPage() {
                   </h3>
                   <ul className="space-y-2">
                     {proc.skills.map(skill => (
-                      <li key={skill} className="flex items-start gap-2 text-sm" style={{ color: '#9CA3AF' }}>
+                      <li key={skill} className="flex items-start gap-2 text-sm" style={{ color: '#ffffff' }}>
                         <CheckCircle size={14} className="flex-shrink-0 mt-0.5" style={{ color: proc.color }} />
                         {skill}
                       </li>
@@ -285,10 +285,10 @@ export function CoursesPage() {
               <thead>
                 <tr style={{ background: '#1A1A1A', borderBottom: '1px solid #ffffff0d' }}>
                   <th className="text-left px-5 py-3 font-semibold text-white">Processo</th>
-                  <th className="text-center px-4 py-3 font-semibold" style={{ color: '#9CA3AF' }}>Dificuldade</th>
-                  <th className="text-center px-4 py-3 font-semibold" style={{ color: '#9CA3AF' }}>Velocidade</th>
-                  <th className="text-center px-4 py-3 font-semibold" style={{ color: '#9CA3AF' }}>Qualidade</th>
-                  <th className="text-center px-4 py-3 font-semibold" style={{ color: '#9CA3AF' }}>Salário médio</th>
+                  <th className="text-center px-4 py-3 font-semibold" style={{ color: '#ffffff' }}>Dificuldade</th>
+                  <th className="text-center px-4 py-3 font-semibold" style={{ color: '#ffffff' }}>Velocidade</th>
+                  <th className="text-center px-4 py-3 font-semibold" style={{ color: '#ffffff' }}>Qualidade</th>
+                  <th className="text-center px-4 py-3 font-semibold" style={{ color: '#ffffff' }}>Salário médio</th>
                 </tr>
               </thead>
               <tbody>
@@ -422,7 +422,7 @@ export function CoursesPage() {
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-4xl font-black text-black mb-4">Poucas vagas! Garanta a sua.</h2>
           <p className="text-black/70 text-lg mb-8">
-            Turmas com máximo 10 alunos. Entre em contato agora pelo WhatsApp e garanta sua vaga na próxima turma.
+            Sem limitação de vagas — queremos atender cada vez mais alunos. Entre em contato pelo WhatsApp e garanta sua vaga na próxima turma.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <a href="https://wa.me/5547988786738" target="_blank" rel="noreferrer"

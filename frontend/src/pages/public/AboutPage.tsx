@@ -14,11 +14,11 @@ function InstructorAvatar({ name, initial, photo }: { name: string; initial: str
     )
   }
   return (
-    <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '2px solid #FF8C0050' }}>
+    <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '2px solid #FF8C0050', position: 'relative' }}>
       <img
         src={`/${photo}.${src}`}
         alt={name}
-        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
         onError={() => setSrc(s => s === 'jpg' ? 'png' : 'failed')}
       />
     </div>
@@ -31,7 +31,7 @@ const VALUES = [
   { icon: '🛡️', title: 'Segurança', desc: 'Treinamento rigoroso em NRs e uso correto de EPIs em todas as aulas.' },
   { icon: '⚡', title: 'Inovação', desc: 'Currículo atualizado com as tecnologias e normas mais recentes do mercado.' },
   { icon: '💼', title: 'Empregabilidade', desc: 'Nossa missão não termina no certificado — conectamos você ao mercado.' },
-  { icon: '🏆', title: 'Qualidade', desc: 'Instrutores com certificação AWS e experiência em grandes indústrias.' },
+  { icon: '🏆', title: 'Qualidade', desc: 'Instrutores com certificação FBTS e experiência nas maiores indústrias do país.' },
 ]
 
 const TEAM = [
@@ -82,10 +82,10 @@ export function AboutPage() {
           <h1 className="text-5xl md:text-6xl font-black text-white mb-6">
             Quem Somos
           </h1>
-          <p className="text-xl leading-relaxed max-w-2xl mx-auto" style={{ color: '#9CA3AF' }}>
+          <p className="text-xl leading-relaxed max-w-2xl mx-auto text-white">
             A Welder &amp; Fusion é uma escola profissionalizante especializada na formação de
-            soldadores, localizada em Itajaí (SC). Há mais de 12 anos transformando talentos
-            em profissionais altamente qualificados e empregáveis.
+            soldadores, localizada em Itajaí (SC). Fundada em 2024, já formou mais de 60 profissionais
+            altamente qualificados e empregáveis.
           </p>
         </div>
       </section>
@@ -97,22 +97,22 @@ export function AboutPage() {
             <div>
               <p className="text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: '#FF8C00' }}>Nossa História</p>
               <h2 className="text-4xl font-black text-white mb-6">Nascemos para conectar habilidade a oportunidade</h2>
-              <p className="text-base leading-relaxed mb-4" style={{ color: '#9CA3AF' }}>
+              <p className="text-base leading-relaxed mb-4 text-white">
                 A Welder &amp; Fusion surgiu de uma necessidade real: o mercado industrial do Sul do Brasil demandava
                 soldadores qualificados, mas faltavam escolas que unissem teoria sólida com prática intensa e
                 acompanhamento personalizado.
               </p>
-              <p className="text-base leading-relaxed mb-4" style={{ color: '#9CA3AF' }}>
+              <p className="text-base leading-relaxed mb-4 text-white">
                 Fundada em Itajaí (SC), no coração do polo metal-mecânico catarinense, a escola foi estruturada com
-                laboratórios de última geração e um corpo docente formado por soldadores com certificação AWS e
-                décadas de experiência nas maiores indústrias do país.
+                laboratórios de última geração e um corpo docente formado por inspetores de soldagem com extensa
+                experiência nas maiores indústrias do país.
               </p>
-              <p className="text-base leading-relaxed mb-8" style={{ color: '#9CA3AF' }}>
-                Hoje, com mais de 500 alunos formados e 98% de taxa de empregabilidade, somos referência regional
-                em formação de soldadores TIG, MIG/MAG e Eletrodo Revestido.
+              <p className="text-base leading-relaxed mb-8 text-white">
+                Completando 1 ano de história, já formamos mais de 60 profissionais com 98% de taxa de empregabilidade,
+                consolidando-nos como referência em formação de soldadores TIG, MIG/MAG e Eletrodo Revestido em Itajaí.
               </p>
               <div className="flex flex-wrap gap-3">
-                {['12+ Anos de experiência', '500+ Alunos formados', '98% Empregabilidade', '15+ Empresas parceiras'].map(t => (
+                {['1 Ano de escola', '60+ Profissionais formados', '98% Empregabilidade'].map(t => (
                   <span key={t} className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full border"
                     style={{ borderColor: '#FF8C0030', color: '#FF8C00', background: '#FF8C0010' }}>
                     <CheckCircle size={12} /> {t}
@@ -123,15 +123,15 @@ export function AboutPage() {
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { n: '12+', label: 'Anos formando profissionais', color: '#FF8C00' },
-                { n: '500+', label: 'Alunos certificados', color: '#ffffff' },
+                { n: '1 Ano', label: 'De escola', color: '#FF8C00' },
+                { n: '60+', label: 'Profissionais formados', color: '#ffffff' },
                 { n: '98%', label: 'Taxa de empregabilidade', color: '#FF8C00' },
-                { n: '15+', label: 'Empresas parceiras', color: '#ffffff' },
+                { n: '3', label: 'Processos de soldagem', color: '#ffffff' },
               ].map(({ n, label, color }) => (
                 <div key={label} className="p-6 rounded-2xl text-center"
                   style={{ background: '#1A1A1A', border: `1px solid ${color}20` }}>
                   <p className="text-4xl font-black mb-2" style={{ color }}>{n}</p>
-                  <p className="text-sm" style={{ color: '#6B7280' }}>{label}</p>
+                  <p className="text-sm text-white">{label}</p>
                 </div>
               ))}
             </div>
@@ -168,7 +168,7 @@ export function AboutPage() {
                   <Icon size={22} style={{ color }} />
                 </div>
                 <h3 className="text-xl font-black text-white mb-3">{title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#9CA3AF' }}>{text}</p>
+                <p className="text-sm leading-relaxed" style={{ color: '#ffffff' }}>{text}</p>
               </div>
             ))}
           </div>
@@ -186,7 +186,7 @@ export function AboutPage() {
                 onMouseLeave={e => (e.currentTarget.style.borderColor = '#ffffff0d')}>
                 <span className="text-3xl mb-3 block">{icon}</span>
                 <h4 className="font-bold text-white mb-1">{title}</h4>
-                <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>{desc}</p>
+                <p className="text-sm leading-relaxed" style={{ color: '#e5e7eb' }}>{desc}</p>
               </div>
             ))}
           </div>
@@ -226,7 +226,7 @@ export function AboutPage() {
                 {/* Bio completa */}
                 <div className="space-y-3">
                   {paragraphs.map((p, i) => (
-                    <p key={i} className="text-sm leading-relaxed" style={{ color: '#9CA3AF' }}>{p}</p>
+                    <p key={i} className="text-sm leading-relaxed" style={{ color: '#ffffff' }}>{p}</p>
                   ))}
                 </div>
               </div>
@@ -239,7 +239,7 @@ export function AboutPage() {
       <section className="py-20" style={{ background: '#1A1A1A' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-black text-white mb-4">Onde estamos</h2>
-          <p className="text-lg mb-10" style={{ color: '#9CA3AF' }}>
+          <p className="text-lg mb-10" style={{ color: '#ffffff' }}>
             Venha conhecer nossa estrutura e conversar com nossa equipe.
           </p>
           <div className="grid sm:grid-cols-3 gap-5 mb-10">
@@ -252,7 +252,7 @@ export function AboutPage() {
                 style={{ background: '#242424', borderColor: '#ffffff0d' }}>
                 <Icon size={20} className="mx-auto mb-3" style={{ color }} />
                 <p className="font-semibold text-white mb-2">{title}</p>
-                {lines.map(l => <p key={l} className="text-sm" style={{ color: '#9CA3AF' }}>{l}</p>)}
+                {lines.map(l => <p key={l} className="text-sm" style={{ color: '#ffffff' }}>{l}</p>)}
               </div>
             ))}
           </div>

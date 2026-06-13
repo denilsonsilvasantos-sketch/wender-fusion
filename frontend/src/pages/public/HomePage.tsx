@@ -9,29 +9,29 @@ import { getThumbnailUrl } from '@/lib/cloudinary'
 
 const SPARKS = [
   { top: '15%', left: '55%', color: '#FF8C00', size: 4, delay: '0s', dur: '3s' },
-  { top: '25%', left: '72%', color: '#00BFFF', size: 3, delay: '0.5s', dur: '2.5s' },
+  { top: '25%', left: '72%', color: '#FFA500', size: 3, delay: '0.5s', dur: '2.5s' },
   { top: '40%', left: '62%', color: '#FF8C00', size: 5, delay: '1s', dur: '3.5s' },
   { top: '55%', left: '80%', color: '#FFA500', size: 3, delay: '0.2s', dur: '2.8s' },
-  { top: '35%', left: '88%', color: '#00BFFF', size: 4, delay: '1.5s', dur: '3.2s' },
+  { top: '35%', left: '88%', color: '#ffffff', size: 4, delay: '1.5s', dur: '3.2s' },
   { top: '65%', left: '68%', color: '#FF8C00', size: 3, delay: '0.8s', dur: '2.6s' },
   { top: '20%', left: '82%', color: '#FFA500', size: 5, delay: '2s', dur: '3s' },
-  { top: '75%', left: '75%', color: '#00BFFF', size: 3, delay: '1.2s', dur: '2.4s' },
+  { top: '75%', left: '75%', color: '#ffffff', size: 3, delay: '1.2s', dur: '2.4s' },
 ]
 
 const STATS = [
-  { value: '500+', label: 'Alunos Formados' },
-  { value: '15+', label: 'Cursos Ativos' },
-  { value: '98%', label: 'Empregados em 3 meses' },
-  { value: '12+', label: 'Anos de Experiência' },
+  { value: '60+', label: 'Profissionais Formados' },
+  { value: '1 Ano', label: 'De Escola' },
+  { value: '98%', label: 'Empregados em 90 Dias' },
+  { value: '3', label: 'Processos de Soldagem' },
 ]
 
 const FEATURES = [
   { icon: Flame, title: 'Prática Intensiva', desc: 'Laboratórios equipados com máquinas profissionais de soldagem TIG, MIG/MAG e Eletrodo.' },
-  { icon: Users, title: 'Turmas Reduzidas', desc: 'Máximo 10 alunos por turma para acompanhamento individualizado e foco no aprendizado.' },
-  { icon: Award, title: 'Certificado Reconhecido', desc: 'Certificação profissional com QR code de validação, aceita pelo mercado nacional.' },
-  { icon: Zap, title: 'Conteúdo Atualizado', desc: 'Módulos alinhados com as normas ABNT, AWS e técnicas mais exigidas pelo mercado.' },
+  { icon: Award, title: 'Certificado Nacional', desc: 'Certificado com QR code de validação, emitido pela escola com validade em todo o Brasil.' },
+  { icon: Zap, title: 'Conteúdo Atualizado', desc: 'Módulos alinhados com normas ABNT NBR e técnicas mais exigidas pelo mercado nacional.' },
   { icon: Shield, title: 'Segurança em 1º Lugar', desc: 'Treinamento em NR-9, NR-10 e uso correto de EPIs específicos para soldagem.' },
   { icon: Clock, title: 'Flexibilidade Total', desc: 'Turmas manhã, tarde e noite. Escolha o horário que encaixa na sua rotina.' },
+  { icon: Briefcase, title: 'Foco em Empregabilidade', desc: 'Nosso objetivo vai além do certificado: conectamos você ao mercado de trabalho real.' },
 ]
 
 const STEPS = [
@@ -212,7 +212,7 @@ export function HomePage() {
               {STATS.map(({ value, label }) => (
                 <div key={label}>
                   <p className="text-3xl font-black drop-shadow" style={{ color: '#FF8C00' }}>{value}</p>
-                  <p className="text-xs mt-0.5" style={{ color: '#9CA3AF' }}>{label}</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#ffffff' }}>{label}</p>
                 </div>
               ))}
             </div>
@@ -273,7 +273,7 @@ export function HomePage() {
 
                   <div className="p-5">
                     <h3 className="font-bold text-white text-lg mb-2 leading-snug group-hover:text-[#FF8C00] transition-colors">{course.title}</h3>
-                    <div className="flex items-center gap-4 text-sm mb-4" style={{ color: '#6B7280' }}>
+                    <div className="flex items-center gap-4 text-sm mb-4" style={{ color: '#e5e7eb' }}>
                       {course.duration_hours && (
                         <span className="flex items-center gap-1"><Clock size={13}/> {course.duration_hours}h</span>
                       )}
@@ -321,7 +321,7 @@ export function HomePage() {
                   <Icon size={22} style={{ color: '#FF8C00' }} />
                 </div>
                 <h3 className="font-bold text-white text-lg mb-2">{title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>{desc}</p>
+                <p className="text-sm leading-relaxed" style={{ color: '#e5e7eb' }}>{desc}</p>
               </div>
             ))}
           </div>
@@ -339,7 +339,7 @@ export function HomePage() {
           <div className="grid md:grid-cols-4 gap-8 relative">
             {/* connecting line */}
             <div className="hidden md:block absolute top-9 left-[12.5%] right-[12.5%] h-px"
-              style={{ background: 'linear-gradient(90deg, #FF8C00, #00BFFF)' }} />
+              style={{ background: 'linear-gradient(90deg, #FF8C00, #FFA500)' }} />
 
             {STEPS.map(({ n, icon: Icon, title, desc }) => (
               <div key={n} className="relative text-center">
@@ -349,7 +349,7 @@ export function HomePage() {
                 </div>
                 <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#FF8C00' }}>Passo {n}</p>
                 <h3 className="font-bold text-white text-lg mb-2">{title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#6B7280' }}>{desc}</p>
+                <p className="text-sm leading-relaxed" style={{ color: '#e5e7eb' }}>{desc}</p>
               </div>
             ))}
           </div>
@@ -373,7 +373,7 @@ export function HomePage() {
                     <Star key={i} size={14} style={{ fill: '#FF8C00', color: '#FF8C00' }} />
                   ))}
                 </div>
-                <p className="text-base italic leading-relaxed mb-6" style={{ color: '#9CA3AF' }}>"{text}"</p>
+                <p className="text-base italic leading-relaxed mb-6" style={{ color: '#ffffff' }}>"{text}"</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm"
                     style={{ background: '#FF8C0020', color: '#FF8C00' }}>
@@ -381,7 +381,7 @@ export function HomePage() {
                   </div>
                   <div>
                     <p className="font-semibold text-white text-sm">{name}</p>
-                    <p className="text-xs" style={{ color: '#6B7280' }}>{role}</p>
+                    <p className="text-xs" style={{ color: '#e5e7eb' }}>{role}</p>
                   </div>
                 </div>
                 {/* quote mark */}
@@ -401,12 +401,11 @@ export function HomePage() {
             <h2 className="text-4xl font-black text-white">Processos que você vai dominar</h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
               { code: 'TIG', full: 'GTAW', color: '#FF8C00', desc: 'Soldagem de precisão com eletrodo de tungstênio. Ideal para aço inox, alumínio e titânio.' },
               { code: 'MIG/MAG', full: 'GMAW', color: '#FF8C00', desc: 'Alta produtividade com arame contínuo. O processo mais usado na indústria metal-mecânica.' },
               { code: 'Eletrodo', full: 'SMAW', color: '#FF8C00', desc: 'Processo versátil com eletrodo revestido. Fundamental para manutenção e estruturas.' },
-              { code: 'Oxicorte', full: 'OFC', color: '#FF8C00', desc: 'Corte e conformação de peças metálicas com chama oxi-acetilênica. Base para caldeiraria.' },
             ].map(({ code, full, color, desc }) => (
               <div key={code} className="group p-6 rounded-2xl border text-center transition-all hover:-translate-y-1 cursor-default"
                 style={{ background: '#242424', borderColor: '#ffffff0d' }}
@@ -418,7 +417,7 @@ export function HomePage() {
                   <span className="text-[9px] font-mono mt-0.5" style={{ color: color + 'aa' }}>{full}</span>
                 </div>
                 <h3 className="font-bold text-white mb-2">{code}</h3>
-                <p className="text-xs leading-relaxed" style={{ color: '#6B7280' }}>{desc}</p>
+                <p className="text-xs leading-relaxed" style={{ color: '#e5e7eb' }}>{desc}</p>
               </div>
             ))}
           </div>
@@ -436,17 +435,17 @@ export function HomePage() {
           <div className="space-y-3">
             {[
               { q: 'Preciso de experiência prévia para me matricular?', a: 'Não! Temos cursos para todos os níveis, do iniciante absoluto ao técnico avançado. Nossa metodologia é pensada para que qualquer pessoa aprenda soldagem na prática.' },
-              { q: 'O certificado é reconhecido pelo mercado?', a: 'Sim. Nossos certificados possuem QR code de validação online e são aceitos pelas principais indústrias do Brasil. Alguns cursos também preparam para as certificações AWS internacionais.' },
+              { q: 'O certificado é reconhecido pelo mercado?', a: 'Sim. Nossos certificados possuem QR code de validação online e são aceitos pelas principais indústrias do Brasil, com validade nacional.' },
               { q: 'Qual a duração dos cursos?', a: 'Varia por modalidade: cursos básicos têm de 40h a 80h; especializações chegam a 200h. Todos com opções de turno manhã, tarde ou noite para encaixar na sua rotina.' },
               { q: 'Como funciona o portal do aluno?', a: 'Após a matrícula você acessa o portal online com material de apoio, agenda de aulas, frequência, notas, pagamentos e seu certificado digital — tudo num só lugar.' },
-              { q: 'Vocês têm parceria com empresas para emprego?', a: 'Sim! Mantemos um banco de talentos e parcerias com mais de 15 empresas do setor. Alunos certificados têm acesso exclusivo às vagas e podem cadastrar o currículo no portal.' },
+              { q: 'Como funciona o banco de talentos?', a: 'Alunos certificados têm acesso ao banco de talentos do portal, onde podem cadastrar o currículo e ser encontrados por empresas que buscam soldadores qualificados na região.' },
             ].map(({ q, a }, i) => (
               <details key={i} className="group rounded-xl border overflow-hidden" style={{ borderColor: '#ffffff0d', background: '#242424' }}>
                 <summary className="flex items-center justify-between px-5 py-4 cursor-pointer list-none font-semibold text-white text-sm select-none">
                   {q}
                   <span className="text-xl leading-none ml-4 flex-shrink-0 transition-transform group-open:rotate-45" style={{ color: '#FF8C00' }}>+</span>
                 </summary>
-                <div className="px-5 pb-4 text-sm leading-relaxed" style={{ color: '#9CA3AF' }}>{a}</div>
+                <div className="px-5 pb-4 text-sm leading-relaxed" style={{ color: '#ffffff' }}>{a}</div>
               </details>
             ))}
           </div>
@@ -475,7 +474,7 @@ export function HomePage() {
                 </div>
                 <h3 className="font-bold text-white mb-3">{title}</h3>
                 {lines.filter(Boolean).map(l => (
-                  <p key={l} className="text-sm" style={{ color: '#9CA3AF' }}>{l}</p>
+                  <p key={l} className="text-sm" style={{ color: '#ffffff' }}>{l}</p>
                 ))}
               </div>
             ))}
@@ -495,8 +494,8 @@ export function HomePage() {
           <h2 className="text-4xl md:text-5xl font-black text-white mb-5">
             Pronto para começar?
           </h2>
-          <p className="text-lg mb-8" style={{ color: '#9CA3AF' }}>
-            Vagas limitadas por turma. Garanta a sua agora e transforme sua carreira na soldagem.
+          <p className="text-lg mb-8" style={{ color: '#ffffff' }}>
+            Garanta sua vaga agora e transforme sua carreira na soldagem profissional.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/cursos">
@@ -506,7 +505,7 @@ export function HomePage() {
               <Button size="lg" variant="outline">Criar Conta Grátis</Button>
             </Link>
           </div>
-          <div className="mt-10 flex items-center justify-center gap-6 text-sm" style={{ color: '#6B7280' }}>
+          <div className="mt-10 flex items-center justify-center gap-6 text-sm" style={{ color: '#e5e7eb' }}>
             {['Sem taxa de matrícula', 'Certificado incluso', 'Suporte pós-curso'].map(t => (
               <span key={t} className="flex items-center gap-1.5">
                 <CheckCircle size={14} style={{ color: '#FF8C00' }} /> {t}

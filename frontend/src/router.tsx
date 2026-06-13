@@ -15,6 +15,7 @@ import { CourseDetailPage } from '@/pages/public/CourseDetailPage'
 import { CertificateValidationPage } from '@/pages/public/CertificateValidationPage'
 import { ArticlesPage } from '@/pages/public/ArticlesPage'
 import { AboutPage } from '@/pages/public/AboutPage'
+import { PublicCalculatorPage } from '@/pages/public/PublicCalculatorPage'
 
 // Auth pages
 import { LoginPage } from '@/pages/auth/LoginPage'
@@ -46,6 +47,7 @@ import { AdminCertificatesPage } from '@/pages/admin/CertificatesPage'
 import { AdminEmpregabilidadePage } from '@/pages/admin/EmpregabilidadePage'
 import { AdminCRMPage } from '@/pages/admin/CRMPage'
 import { AdminConsultingPage } from '@/pages/admin/ConsultingPage'
+import { ArticlesAdminPage } from '@/pages/admin/ArticlesAdminPage'
 
 // Industrial portal pages
 import { IndustrialDashboardPage } from '@/pages/industrial/DashboardPage'
@@ -86,7 +88,7 @@ export const router = createBrowserRouter([
       { path: '/', element: <HomePage /> },
       { path: '/cursos', element: <CoursesPage /> },
       { path: '/cursos/:id', element: <CourseDetailPage /> },
-      { path: '/calculadora', element: <CalculatorPage /> },
+      { path: '/calculadora', element: <PublicCalculatorPage /> },
       { path: '/artigos', element: <ArticlesPage /> },
       { path: '/sobre', element: <AboutPage /> },
     ],
@@ -146,6 +148,7 @@ export const router = createBrowserRouter([
           { path: '/admin/empregabilidade', element: <AdminEmpregabilidadePage /> },
           { path: '/admin/crm', element: <AdminCRMPage /> },
           { path: '/admin/consultoria', element: <AdminConsultingPage /> },
+          { path: '/admin/artigos', element: <ArticlesAdminPage /> },
         ],
       },
     ],

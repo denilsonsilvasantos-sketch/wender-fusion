@@ -50,7 +50,7 @@ export function Footer() {
             </Link>
             <p className="text-sm mt-4 leading-relaxed" style={{ color: '#6B7280' }}>
               Qualificação que Conecta o Seu Futuro.<br />
-              Formando soldadores de excelência há mais de 12 anos.
+              Escola fundada em 2024, em Itajaí (SC).
             </p>
             <div className="flex gap-3 mt-5">
               <a href="https://instagram.com/welder.fusion" target="_blank" rel="noreferrer"
@@ -81,7 +81,6 @@ export function Footer() {
                 'Soldagem TIG (GTAW)',
                 'Soldagem MIG/MAG (GMAW)',
                 'Eletrodo Revestido (SMAW)',
-                'Oxicorte',
               ].map(label => (
                 <li key={label}>
                   <Link to="/cursos"

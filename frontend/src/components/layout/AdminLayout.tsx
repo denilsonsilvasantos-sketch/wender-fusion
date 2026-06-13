@@ -3,7 +3,7 @@ import { Outlet, NavLink, Link } from 'react-router-dom'
 import {
   LayoutDashboard, BookOpen, Users, DollarSign, Award, ClipboardList,
   CalendarCheck, Wrench, LogOut, Menu, ChevronLeft, Shield,
-  Briefcase, TrendingUp, Building2
+  Briefcase, TrendingUp, Building2, Newspaper
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { Avatar, WFLogo } from '@/components/ui'
@@ -21,6 +21,7 @@ const navItems = [
   { to: '/admin/empregabilidade', label: 'Empregabilidade', icon: Briefcase },
   { to: '/admin/crm', label: 'CRM Comercial', icon: TrendingUp },
   { to: '/admin/consultoria', label: 'Consultoria', icon: Building2 },
+  { to: '/admin/artigos', label: 'Artigos', icon: Newspaper },
 ]
 
 export function AdminLayout() {
