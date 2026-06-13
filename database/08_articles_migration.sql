@@ -18,12 +18,14 @@ VALUES (
 ON CONFLICT (id) DO NOTHING;
 
 -- Leitura pública
-CREATE POLICY IF NOT EXISTS "Capas de artigo são públicas"
+DROP POLICY IF EXISTS "Capas de artigo são públicas" ON storage.objects;
+CREATE POLICY "Capas de artigo são públicas"
   ON storage.objects FOR SELECT
   USING (bucket_id = 'article-covers');
 
 -- Upload apenas por admin
-CREATE POLICY IF NOT EXISTS "Admins enviam capas de artigo"
+DROP POLICY IF EXISTS "Admins enviam capas de artigo" ON storage.objects;
+CREATE POLICY "Admins enviam capas de artigo"
   ON storage.objects FOR INSERT
   WITH CHECK (
     bucket_id = 'article-covers'
@@ -31,7 +33,8 @@ CREATE POLICY IF NOT EXISTS "Admins enviam capas de artigo"
   );
 
 -- Substituição apenas por admin
-CREATE POLICY IF NOT EXISTS "Admins atualizam capas de artigo"
+DROP POLICY IF EXISTS "Admins atualizam capas de artigo" ON storage.objects;
+CREATE POLICY "Admins atualizam capas de artigo"
   ON storage.objects FOR UPDATE
   USING (
     bucket_id = 'article-covers'
@@ -39,7 +42,8 @@ CREATE POLICY IF NOT EXISTS "Admins atualizam capas de artigo"
   );
 
 -- Exclusão apenas por admin
-CREATE POLICY IF NOT EXISTS "Admins deletam capas de artigo"
+DROP POLICY IF EXISTS "Admins deletam capas de artigo" ON storage.objects;
+CREATE POLICY "Admins deletam capas de artigo"
   ON storage.objects FOR DELETE
   USING (
     bucket_id = 'article-covers'
