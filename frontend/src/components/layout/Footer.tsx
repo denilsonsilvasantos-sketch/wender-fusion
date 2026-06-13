@@ -159,12 +159,12 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3"
+        <div className="pt-6 flex flex-col items-center gap-2"
           style={{ borderTop: '1px solid #ffffff08' }}>
-          <p className="text-xs" style={{ color: '#9ca3af' }}>
+          <p className="text-xs text-center" style={{ color: '#ffffff' }}>
             &copy; {new Date().getFullYear()} Welder &amp; Fusion — Escola Profissionalizante de Soldadores. Todos os direitos reservados.
           </p>
-          <p className="text-xs" style={{ color: '#9ca3af' }}>
+          <p className="text-xs" style={{ color: '#ffffff' }}>
             Itajaí, SC — Brasil
           </p>
         </div>
