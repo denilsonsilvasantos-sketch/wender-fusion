@@ -15,7 +15,7 @@ DECLARE
 BEGIN
 
   -- ── ADMIN ─────────────────────────────────────────────────
-  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'admin@welderfusion.com.br') THEN
+  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'admin@welderefusion.com.br') THEN
     INSERT INTO auth.users (
       id, instance_id, aud, role,
       email, encrypted_password,
@@ -26,26 +26,24 @@ BEGIN
       email_change_token_new, email_change
     ) VALUES (
       uid_admin, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-      'admin@welderfusion.com.br',
-      crypt('Wf@Admin2024', gen_salt('bf')),
+      'admin@welderefusion.com.br',
+      crypt('admin123', gen_salt('bf')),
       now(), now(),
       '{"provider":"email","providers":["email"]}'::jsonb,
       '{"name":"Admin Geral"}'::jsonb,
       now(), now(), '', '', '', ''
     );
-    RAISE NOTICE 'Criado em auth.users: admin@welderfusion.com.br';
+    RAISE NOTICE 'Criado em auth.users: admin@welderefusion.com.br';
   ELSE
-    -- Garante que o uid_admin seja o ID real existente
-    SELECT id INTO uid_admin FROM auth.users WHERE email = 'admin@welderfusion.com.br';
-    RAISE NOTICE 'Já existe em auth.users: admin@welderfusion.com.br (id=%)', uid_admin;
+    SELECT id INTO uid_admin FROM auth.users WHERE email = 'admin@welderefusion.com.br';
+    RAISE NOTICE 'Já existe em auth.users: admin@welderefusion.com.br (id=%)', uid_admin;
   END IF;
-  -- Sempre garante o perfil com role correto (idempotente)
   INSERT INTO public.user_profiles (id, email, name, role)
-  VALUES (uid_admin, 'admin@welderfusion.com.br', 'Admin Geral', 'admin')
-  ON CONFLICT (id) DO UPDATE SET role = 'admin', name = 'Admin Geral';
+  VALUES (uid_admin, 'admin@welderefusion.com.br', 'Admin Geral', 'admin')
+  ON CONFLICT (id) DO UPDATE SET role = 'admin', name = 'Admin Geral', email = 'admin@welderefusion.com.br';
 
   -- ── INSTRUTOR ─────────────────────────────────────────────
-  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'instrutor@welderfusion.com.br') THEN
+  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'instrutor@welderefusion.com.br') THEN
     INSERT INTO auth.users (
       id, instance_id, aud, role,
       email, encrypted_password,
@@ -56,24 +54,24 @@ BEGIN
       email_change_token_new, email_change
     ) VALUES (
       uid_instrutor, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-      'instrutor@welderfusion.com.br',
-      crypt('Wf@Instrutor2024', gen_salt('bf')),
+      'instrutor@welderefusion.com.br',
+      crypt('instrutor123', gen_salt('bf')),
       now(), now(),
       '{"provider":"email","providers":["email"]}'::jsonb,
       '{"name":"Carlos Eduardo"}'::jsonb,
       now(), now(), '', '', '', ''
     );
-    RAISE NOTICE 'Criado em auth.users: instrutor@welderfusion.com.br';
+    RAISE NOTICE 'Criado em auth.users: instrutor@welderefusion.com.br';
   ELSE
-    SELECT id INTO uid_instrutor FROM auth.users WHERE email = 'instrutor@welderfusion.com.br';
-    RAISE NOTICE 'Já existe em auth.users: instrutor@welderfusion.com.br (id=%)', uid_instrutor;
+    SELECT id INTO uid_instrutor FROM auth.users WHERE email = 'instrutor@welderefusion.com.br';
+    RAISE NOTICE 'Já existe em auth.users: instrutor@welderefusion.com.br (id=%)', uid_instrutor;
   END IF;
   INSERT INTO public.user_profiles (id, email, name, role)
-  VALUES (uid_instrutor, 'instrutor@welderfusion.com.br', 'Carlos Eduardo', 'instructor')
-  ON CONFLICT (id) DO UPDATE SET role = 'instructor', name = 'Carlos Eduardo';
+  VALUES (uid_instrutor, 'instrutor@welderefusion.com.br', 'Carlos Eduardo', 'instructor')
+  ON CONFLICT (id) DO UPDATE SET role = 'instructor', name = 'Carlos Eduardo', email = 'instrutor@welderefusion.com.br';
 
   -- ── ALUNO ─────────────────────────────────────────────────
-  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'aluno@welderfusion.com.br') THEN
+  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'aluno@welderefusion.com.br') THEN
     INSERT INTO auth.users (
       id, instance_id, aud, role,
       email, encrypted_password,
@@ -84,24 +82,24 @@ BEGIN
       email_change_token_new, email_change
     ) VALUES (
       uid_aluno, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-      'aluno@welderfusion.com.br',
-      crypt('Wf@Aluno2024', gen_salt('bf')),
+      'aluno@welderefusion.com.br',
+      crypt('aluno123', gen_salt('bf')),
       now(), now(),
       '{"provider":"email","providers":["email"]}'::jsonb,
       '{"name":"João Silva"}'::jsonb,
       now(), now(), '', '', '', ''
     );
-    RAISE NOTICE 'Criado em auth.users: aluno@welderfusion.com.br';
+    RAISE NOTICE 'Criado em auth.users: aluno@welderefusion.com.br';
   ELSE
-    SELECT id INTO uid_aluno FROM auth.users WHERE email = 'aluno@welderfusion.com.br';
-    RAISE NOTICE 'Já existe em auth.users: aluno@welderfusion.com.br (id=%)', uid_aluno;
+    SELECT id INTO uid_aluno FROM auth.users WHERE email = 'aluno@welderefusion.com.br';
+    RAISE NOTICE 'Já existe em auth.users: aluno@welderefusion.com.br (id=%)', uid_aluno;
   END IF;
   INSERT INTO public.user_profiles (id, email, name, role)
-  VALUES (uid_aluno, 'aluno@welderfusion.com.br', 'João Silva', 'student')
-  ON CONFLICT (id) DO UPDATE SET role = 'student', name = 'João Silva';
+  VALUES (uid_aluno, 'aluno@welderefusion.com.br', 'João Silva', 'student')
+  ON CONFLICT (id) DO UPDATE SET role = 'student', name = 'João Silva', email = 'aluno@welderefusion.com.br';
 
   -- ── CLIENTE INDUSTRIAL ────────────────────────────────────
-  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'industrial@welderfusion.com.br') THEN
+  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'industrial@welderefusion.com.br') THEN
     INSERT INTO auth.users (
       id, instance_id, aud, role,
       email, encrypted_password,
@@ -112,20 +110,20 @@ BEGIN
       email_change_token_new, email_change
     ) VALUES (
       uid_industrial, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-      'industrial@welderfusion.com.br',
-      crypt('Wf@Industrial2024', gen_salt('bf')),
+      'industrial@welderefusion.com.br',
+      crypt('industrial123', gen_salt('bf')),
       now(), now(),
       '{"provider":"email","providers":["email"]}'::jsonb,
       '{"name":"Metalúrgica ABC Ltda"}'::jsonb,
       now(), now(), '', '', '', ''
     );
-    RAISE NOTICE 'Criado em auth.users: industrial@welderfusion.com.br';
+    RAISE NOTICE 'Criado em auth.users: industrial@welderefusion.com.br';
   ELSE
-    SELECT id INTO uid_industrial FROM auth.users WHERE email = 'industrial@welderfusion.com.br';
-    RAISE NOTICE 'Já existe em auth.users: industrial@welderfusion.com.br (id=%)', uid_industrial;
+    SELECT id INTO uid_industrial FROM auth.users WHERE email = 'industrial@welderefusion.com.br';
+    RAISE NOTICE 'Já existe em auth.users: industrial@welderefusion.com.br (id=%)', uid_industrial;
   END IF;
   INSERT INTO public.user_profiles (id, email, name, role)
-  VALUES (uid_industrial, 'industrial@welderfusion.com.br', 'Metalúrgica ABC Ltda', 'industrial_client')
-  ON CONFLICT (id) DO UPDATE SET role = 'industrial_client', name = 'Metalúrgica ABC Ltda';
+  VALUES (uid_industrial, 'industrial@welderefusion.com.br', 'Metalúrgica ABC Ltda', 'industrial_client')
+  ON CONFLICT (id) DO UPDATE SET role = 'industrial_client', name = 'Metalúrgica ABC Ltda', email = 'industrial@welderefusion.com.br';
 
 END $$;
