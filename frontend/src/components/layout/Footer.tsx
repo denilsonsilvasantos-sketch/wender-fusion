@@ -48,7 +48,7 @@ export function Footer() {
                 style={{ height: 110, width: 'auto', objectFit: 'contain' }}
               />
             </Link>
-            <p className="text-sm mt-4 leading-relaxed" style={{ color: '#6B7280' }}>
+            <p className="text-sm mt-4 leading-relaxed" style={{ color: '#d1d5db' }}>
               Qualificação que Conecta o Seu Futuro.<br />
               Escola fundada em 2024, em Itajaí (SC).
             </p>
@@ -85,7 +85,7 @@ export function Footer() {
                 <li key={label}>
                   <Link to="/cursos"
                     className="text-sm transition-colors hover:text-white"
-                    style={{ color: '#6B7280' }}>
+                    style={{ color: '#d1d5db' }}>
                     {label}
                   </Link>
                 </li>
@@ -112,7 +112,7 @@ export function Footer() {
                 <li key={to}>
                   <Link to={to}
                     className="text-sm transition-colors hover:text-white"
-                    style={{ color: '#6B7280' }}>
+                    style={{ color: '#d1d5db' }}>
                     {label}
                   </Link>
                 </li>
@@ -126,14 +126,14 @@ export function Footer() {
               Contato
             </h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-sm" style={{ color: '#6B7280' }}>
+              <li className="flex items-start gap-3 text-sm" style={{ color: '#d1d5db' }}>
                 <MapPin size={15} className="flex-shrink-0 mt-0.5" style={{ color: '#FF8C00' }} />
                 <span>Rua Cesar Stamm, 55<br />Cordeiros — Itajaí, SC</span>
               </li>
               <li>
                 <a href="https://wa.me/5547988786738" target="_blank" rel="noreferrer"
                   className="flex items-center gap-3 text-sm transition-colors hover:text-white"
-                  style={{ color: '#6B7280' }}>
+                  style={{ color: '#d1d5db' }}>
                   <span style={{ color: '#25D366' }}><IconWhatsApp size={15} /></span>
                   (47) 98878-6738
                 </a>
@@ -141,7 +141,7 @@ export function Footer() {
               <li>
                 <a href="mailto:escola.welderefusion@gmail.com"
                   className="flex items-center gap-3 text-sm transition-colors hover:text-white"
-                  style={{ color: '#6B7280' }}>
+                  style={{ color: '#d1d5db' }}>
                   <Mail size={15} className="flex-shrink-0" style={{ color: '#FF8C00' }} />
                   escola.welderefusion@gmail.com
                 </a>
@@ -161,10 +161,10 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3"
           style={{ borderTop: '1px solid #ffffff08' }}>
-          <p className="text-xs" style={{ color: '#374151' }}>
+          <p className="text-xs" style={{ color: '#9ca3af' }}>
             &copy; {new Date().getFullYear()} Welder &amp; Fusion — Escola Profissionalizante de Soldadores. Todos os direitos reservados.
           </p>
-          <p className="text-xs" style={{ color: '#374151' }}>
+          <p className="text-xs" style={{ color: '#9ca3af' }}>
             Itajaí, SC — Brasil
           </p>
         </div>

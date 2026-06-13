@@ -45,7 +45,7 @@ export function PublicHeader() {
                     'px-3 py-1.5 rounded-lg text-sm font-medium transition-all',
                     isActive
                       ? 'text-[#FF8C00] bg-[#FF8C0012]'
-                      : 'text-[#9CA3AF] hover:text-white hover:bg-white/5'
+                      : 'text-white/75 hover:text-white hover:bg-white/5'
                   )}
                 >
                   {label}
@@ -77,7 +77,7 @@ export function PublicHeader() {
               <button
                 onClick={() => setOpen(v => !v)}
                 className="p-2 rounded-lg transition-colors hover:bg-white/5"
-                style={{ color: '#9CA3AF' }}
+                style={{ color: '#ffffff' }}
                 aria-label="Menu"
               >
                 {open ? <X size={22} /> : <Menu size={22} />}
@@ -105,7 +105,7 @@ export function PublicHeader() {
                 <span style={{ color: '#FF8C00' }}>&amp;</span>
                 <span style={{ color: '#FF8C00' }}> Fusion</span>
               </span>
-              <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-white/5" style={{ color: '#9CA3AF' }}>
+              <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-white/5" style={{ color: '#ffffff' }}>
                 <X size={20} />
               </button>
             </div>
@@ -121,7 +121,7 @@ export function PublicHeader() {
                     'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all',
                     isActive
                       ? 'bg-[#FF8C0015] text-[#FF8C00]'
-                      : 'text-[#9CA3AF] hover:bg-white/5 hover:text-white'
+                      : 'text-white/75 hover:bg-white/5 hover:text-white'
                   )}
                 >
                   <Icon size={17} />

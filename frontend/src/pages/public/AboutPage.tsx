@@ -5,20 +5,19 @@ import { Button } from '@/components/ui'
 
 function InstructorAvatar({ name, initial, photo }: { name: string; initial: string; photo: string }) {
   const [src, setSrc] = useState<'jpg' | 'png' | 'failed'>('jpg')
-  const size = 80
   if (src === 'failed') {
     return (
-      <div style={{ width: size, height: size, borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FF8C0020', border: '2px solid #FF8C0050', fontSize: 28, fontWeight: 900, color: '#FF8C00' }}>
+      <div style={{ width: 75, height: 75, borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FF8C0020', border: '3px solid #FF8C0060', fontSize: 26, fontWeight: 900, color: '#FF8C00' }}>
         {initial}
       </div>
     )
   }
   return (
-    <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '2px solid #FF8C0050', position: 'relative' }}>
+    <div style={{ width: 75, height: 75, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '3px solid #FF8C0060', display: 'block' }}>
       <img
         src={`/${photo}.${src}`}
         alt={name}
-        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+        style={{ width: '75px', height: '75px', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
         onError={() => setSrc(s => s === 'jpg' ? 'png' : 'failed')}
       />
     </div>
