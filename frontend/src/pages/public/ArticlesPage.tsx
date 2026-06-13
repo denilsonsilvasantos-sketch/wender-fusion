@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Tag, ArrowRight, Search, X } from 'lucide-react'
 import { Input } from '@/components/ui'
+import { supabase } from '@/lib/supabase'
 
 const TAGS = ['Todos', 'Técnica', 'Mercado', 'Segurança', 'Carreira', 'Certificações', 'Equipamentos']
 
@@ -14,9 +15,25 @@ const TAG_COLORS: Record<string, string> = {
 }
 
 interface Article {
-  id: number; slug: string; title: string; excerpt: string; tag: string
-  date: string; minutes: number; featured: boolean; author: string
+  id: number | string; slug: string; title: string; excerpt: string; tag: string
+  date: string; minutes?: number; featured: boolean; author: string; coverUrl?: string
   content: { heading?: string; body: string }[]
+}
+
+interface DbArticle {
+  id: string; title: string; excerpt: string | null; content: string | null
+  tag: string; date: string; cover_url: string | null; featured: boolean
+}
+
+function fromDb(a: DbArticle): Article {
+  return {
+    id: a.id, slug: a.id,
+    title: a.title, excerpt: a.excerpt ?? '',
+    tag: a.tag, date: a.date,
+    coverUrl: a.cover_url ?? undefined,
+    featured: a.featured, author: 'Equipe W&F',
+    content: (a.content ?? '').split('\n\n').filter(Boolean).map(p => ({ body: p })),
+  }
 }
 
 // ── Ilustrações SVG únicas por artigo ─────────────────────────────────────────
@@ -329,6 +346,15 @@ const THUMB_MAP: Record<string, () => React.ReactElement> = {
   'certificacao-fbts': ThumbFBTS,
 }
 
+const TAG_THUMB_MAP: Record<string, () => React.ReactElement> = {
+  'Técnica': ThumbTigMig,
+  'Mercado': ThumbMercado,
+  'Segurança': ThumbSeguranca,
+  'Carreira': ThumbCarreira,
+  'Equipamentos': ThumbManutencao,
+  'Certificações': ThumbFBTS,
+}
+
 const ARTICLES: Article[] = [
   {
     id: 1, slug: 'tig-vs-mig-mag', featured: true,
@@ -440,24 +466,41 @@ function fmtDate(d: string) {
   return new Date(d).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })
 }
 
-function ArticleThumb({ slug }: { slug: string }) {
-  const Comp = THUMB_MAP[slug]
-  if (!Comp) return <div className="w-full h-full" style={{ background: '#242424' }}/>
-  return <div className="w-full h-full overflow-hidden"><Comp /></div>
+function ArticleThumb({ slug, tag, coverUrl }: { slug: string; tag: string; coverUrl?: string }) {
+  if (coverUrl) return <div className="w-full h-full overflow-hidden"><img src={coverUrl} alt="" className="w-full h-full object-cover" /></div>
+  const BySlug = THUMB_MAP[slug]
+  if (BySlug) return <div className="w-full h-full overflow-hidden"><BySlug /></div>
+  const ByTag = TAG_THUMB_MAP[tag]
+  if (ByTag) return <div className="w-full h-full overflow-hidden"><ByTag /></div>
+  return <div className="w-full h-full" style={{ background: '#242424' }} />
 }
 
 export function ArticlesPage() {
   const [activeTag, setActiveTag] = useState('Todos')
   const [search, setSearch] = useState('')
   const [selected, setSelected] = useState<Article | null>(null)
+  const [dbArticles, setDbArticles] = useState<Article[] | null>(null)
 
-  const filtered = ARTICLES.filter(a => {
+  useEffect(() => {
+    supabase
+      .from('articles')
+      .select('id, title, excerpt, content, tag, date, cover_url, featured')
+      .eq('published', true)
+      .order('date', { ascending: false })
+      .then(({ data }) => {
+        setDbArticles(data && data.length > 0 ? (data as DbArticle[]).map(fromDb) : [])
+      })
+  }, [])
+
+  const source = dbArticles && dbArticles.length > 0 ? dbArticles : ARTICLES
+
+  const filtered = source.filter(a => {
     const matchTag = activeTag === 'Todos' || a.tag === activeTag
     const matchSearch = !search || a.title.toLowerCase().includes(search.toLowerCase())
     return matchTag && matchSearch
   })
 
-  const featured = ARTICLES.find(a => a.featured)
+  const featured = source.find(a => a.featured)
   const grid = filtered.filter(a => !(a.featured && activeTag === 'Todos' && !search))
 
   return (
@@ -507,7 +550,7 @@ export function ArticlesPage() {
             onClick={() => setSelected(featured)}>
             <div className="grid lg:grid-cols-5">
               <div className="lg:col-span-2 min-h-[220px] lg:min-h-0">
-                <ArticleThumb slug={featured.slug} />
+                <ArticleThumb slug={featured.slug} tag={featured.tag} coverUrl={featured.coverUrl} />
               </div>
               <div className="lg:col-span-3 p-8 flex flex-col justify-between">
                 <div>
@@ -547,7 +590,7 @@ export function ArticlesPage() {
                 onMouseEnter={e => (e.currentTarget.style.borderColor = '#FF8C0030')}
                 onMouseLeave={e => (e.currentTarget.style.borderColor = '#ffffff0d')}>
                 <div className="h-44 overflow-hidden">
-                  <ArticleThumb slug={article.slug} />
+                  <ArticleThumb slug={article.slug} tag={article.tag} coverUrl={article.coverUrl} />
                 </div>
                 <div className="h-1" style={{ background: TAG_COLORS[article.tag] || '#FF8C00' }} />
                 <div className="p-5 flex flex-col flex-1">
@@ -590,7 +633,7 @@ export function ArticlesPage() {
           <div className="relative z-10 w-full max-w-3xl rounded-2xl overflow-hidden mb-8"
             style={{ background: '#1A1A1A', border: '1px solid #FF8C0020' }}>
             <div className="h-52 relative">
-              <ArticleThumb slug={selected.slug} />
+              <ArticleThumb slug={selected.slug} tag={selected.tag} coverUrl={selected.coverUrl} />
               <button onClick={() => setSelected(null)}
                 className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all hover:opacity-80"
                 style={{ background: 'rgba(0,0,0,0.75)', color: '#fff' }}>

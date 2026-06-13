@@ -1,66 +1,97 @@
-import { useState, type ChangeEvent } from 'react'
+import { useState, useEffect, type ChangeEvent } from 'react'
 import { Plus, Edit2, Trash2, Eye, EyeOff, X, Save } from 'lucide-react'
 import { Button, Input } from '@/components/ui'
+import { supabase } from '@/lib/supabase'
 
 const TAG_OPTIONS = ['Técnica', 'Mercado', 'Segurança', 'Carreira', 'Certificações', 'Equipamentos']
 
 interface Article {
-  id: number
+  id: string
   title: string
   excerpt: string
   content: string
   tag: string
   date: string
-  coverUrl: string
+  cover_url: string
   published: boolean
   featured: boolean
 }
 
-const INITIAL: Article[] = [
-  { id: 1, title: 'TIG vs MIG/MAG: qual processo escolher para cada aplicação?', excerpt: 'Entenda as diferenças técnicas, vantagens e limitações de cada processo.', content: '', tag: 'Técnica', date: '2024-06-05', coverUrl: '', published: true, featured: true },
-  { id: 2, title: 'Mercado de soldagem em 2024: oportunidades e tendências', excerpt: 'O setor de soldagem no Brasil em dados.', content: '', tag: 'Mercado', date: '2024-05-28', coverUrl: '', published: true, featured: false },
-]
-
-const EMPTY: Omit<Article, 'id'> = { title: '', excerpt: '', content: '', tag: 'Técnica', date: new Date().toISOString().split('T')[0], coverUrl: '', published: false, featured: false }
+const EMPTY: Omit<Article, 'id'> = {
+  title: '', excerpt: '', content: '', tag: 'Técnica',
+  date: new Date().toISOString().split('T')[0],
+  cover_url: '', published: false, featured: false,
+}
 
 const TAG_COLORS: Record<string, string> = {
-  'Técnica': '#FF8C00', 'Mercado': '#FF8C00', 'Segurança': '#EF4444',
-  'Carreira': '#22C55E', 'Certificações': '#A855F7', 'Equipamentos': '#F59E0B',
+  'Técnica': '#FF8C00', 'Mercado': '#22C55E', 'Segurança': '#EF4444',
+  'Carreira': '#3B82F6', 'Certificações': '#A855F7', 'Equipamentos': '#F59E0B',
 }
 
 export function ArticlesAdminPage() {
-  const [articles, setArticles] = useState<Article[]>(INITIAL)
+  const [articles, setArticles] = useState<Article[]>([])
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [uploadingCover, setUploadingCover] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [editing, setEditing] = useState<Article | null>(null)
   const [form, setForm] = useState<Omit<Article, 'id'>>(EMPTY)
   const [search, setSearch] = useState('')
 
-  function openNew() { setEditing(null); setForm(EMPTY); setModalOpen(true) }
-  function openEdit(a: Article) { setEditing(a); setForm({ ...a }); setModalOpen(true) }
+  useEffect(() => { fetchArticles() }, [])
 
-  function handleCoverUpload(e: ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setForm(prev => ({ ...prev, coverUrl: URL.createObjectURL(file) }))
+  async function fetchArticles() {
+    setLoading(true)
+    const { data } = await supabase
+      .from('articles')
+      .select('*')
+      .order('created_at', { ascending: false })
+    setArticles((data ?? []) as Article[])
+    setLoading(false)
   }
+
+  function openNew() { setEditing(null); setForm(EMPTY); setModalOpen(true) }
+  function openEdit(a: Article) { setEditing(a); setForm({ title: a.title, excerpt: a.excerpt, content: a.content, tag: a.tag, date: a.date, cover_url: a.cover_url, published: a.published, featured: a.featured }); setModalOpen(true) }
   function closeModal() { setModalOpen(false) }
 
-  function handleSave() {
-    if (!form.title.trim()) return
-    if (editing) {
-      setArticles(prev => prev.map(a => a.id === editing.id ? { ...form, id: editing.id } : a))
-    } else {
-      setArticles(prev => [...prev, { ...form, id: Date.now() }])
+  async function handleCoverUpload(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingCover(true)
+    const ext = file.name.split('.').pop()
+    const filename = `${Date.now()}.${ext}`
+    const { error } = await supabase.storage
+      .from('article-covers')
+      .upload(filename, file, { upsert: true })
+    if (!error) {
+      const { data } = supabase.storage.from('article-covers').getPublicUrl(filename)
+      setForm(prev => ({ ...prev, cover_url: data.publicUrl }))
     }
+    setUploadingCover(false)
+  }
+
+  async function handleSave() {
+    if (!form.title.trim()) return
+    setSaving(true)
+    if (editing) {
+      await supabase.from('articles').update({ ...form }).eq('id', editing.id)
+    } else {
+      await supabase.from('articles').insert({ ...form })
+    }
+    await fetchArticles()
+    setSaving(false)
     setModalOpen(false)
   }
 
-  function handleDelete(id: number) {
-    if (confirm('Excluir este artigo?')) setArticles(prev => prev.filter(a => a.id !== id))
+  async function handleDelete(id: string) {
+    if (!confirm('Excluir este artigo?')) return
+    await supabase.from('articles').delete().eq('id', id)
+    setArticles(prev => prev.filter(a => a.id !== id))
   }
 
-  function togglePublished(id: number) {
-    setArticles(prev => prev.map(a => a.id === id ? { ...a, published: !a.published } : a))
+  async function togglePublished(a: Article) {
+    await supabase.from('articles').update({ published: !a.published }).eq('id', a.id)
+    setArticles(prev => prev.map(x => x.id === a.id ? { ...x, published: !x.published } : x))
   }
 
   const filtered = articles.filter(a => !search || a.title.toLowerCase().includes(search.toLowerCase()))
@@ -70,7 +101,7 @@ export function ArticlesAdminPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-black text-[var(--color-text)]">Artigos &amp; Notícias</h1>
-          <p className="text-sm text-[var(--color-text-muted)] mt-0.5">Gerencie os artigos que aparecem na página pública de Artigos.</p>
+          <p className="text-sm text-[var(--color-text-muted)] mt-0.5">Gerencie os artigos que aparecem na página pública.</p>
         </div>
         <Button onClick={openNew} leftIcon={<Plus size={15} />}>Novo Artigo</Button>
       </div>
@@ -94,13 +125,15 @@ export function ArticlesAdminPage() {
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 ? (
+            {loading ? (
+              <tr><td colSpan={7} className="text-center py-12 text-[var(--color-text-muted)] text-sm">Carregando...</td></tr>
+            ) : filtered.length === 0 ? (
               <tr><td colSpan={7} className="text-center py-12 text-[var(--color-text-muted)] text-sm">Nenhum artigo encontrado.</td></tr>
-            ) : filtered.map((a, i) => (
+            ) : filtered.map(a => (
               <tr key={a.id} className="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-elevated)] transition-colors">
                 <td className="px-4 py-3">
-                  {a.coverUrl
-                    ? <img src={a.coverUrl} alt="" className="w-16 h-10 object-cover rounded-md" />
+                  {a.cover_url
+                    ? <img src={a.cover_url} alt="" className="w-16 h-10 object-cover rounded-md" />
                     : <div className="w-16 h-10 rounded-md flex items-center justify-center text-xs text-[var(--color-text-muted)]" style={{ background: 'var(--color-surface-elevated)' }}>—</div>
                   }
                 </td>
@@ -116,7 +149,7 @@ export function ArticlesAdminPage() {
                 </td>
                 <td className="px-4 py-3 text-[var(--color-text-muted)]">{new Date(a.date).toLocaleDateString('pt-BR')}</td>
                 <td className="px-4 py-3">
-                  <button onClick={() => togglePublished(a.id)}
+                  <button onClick={() => togglePublished(a)}
                     className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full transition-all"
                     style={a.published
                       ? { background: '#22C55E20', color: '#22C55E' }
@@ -176,20 +209,32 @@ export function ArticlesAdminPage() {
                     className="w-full rounded-md px-3 py-2 text-sm bg-[var(--color-surface-elevated)] border border-[var(--color-border)] text-[var(--color-text)]" />
                 </div>
               </div>
+
+              {/* Upload de capa */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-1.5">Foto de Capa</label>
                 <div className="flex items-start gap-4">
-                  {form.coverUrl && (
-                    <img src={form.coverUrl} alt="Capa" className="w-32 h-20 object-cover rounded-lg border border-[var(--color-border)]" />
+                  {form.cover_url && (
+                    <div className="relative">
+                      <img src={form.cover_url} alt="Capa" className="w-32 h-20 object-cover rounded-lg border border-[var(--color-border)]" />
+                      <button type="button" onClick={() => setForm(prev => ({ ...prev, cover_url: '' }))}
+                        className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center hover:bg-red-600">
+                        ×
+                      </button>
+                    </div>
                   )}
                   <label className="flex-1 flex flex-col items-center justify-center gap-2 px-4 py-5 rounded-xl border-2 border-dashed cursor-pointer transition-colors hover:border-[var(--color-primary)]"
-                    style={{ borderColor: 'var(--color-border)' }}>
-                    <span className="text-2xl">🖼️</span>
-                    <span className="text-xs text-[var(--color-text-muted)]">{form.coverUrl ? 'Trocar imagem' : 'Clique para enviar a capa'}</span>
-                    <input type="file" accept="image/*" className="hidden" onChange={handleCoverUpload} />
+                    style={{ borderColor: 'var(--color-border)', opacity: uploadingCover ? 0.6 : 1, pointerEvents: uploadingCover ? 'none' : 'auto' }}>
+                    <span className="text-2xl">{uploadingCover ? '⏳' : '🖼️'}</span>
+                    <span className="text-xs text-[var(--color-text-muted)]">
+                      {uploadingCover ? 'Enviando para o servidor...' : form.cover_url ? 'Trocar imagem' : 'Clique para enviar a capa'}
+                    </span>
+                    <span className="text-xs text-[var(--color-text-muted)] opacity-60">JPG, PNG, WEBP — máx. 5MB</span>
+                    <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="hidden" disabled={uploadingCover} onChange={handleCoverUpload} />
                   </label>
                 </div>
               </div>
+
               <div>
                 <label className="block text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-1.5">Conteúdo</label>
                 <textarea rows={10} value={form.content} onChange={e => setForm({ ...form, content: e.target.value })}
@@ -210,7 +255,7 @@ export function ArticlesAdminPage() {
 
             <div className="flex justify-end gap-3 px-6 py-4 border-t border-[var(--color-border)]">
               <Button variant="ghost" onClick={closeModal}>Cancelar</Button>
-              <Button onClick={handleSave} leftIcon={<Save size={15} />}>Salvar Artigo</Button>
+              <Button onClick={handleSave} loading={saving} leftIcon={<Save size={15} />}>Salvar Artigo</Button>
             </div>
           </div>
         </div>
