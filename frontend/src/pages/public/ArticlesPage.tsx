@@ -626,6 +626,19 @@ export function ArticlesPage() {
         </div>
       </div>
 
+      <style>{`
+        .article-html p { margin-bottom: 0.75em; }
+        .article-html h1 { font-size: 1.3em; font-weight: 900; margin-bottom: 0.5em; color: #FF8C00; }
+        .article-html h2 { font-size: 1.1em; font-weight: 700; margin-bottom: 0.5em; color: #FF8C00; }
+        .article-html ul { list-style: disc; padding-left: 1.5em; margin-bottom: 0.75em; }
+        .article-html ol { list-style: decimal; padding-left: 1.5em; margin-bottom: 0.75em; }
+        .article-html li { margin-bottom: 0.2em; }
+        .article-html blockquote { border-left: 3px solid #FF8C00; padding-left: 1em; margin: 0.75em 0; opacity: 0.8; font-style: italic; }
+        .article-html hr { border: none; border-top: 1px solid #ffffff20; margin: 1em 0; }
+        .article-html strong { font-weight: 700; }
+        .article-html em { font-style: italic; }
+      `}</style>
+
       {/* ── MODAL ── */}
       {selected && (
         <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 overflow-y-auto">
@@ -649,11 +662,15 @@ export function ArticlesPage() {
                 <span className="text-xs text-white">{fmtDate(selected.date)}</span>
               </div>
               <h1 className="text-2xl md:text-3xl font-black text-white mb-6 leading-snug">{selected.title}</h1>
-              <div className="space-y-5">
+              <div className="space-y-5 article-body">
                 {selected.content.map((block, i) => (
                   <div key={i}>
                     {block.heading && <h2 className="text-lg font-black mb-2" style={{ color: '#FF8C00' }}>{block.heading}</h2>}
-                    <p className="text-sm leading-relaxed text-white">{block.body}</p>
+                    {block.body.startsWith('<') ? (
+                      <div className="text-sm leading-relaxed text-white article-html" dangerouslySetInnerHTML={{ __html: block.body }} />
+                    ) : (
+                      <p className="text-sm leading-relaxed text-white">{block.body}</p>
+                    )}
                   </div>
                 ))}
               </div>

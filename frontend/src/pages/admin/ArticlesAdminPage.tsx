@@ -1,6 +1,7 @@
 import { useState, useEffect, type ChangeEvent } from 'react'
 import { Plus, Edit2, Trash2, Eye, EyeOff, X, Save } from 'lucide-react'
 import { Button, Input } from '@/components/ui'
+import { RichTextEditor } from '@/components/ui/RichTextEditor'
 import { supabase } from '@/lib/supabase'
 
 const TAG_OPTIONS = ['Técnica', 'Mercado', 'Segurança', 'Carreira', 'Certificações', 'Equipamentos']
@@ -237,9 +238,11 @@ export function ArticlesAdminPage() {
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-1.5">Conteúdo</label>
-                <textarea rows={10} value={form.content} onChange={e => setForm({ ...form, content: e.target.value })}
-                  placeholder="Escreva o conteúdo completo do artigo aqui..."
-                  className="w-full rounded-xl px-4 py-3 text-sm bg-[var(--color-surface-elevated)] border border-[var(--color-border)] text-[var(--color-text)] resize-y" />
+                <RichTextEditor
+                  value={form.content}
+                  onChange={html => setForm(prev => ({ ...prev, content: html }))}
+                  rows={12}
+                />
               </div>
               <div className="flex gap-6">
                 <label className="flex items-center gap-2 cursor-pointer">
