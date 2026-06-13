@@ -1,4 +1,5 @@
-import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom'
+import { useEffect } from 'react'
+import { createBrowserRouter, Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { Spinner } from '@/components/ui'
 
@@ -108,6 +109,12 @@ import {
 // Checkout
 import { CheckoutPage } from '@/pages/checkout/CheckoutPage'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  return <Outlet />
+}
+
 function ProtectedRoute({
   adminOnly = false,
   instructorOnly = false,
@@ -142,6 +149,9 @@ function ProtectedRoute({
 }
 
 export const router = createBrowserRouter([
+  {
+    element: <ScrollToTop />,
+    children: [
   // Public routes
   {
     element: <PublicLayout />,
@@ -382,4 +392,6 @@ export const router = createBrowserRouter([
   },
 
   { path: '*', element: <Navigate to="/" replace /> },
+    ],
+  },
 ])
