@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Mail, Lock, Flame } from 'lucide-react'
+import { Mail, Lock, Flame, Eye, EyeOff } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useAuth } from '@/hooks/useAuth'
 import { Input, Button } from '@/components/ui'
@@ -28,6 +28,7 @@ export function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) })
 
@@ -90,7 +91,11 @@ export function LoginPage() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Input label="E-mail" type="email" placeholder="seu@email.com" leftIcon={<Mail size={16} />} error={errors.email?.message} {...register('email')} />
-            <Input label="Senha" type="password" placeholder="••••••••" leftIcon={<Lock size={16} />} error={errors.password?.message} {...register('password')} />
+            <Input label="Senha" type={showPassword ? 'text' : 'password'} placeholder="••••••••" leftIcon={<Lock size={16} />} rightIcon={
+                <button type="button" onClick={() => setShowPassword(v => !v)} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              } error={errors.password?.message} {...register('password')} />
             <div className="flex justify-end">
               <Link to="/recuperar-senha" className="text-xs text-[var(--color-primary)] hover:underline">Esqueci minha senha</Link>
             </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Clock, Tag, ArrowRight, Search, X } from 'lucide-react'
+import { Tag, ArrowRight, Search, X } from 'lucide-react'
 import { Input } from '@/components/ui'
 
 const TAGS = ['Todos', 'Técnica', 'Mercado', 'Segurança', 'Carreira', 'Certificações', 'Equipamentos']
@@ -516,7 +516,6 @@ export function ArticlesPage() {
                       style={{ background: (TAG_COLORS[featured.tag] || '#FF8C00') + '20', color: TAG_COLORS[featured.tag] || '#FF8C00' }}>
                       {featured.tag}
                     </span>
-                    <span className="text-xs flex items-center gap-1 text-white"><Clock size={11} /> {featured.minutes} min de leitura</span>
                   </div>
                   <h2 className="text-2xl font-black text-white mb-3 group-hover:text-[#FF8C00] transition-colors leading-snug">{featured.title}</h2>
                   <p className="text-sm leading-relaxed text-white">{featured.excerpt}</p>
@@ -556,7 +555,6 @@ export function ArticlesPage() {
                     <span className="flex items-center gap-1 text-xs font-semibold" style={{ color: TAG_COLORS[article.tag] || '#FF8C00' }}>
                       <Tag size={11} /> {article.tag}
                     </span>
-                    <span className="text-xs flex items-center gap-1 text-white"><Clock size={11} /> {article.minutes} min</span>
                   </div>
                   <h3 className="font-bold text-white text-base leading-snug mb-2 group-hover:text-[#FF8C00] transition-colors flex-1">{article.title}</h3>
                   <p className="text-sm leading-relaxed mb-4 text-white">{article.excerpt}</p>
@@ -605,7 +603,6 @@ export function ArticlesPage() {
                   style={{ background: (TAG_COLORS[selected.tag] || '#FF8C00') + '20', color: TAG_COLORS[selected.tag] || '#FF8C00' }}>
                   {selected.tag}
                 </span>
-                <span className="text-xs flex items-center gap-1 text-white"><Clock size={11} /> {selected.minutes} min</span>
                 <span className="text-xs text-white">{fmtDate(selected.date)}</span>
               </div>
               <h1 className="text-2xl md:text-3xl font-black text-white mb-6 leading-snug">{selected.title}</h1>
