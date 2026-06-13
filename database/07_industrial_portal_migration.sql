@@ -536,9 +536,13 @@ CREATE OR REPLACE TRIGGER update_support_tickets_updated_at
 -- ============================================================
 -- 19. ATUALIZAR VIEW admin_dashboard_metrics
 --     Inclui métricas do portal industrial
+--     DROP + CREATE porque CREATE OR REPLACE não permite
+--     renomear/reordenar colunas de uma view existente
 -- ============================================================
 
-CREATE OR REPLACE VIEW admin_dashboard_metrics AS
+DROP VIEW IF EXISTS admin_dashboard_metrics;
+
+CREATE VIEW admin_dashboard_metrics AS
 SELECT
   (SELECT COUNT(*) FROM user_profiles WHERE role = 'student')             AS total_students,
   (SELECT COUNT(*) FROM courses WHERE status = 'published')               AS published_courses,
