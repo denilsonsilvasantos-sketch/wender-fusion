@@ -8,7 +8,7 @@ import {
   Layers, Zap, Filter, BarChart2, FolderOpen, Megaphone, GitBranch,
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { Avatar, WFLogo } from '@/components/ui'
+import { Avatar } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
 // ── Nav types ─────────────────────────────────────────────────────────────────
@@ -200,8 +200,8 @@ export function AdminLayout() {
       {/* Logo header */}
       <div className="flex items-center justify-between px-4 h-14 border-b border-[var(--color-border)] flex-shrink-0">
         <Link to="/admin" className="flex items-center gap-2">
-          <WFLogo size="sm" showSubtitle />
-          <span className="flex items-center gap-1 ml-1">
+          <img src="/logo-hero3.png" alt="Welder & Fusion" style={{ height: 36, width: 'auto', objectFit: 'contain' }} />
+          <span className="flex items-center gap-1">
             <Shield size={10} className="text-[var(--color-secondary)]" />
             <span className="text-[10px] text-[var(--color-secondary)] uppercase tracking-wider">ERP</span>
           </span>

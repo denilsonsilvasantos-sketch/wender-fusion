@@ -109,13 +109,8 @@ export function IndustrialLayout() {
       {/* Logo */}
       <div className="flex items-center justify-between px-4 h-14 border-b border-[var(--color-border)] flex-shrink-0">
         <Link to="/industrial" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: COLOR }}>
-            <Factory size={14} className="text-white" />
-          </div>
-          <div>
-            <p className="text-xs font-black text-[var(--color-text)] leading-tight">W&amp;F</p>
-            <p className="text-[9px] uppercase tracking-widest leading-tight" style={{ color: COLOR }}>Portal Industrial</p>
-          </div>
+          <img src="/logo-hero3.png" alt="Welder & Fusion" style={{ height: 36, width: 'auto', objectFit: 'contain' }} />
+          <p className="text-[9px] uppercase tracking-widest leading-tight font-semibold" style={{ color: COLOR }}>Portal Industrial</p>
         </Link>
         <button className="md:hidden text-[var(--color-text-muted)]" onClick={() => setSidebarOpen(false)}>
           <ChevronLeft size={18} />
