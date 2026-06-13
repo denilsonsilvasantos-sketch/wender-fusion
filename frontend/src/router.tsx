@@ -92,9 +92,18 @@ import {
 
 // Industrial portal pages
 import { IndustrialDashboardPage } from '@/pages/industrial/DashboardPage'
-import { IndustrialServiceOrdersPage } from '@/pages/industrial/ServiceOrdersPage'
-import { IndustrialQuotationsPage } from '@/pages/industrial/QuotationsPage'
-import { IndustrialFinancialPage } from '@/pages/industrial/FinancialPage'
+import { SolicitarOrcamentoPage } from '@/pages/industrial/SolicitarOrcamentoPage'
+import { OrcamentosPage } from '@/pages/industrial/OrcamentosPage'
+import { OrdensServicoPage } from '@/pages/industrial/OrdensServicoPage'
+import { FaturasPage } from '@/pages/industrial/FaturasPage'
+import {
+  CronogramaPage as IndCronogramaPage, EvidenciasPage,
+  ProjetosPage, ProcedimentosPage, RelatoriosTecPage, CertificadosDocPage, DownloadsPage as IndDownloadsPage,
+  BoletosPage, PixPage, NotasFiscaisPage, ExtratoPage,
+  ContratosPage, AgendaPage as IndAgendaPage, AuditoriasPage, TreinamentosPage, RelatoriosConsPage,
+  ChamadosPage, MensagensPage, SuportePage as IndSuportePage,
+  DadosCadastraisPage, ResponsaveisPage, UnidadesPage, ConfiguracoesTPage,
+} from '@/pages/industrial/_stubs'
 
 // Checkout
 import { CheckoutPage } from '@/pages/checkout/CheckoutPage'
@@ -324,9 +333,49 @@ export const router = createBrowserRouter([
         element: <IndustrialLayout />,
         children: [
           { path: '/industrial', element: <IndustrialDashboardPage /> },
-          { path: '/industrial/ordens', element: <IndustrialServiceOrdersPage /> },
-          { path: '/industrial/cotacoes', element: <IndustrialQuotationsPage /> },
-          { path: '/industrial/financeiro', element: <IndustrialFinancialPage /> },
+
+          // Serviços
+          { path: '/industrial/orcamento/novo',   element: <SolicitarOrcamentoPage /> },
+          { path: '/industrial/orcamentos',       element: <OrcamentosPage />         },
+          { path: '/industrial/ordens',           element: <OrdensServicoPage />      },
+          { path: '/industrial/cronograma',       element: <IndCronogramaPage />      },
+          { path: '/industrial/evidencias',       element: <EvidenciasPage />         },
+
+          // Documentos
+          { path: '/industrial/docs/projetos',      element: <ProjetosPage />          },
+          { path: '/industrial/docs/procedimentos', element: <ProcedimentosPage />     },
+          { path: '/industrial/docs/relatorios',    element: <RelatoriosTecPage />     },
+          { path: '/industrial/docs/certificados',  element: <CertificadosDocPage />   },
+          { path: '/industrial/docs/downloads',     element: <IndDownloadsPage />      },
+
+          // Financeiro
+          { path: '/industrial/financeiro/faturas', element: <FaturasPage />          },
+          { path: '/industrial/financeiro/boletos', element: <BoletosPage />          },
+          { path: '/industrial/financeiro/pix',     element: <PixPage />              },
+          { path: '/industrial/financeiro/nf',      element: <NotasFiscaisPage />     },
+          { path: '/industrial/financeiro/extrato', element: <ExtratoPage />          },
+
+          // Consultorias
+          { path: '/industrial/consultorias/contratos',   element: <ContratosPage />      },
+          { path: '/industrial/consultorias/agenda',      element: <IndAgendaPage />      },
+          { path: '/industrial/consultorias/auditorias',  element: <AuditoriasPage />     },
+          { path: '/industrial/consultorias/treinamentos',element: <TreinamentosPage />   },
+          { path: '/industrial/consultorias/relatorios',  element: <RelatoriosConsPage /> },
+
+          // Atendimento
+          { path: '/industrial/atendimento/chamados',  element: <ChamadosPage />   },
+          { path: '/industrial/atendimento/mensagens', element: <MensagensPage />  },
+          { path: '/industrial/atendimento/suporte',   element: <IndSuportePage /> },
+
+          // Empresa
+          { path: '/industrial/empresa/dados',          element: <DadosCadastraisPage />  },
+          { path: '/industrial/empresa/responsaveis',   element: <ResponsaveisPage />     },
+          { path: '/industrial/empresa/unidades',       element: <UnidadesPage />         },
+          { path: '/industrial/empresa/configuracoes',  element: <ConfiguracoesTPage />   },
+
+          // Legacy aliases
+          { path: '/industrial/cotacoes',   element: <OrcamentosPage />  },
+          { path: '/industrial/financeiro', element: <FaturasPage />     },
         ],
       },
     ],

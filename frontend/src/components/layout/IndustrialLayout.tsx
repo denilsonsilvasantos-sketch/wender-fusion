@@ -1,109 +1,208 @@
-import { useState } from 'react'
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Outlet, NavLink, Link, useLocation } from 'react-router-dom'
+import {
+  LayoutDashboard, FileText, ClipboardList, Calendar, Camera, FolderOpen,
+  BookOpen, FileCheck, Award, Download, Receipt, Banknote, QrCode, FileMinus,
+  BarChart2, GraduationCap, ScrollText, CalendarCheck, ShieldCheck, FileBarChart,
+  Headphones, MessageSquare, HelpCircle, Building2, Users, MapPin, Settings,
+  LogOut, Menu, ChevronLeft, ChevronDown, ChevronRight, Factory, PlusCircle,
+} from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { Avatar } from '@/components/ui'
+import { cn } from '@/lib/utils'
 
-const navItems = [
-  { to: '/industrial', label: 'Dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-  { to: '/industrial/ordens', label: 'Ordens de Serviço', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2' },
-  { to: '/industrial/cotacoes', label: 'Cotações', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
-  { to: '/industrial/financeiro', label: 'Financeiro', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+const COLOR = '#3B82F6'
+
+interface NavLeaf { type: 'link'; label: string; to: string; icon: React.ElementType }
+interface NavSection { key: string; emoji: string; label: string; color: string; items: NavLeaf[] }
+
+const SECTIONS: NavSection[] = [
+  {
+    key: 'servicos', emoji: '🏭', label: 'SERVIÇOS', color: '#3B82F6',
+    items: [
+      { type: 'link', label: 'Solicitar Orçamento', to: '/industrial/orcamento/novo',  icon: PlusCircle    },
+      { type: 'link', label: 'Meus Orçamentos',     to: '/industrial/orcamentos',       icon: FileText      },
+      { type: 'link', label: 'Ordens de Serviço',   to: '/industrial/ordens',           icon: ClipboardList },
+      { type: 'link', label: 'Cronograma',          to: '/industrial/cronograma',       icon: Calendar      },
+      { type: 'link', label: 'Evidências',          to: '/industrial/evidencias',       icon: Camera        },
+    ],
+  },
+  {
+    key: 'documentos', emoji: '📄', label: 'DOCUMENTOS', color: '#8B5CF6',
+    items: [
+      { type: 'link', label: 'Projetos',            to: '/industrial/docs/projetos',    icon: FolderOpen    },
+      { type: 'link', label: 'Procedimentos',       to: '/industrial/docs/procedimentos',icon: BookOpen     },
+      { type: 'link', label: 'Relatórios Técnicos', to: '/industrial/docs/relatorios',  icon: FileBarChart  },
+      { type: 'link', label: 'Certificados',        to: '/industrial/docs/certificados',icon: Award         },
+      { type: 'link', label: 'Downloads',           to: '/industrial/docs/downloads',   icon: Download      },
+    ],
+  },
+  {
+    key: 'financeiro', emoji: '💰', label: 'FINANCEIRO', color: '#10B981',
+    items: [
+      { type: 'link', label: 'Faturas',             to: '/industrial/financeiro/faturas',    icon: Receipt    },
+      { type: 'link', label: 'Boletos',             to: '/industrial/financeiro/boletos',    icon: Banknote   },
+      { type: 'link', label: 'PIX',                 to: '/industrial/financeiro/pix',        icon: QrCode     },
+      { type: 'link', label: 'Notas Fiscais',       to: '/industrial/financeiro/nf',         icon: FileMinus  },
+      { type: 'link', label: 'Extrato',             to: '/industrial/financeiro/extrato',    icon: BarChart2  },
+    ],
+  },
+  {
+    key: 'consultorias', emoji: '🎓', label: 'CONSULTORIAS', color: '#F59E0B',
+    items: [
+      { type: 'link', label: 'Contratos',           to: '/industrial/consultorias/contratos',  icon: ScrollText    },
+      { type: 'link', label: 'Agenda',              to: '/industrial/consultorias/agenda',     icon: CalendarCheck },
+      { type: 'link', label: 'Auditorias',          to: '/industrial/consultorias/auditorias', icon: ShieldCheck   },
+      { type: 'link', label: 'Treinamentos',        to: '/industrial/consultorias/treinamentos',icon: GraduationCap},
+      { type: 'link', label: 'Relatórios',          to: '/industrial/consultorias/relatorios', icon: FileCheck     },
+    ],
+  },
+  {
+    key: 'atendimento', emoji: '📞', label: 'ATENDIMENTO', color: '#EF4444',
+    items: [
+      { type: 'link', label: 'Chamados',            to: '/industrial/atendimento/chamados',  icon: Headphones    },
+      { type: 'link', label: 'Mensagens',           to: '/industrial/atendimento/mensagens', icon: MessageSquare },
+      { type: 'link', label: 'Suporte',             to: '/industrial/atendimento/suporte',   icon: HelpCircle    },
+    ],
+  },
+  {
+    key: 'empresa', emoji: '👤', label: 'MINHA EMPRESA', color: '#64748B',
+    items: [
+      { type: 'link', label: 'Dados Cadastrais',    to: '/industrial/empresa/dados',          icon: Building2  },
+      { type: 'link', label: 'Responsáveis',        to: '/industrial/empresa/responsaveis',   icon: Users      },
+      { type: 'link', label: 'Unidades',            to: '/industrial/empresa/unidades',       icon: MapPin     },
+      { type: 'link', label: 'Configurações',       to: '/industrial/empresa/configuracoes',  icon: Settings   },
+    ],
+  },
 ]
+
+function SidebarLink({ item, color }: { item: NavLeaf; color: string }) {
+  return (
+    <NavLink
+      to={item.to}
+      className={({ isActive }) => cn(
+        'flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors w-full',
+        isActive ? 'font-semibold' : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-elevated)] hover:text-[var(--color-text)]'
+      )}
+      style={({ isActive }) => isActive ? { background: color + '18', color } : {}}
+    >
+      <item.icon size={13} className="flex-shrink-0" />
+      <span className="truncate">{item.label}</span>
+    </NavLink>
+  )
+}
 
 export function IndustrialLayout() {
   const { profile, signOut } = useAuth()
   const { pathname } = useLocation()
-  const navigate = useNavigate()
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [openSections, setOpenSections] = useState(new Set(SECTIONS.map(s => s.key)))
 
-  async function handleSignOut() {
-    await signOut()
-    navigate('/login')
-  }
+  useEffect(() => { setSidebarOpen(false) }, [pathname])
 
-  return (
-    <div className="min-h-screen bg-[var(--color-bg)] flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-[var(--color-surface)] border-r border-white/5 flex flex-col hidden lg:flex">
-        <div className="p-6 border-b border-white/5">
-          <Link to="/industrial" className="flex items-center gap-2">
-            <span className="text-[var(--color-primary)] font-bold text-lg">W&F</span>
-            <span className="text-white text-sm font-medium">Portal Industrial</span>
-          </Link>
-        </div>
+  const toggleSection = (k: string) => setOpenSections(prev => {
+    const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n
+  })
 
-        <nav className="flex-1 p-4 space-y-1">
-          {navItems.map(item => {
-            const active = pathname === item.to
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
-                  active
-                    ? 'bg-[var(--color-primary)]/15 text-[var(--color-primary)]'
-                    : 'text-[var(--color-text-muted)] hover:bg-white/5 hover:text-white'
-                }`}
-              >
-                <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} />
-                </svg>
-                {item.label}
-              </Link>
-            )
-          })}
-        </nav>
-
-        <div className="p-4 border-t border-white/5">
-          <div className="flex items-center gap-3 mb-3">
-            <Avatar name={profile?.name ?? 'Cliente'} avatarUrl={profile?.avatar_url} size="sm" />
-            <div className="min-w-0">
-              <p className="text-white text-sm font-medium truncate">{profile?.name}</p>
-              <p className="text-[var(--color-text-muted)] text-xs">Portal Industrial</p>
-            </div>
+  const sidebar = (
+    <aside className="w-[260px] h-screen bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col">
+      {/* Logo */}
+      <div className="flex items-center justify-between px-4 h-14 border-b border-[var(--color-border)] flex-shrink-0">
+        <Link to="/industrial" className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: COLOR }}>
+            <Factory size={14} className="text-white" />
           </div>
-          <button
-            onClick={handleSignOut}
-            className="w-full text-left text-sm text-[var(--color-text-muted)] hover:text-white transition-colors px-2 py-1"
-          >
-            Sair
-          </button>
-        </div>
-      </aside>
-
-      {/* Mobile header */}
-      <div className="lg:hidden fixed top-0 inset-x-0 z-40 bg-[var(--color-surface)] border-b border-white/5 flex items-center justify-between px-4 h-14">
-        <span className="text-[var(--color-primary)] font-bold">W&F Industrial</span>
-        <button onClick={() => setMenuOpen(!menuOpen)} className="text-white p-1">
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+          <div>
+            <p className="text-xs font-black text-[var(--color-text)] leading-tight">W&amp;F</p>
+            <p className="text-[9px] uppercase tracking-widest leading-tight" style={{ color: COLOR }}>Portal Industrial</p>
+          </div>
+        </Link>
+        <button className="md:hidden text-[var(--color-text-muted)]" onClick={() => setSidebarOpen(false)}>
+          <ChevronLeft size={18} />
         </button>
       </div>
 
-      {menuOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-black/60" onClick={() => setMenuOpen(false)}>
-          <div className="bg-[var(--color-surface)] w-64 h-full p-4 space-y-1" onClick={e => e.stopPropagation()}>
-            {navItems.map(item => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[var(--color-text-muted)] hover:text-white"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Dashboard root */}
+      <div className="px-3 pt-3 pb-1 flex-shrink-0">
+        <NavLink
+          to="/industrial" end
+          className={({ isActive }) => cn(
+            'flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-semibold transition-colors',
+            isActive ? 'font-semibold' : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-elevated)] hover:text-[var(--color-text)]'
+          )}
+          style={({ isActive }) => isActive ? { background: COLOR + '18', color: COLOR } : {}}
+        >
+          <LayoutDashboard size={16} />
+          Dashboard
+        </NavLink>
+      </div>
+      <div className="mx-3 my-2 border-t border-[var(--color-border)] flex-shrink-0" />
 
-      {/* Content */}
-      <main className="flex-1 overflow-auto">
-        <div className="p-6 pt-20 lg:pt-6 max-w-5xl mx-auto">
+      {/* Sections */}
+      <nav className="flex-1 overflow-y-auto px-3 pb-4 scrollbar-thin">
+        {SECTIONS.map(section => (
+          <div key={section.key}>
+            <button
+              onClick={() => toggleSection(section.key)}
+              className="flex items-center gap-2 w-full px-2 py-2 rounded-md transition-colors hover:bg-[var(--color-surface-elevated)] mb-0.5"
+            >
+              <span className="text-sm leading-none">{section.emoji}</span>
+              <span className="flex-1 text-left text-[10px] font-black uppercase tracking-widest" style={{ color: section.color }}>{section.label}</span>
+              {openSections.has(section.key)
+                ? <ChevronDown size={11} style={{ color: section.color }} />
+                : <ChevronRight size={11} style={{ color: section.color }} />}
+            </button>
+            {openSections.has(section.key) && (
+              <div className="space-y-0.5 mb-3">
+                {section.items.map(item => <SidebarLink key={item.to} item={item} color={section.color} />)}
+              </div>
+            )}
+          </div>
+        ))}
+      </nav>
+
+      {/* Profile + logout */}
+      <div className="px-3 pb-4 border-t border-[var(--color-border)] pt-3 flex-shrink-0">
+        {profile && (
+          <div className="flex items-center gap-3 px-2 py-2 rounded-md bg-[var(--color-surface-elevated)] mb-2">
+            <Avatar name={profile.name} avatarUrl={profile.avatar_url} size="sm" />
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-medium text-[var(--color-text)] truncate">{profile.name}</p>
+              <p className="text-xs font-semibold" style={{ color: COLOR }}>Cliente Industrial</p>
+            </div>
+          </div>
+        )}
+        <button
+          onClick={signOut}
+          className="flex items-center gap-3 px-3 py-2 w-full rounded-md text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-elevated)] hover:text-[var(--color-danger)] transition-colors"
+        >
+          <LogOut size={14} />
+          Sair
+        </button>
+      </div>
+    </aside>
+  )
+
+  return (
+    <div className="min-h-screen flex bg-[var(--color-bg)]">
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black/60 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />
+      )}
+      <div className="hidden md:flex sticky top-0 h-screen">{sidebar}</div>
+      <div className={cn('fixed inset-y-0 left-0 z-40 md:hidden transition-transform duration-200', sidebarOpen ? 'translate-x-0' : '-translate-x-full')}>
+        {sidebar}
+      </div>
+      <div className="flex-1 flex flex-col min-w-0">
+        <header className="md:hidden sticky top-0 z-20 h-14 bg-[var(--color-surface)] border-b border-[var(--color-border)] flex items-center gap-3 px-4">
+          <button onClick={() => setSidebarOpen(true)} className="text-[var(--color-text-secondary)]">
+            <Menu size={20} />
+          </button>
+          <span className="font-semibold text-sm text-[var(--color-text)]">Portal Industrial</span>
+        </header>
+        <main className="flex-1 p-4 md:p-6 lg:p-8 max-w-[1440px] mx-auto w-full">
           <Outlet />
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   )
 }
