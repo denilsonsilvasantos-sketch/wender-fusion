@@ -36,6 +36,17 @@ import { EvaluationsPage } from '@/pages/student/EvaluationsPage'
 import { AttendancePage } from '@/pages/student/AttendancePage'
 import { JobsPage } from '@/pages/student/JobsPage'
 import { TalentPage } from '@/pages/student/TalentPage'
+import { GamificacaoPage } from '@/pages/student/GamificacaoPage'
+import { MeuCurriculoPage } from '@/pages/student/MeuCurriculoPage'
+import {
+  MeusCursosPage, CronogramaPage, ApostilasPage, VideoaulasPage, AvaliacoesPage,
+  PresencaPage as StudentPresencaPage, CertificadosPage as StudentCertificadosPage,
+  ConquistasPage, RankingPage, HistoricoAcademicoPage,
+  BancoTalentosPage, VagasPage, CandidaturasPage, RecomendacoesPage as StudentRecomendacoesPage,
+  CalculadoraPage, BibliotecaPage, NormasPage, DownloadsPage,
+  PerfilPage as StudentPerfilPage, DocumentosPage as StudentDocumentosPage,
+  PagamentosPage, SuportePage,
+} from '@/pages/student/_stubs'
 
 // Admin — core pages
 import { AdminDashboardPage } from '@/pages/admin/DashboardPage'
@@ -156,16 +167,51 @@ export const router = createBrowserRouter([
         element: <StudentLayout />,
         children: [
           { path: '/aluno', element: <StudentDashboardPage /> },
-          { path: '/aluno/cursos', element: <MyCoursesPage /> },
+
+          // Minha Formação
+          { path: '/aluno/cursos', element: <MeusCursosPage /> },
           { path: '/aluno/cursos/:enrollmentId', element: <CourseViewPage /> },
-          { path: '/aluno/perfil', element: <ProfilePage /> },
-          { path: '/aluno/pagamentos', element: <PaymentsPage /> },
-          { path: '/aluno/certificados', element: <CertificatesPage /> },
-          { path: '/aluno/calculadora', element: <CalculatorPage /> },
-          { path: '/aluno/avaliacoes', element: <EvaluationsPage /> },
-          { path: '/aluno/presenca', element: <AttendancePage /> },
-          { path: '/aluno/vagas', element: <JobsPage /> },
-          { path: '/aluno/talento', element: <TalentPage /> },
+          { path: '/aluno/cronograma', element: <CronogramaPage /> },
+          { path: '/aluno/apostilas', element: <ApostilasPage /> },
+          { path: '/aluno/videoaulas', element: <VideoaulasPage /> },
+          { path: '/aluno/avaliacoes', element: <AvaliacoesPage /> },
+          { path: '/aluno/presenca', element: <StudentPresencaPage /> },
+          { path: '/aluno/certificados', element: <StudentCertificadosPage /> },
+
+          // Desenvolvimento
+          { path: '/aluno/gamificacao', element: <GamificacaoPage /> },
+          { path: '/aluno/conquistas', element: <ConquistasPage /> },
+          { path: '/aluno/ranking', element: <RankingPage /> },
+          { path: '/aluno/historico', element: <HistoricoAcademicoPage /> },
+
+          // Empregabilidade
+          { path: '/aluno/curriculo', element: <MeuCurriculoPage /> },
+          { path: '/aluno/talento', element: <BancoTalentosPage /> },
+          { path: '/aluno/vagas', element: <VagasPage /> },
+          { path: '/aluno/candidaturas', element: <CandidaturasPage /> },
+          { path: '/aluno/recomendacoes', element: <StudentRecomendacoesPage /> },
+
+          // Ferramentas
+          { path: '/aluno/calculadora', element: <CalculadoraPage /> },
+          { path: '/aluno/biblioteca', element: <BibliotecaPage /> },
+          { path: '/aluno/normas', element: <NormasPage /> },
+          { path: '/aluno/downloads', element: <DownloadsPage /> },
+
+          // Conta
+          { path: '/aluno/perfil', element: <StudentPerfilPage /> },
+          { path: '/aluno/documentos', element: <StudentDocumentosPage /> },
+          { path: '/aluno/pagamentos', element: <PagamentosPage /> },
+          { path: '/aluno/suporte', element: <SuportePage /> },
+
+          // Legacy aliases (used by old code)
+          { path: '/aluno/meus-cursos', element: <MyCoursesPage /> },
+          { path: '/aluno/meu-certificado', element: <CertificatesPage /> },
+          { path: '/aluno/financeiro', element: <PaymentsPage /> },
+          { path: '/aluno/calcular', element: <CalculatorPage /> },
+          { path: '/aluno/empregabilidade', element: <TalentPage /> },
+          { path: '/aluno/notas', element: <EvaluationsPage /> },
+          { path: '/aluno/frequencia', element: <AttendancePage /> },
+          { path: '/aluno/jobs', element: <JobsPage /> },
         ],
       },
     ],
