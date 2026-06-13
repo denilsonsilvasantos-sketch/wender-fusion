@@ -204,7 +204,7 @@ export function AboutPage() {
               <div key={name} className="p-7 rounded-2xl border"
                 style={{ background: '#1A1A1A', borderColor: '#FF8C0020' }}>
                 {/* Header */}
-                <div className="flex flex-col items-start gap-3 mb-5">
+                <div className="flex items-center gap-4 mb-5">
                   <InstructorAvatar name={name} initial={initial} photo={photo} />
                   <div>
                     <h3 className="font-black text-white text-xl">{name}</h3>
@@ -221,7 +221,7 @@ export function AboutPage() {
                 </div>
 
                 {/* Bio completa */}
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {paragraphs.map((p, i) => (
                     <p key={i} className="text-sm leading-relaxed text-justify" style={{ color: '#ffffff' }}>{p}</p>
                   ))}
