@@ -7,17 +7,17 @@ function InstructorAvatar({ name, initial, photo }: { name: string; initial: str
   const [src, setSrc] = useState<'jpg' | 'png' | 'failed'>('jpg')
   if (src === 'failed') {
     return (
-      <div style={{ width: 75, height: 75, borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FF8C0020', border: '3px solid #FF8C0060', fontSize: 26, fontWeight: 900, color: '#FF8C00' }}>
+      <div style={{ width: 120, height: 120, borderRadius: 12, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FF8C0020', fontSize: 38, fontWeight: 900, color: '#FF8C00' }}>
         {initial}
       </div>
     )
   }
   return (
-    <div style={{ width: 75, height: 75, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '3px solid #FF8C0060', display: 'block' }}>
+    <div style={{ width: 120, height: 120, borderRadius: 12, overflow: 'hidden', flexShrink: 0 }}>
       <img
         src={`/${photo}.${src}`}
         alt={name}
-        style={{ width: '75px', height: '75px', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
+        style={{ width: '120px', height: '120px', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
         onError={() => setSrc(s => s === 'jpg' ? 'png' : 'failed')}
       />
     </div>
