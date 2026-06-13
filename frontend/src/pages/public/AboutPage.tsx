@@ -7,17 +7,17 @@ function InstructorAvatar({ name, initial, photo }: { name: string; initial: str
   const [src, setSrc] = useState<'jpg' | 'png' | 'failed'>('jpg')
   if (src === 'failed') {
     return (
-      <div style={{ width: 200, height: 200, borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FF8C0020', border: '3px solid #FF8C0060', fontSize: 60, fontWeight: 900, color: '#FF8C00' }}>
+      <div style={{ width: 100, height: 100, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FF8C0020', border: '3px solid #FF8C0060', fontSize: 32, fontWeight: 900, color: '#FF8C00' }}>
         {initial}
       </div>
     )
   }
   return (
-    <div style={{ width: 200, height: 200, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '3px solid #FF8C0060' }}>
+    <div style={{ width: 100, height: 100, borderRadius: '50%', overflow: 'hidden', border: '3px solid #FF8C0060' }}>
       <img
         src={`/${photo}.${src}`}
         alt={name}
-        style={{ width: '200px', height: '200px', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
+        style={{ width: '100px', height: '100px', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
         onError={() => setSrc(s => s === 'jpg' ? 'png' : 'failed')}
       />
     </div>
@@ -204,9 +204,9 @@ export function AboutPage() {
               <div key={name} className="p-7 rounded-2xl border"
                 style={{ background: '#1A1A1A', borderColor: '#FF8C0020' }}>
                 {/* Header */}
-                <div className="flex items-start gap-5 mb-5">
+                <div className="flex flex-col items-start gap-3 mb-5">
                   <InstructorAvatar name={name} initial={initial} photo={photo} />
-                  <div className="pt-1">
+                  <div>
                     <h3 className="font-black text-white text-xl">{name}</h3>
                     <p className="text-sm font-medium mt-0.5 mb-3" style={{ color: '#FF8C00' }}>{role}</p>
                     <div className="flex flex-wrap gap-2">
@@ -223,7 +223,7 @@ export function AboutPage() {
                 {/* Bio completa */}
                 <div className="space-y-3">
                   {paragraphs.map((p, i) => (
-                    <p key={i} className="text-sm leading-relaxed" style={{ color: '#ffffff' }}>{p}</p>
+                    <p key={i} className="text-sm leading-relaxed text-justify" style={{ color: '#ffffff' }}>{p}</p>
                   ))}
                 </div>
               </div>
