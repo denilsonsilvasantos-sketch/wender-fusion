@@ -5,6 +5,17 @@
 -- ============================================================
 
 -- ============================================================
+-- 0. FUNÇÃO AUXILIAR updated_at (idempotente — já existe no 03_functions_triggers.sql)
+-- ============================================================
+CREATE OR REPLACE FUNCTION public.update_updated_at()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$;
+
+-- ============================================================
 -- 1. FUNÇÃO PÚBLICA DE VALIDAÇÃO DE CERTIFICADO
 -- ============================================================
 -- SECURITY DEFINER: executa como owner (bypassa RLS) mas só
@@ -129,7 +140,7 @@ CREATE INDEX IF NOT EXISTS idx_ito_student    ON instructor_technical_opinions(s
 -- Auto-update updated_at
 CREATE OR REPLACE TRIGGER update_ito_updated_at
   BEFORE UPDATE ON instructor_technical_opinions
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
 
 -- ============================================================
@@ -170,7 +181,7 @@ CREATE INDEX IF NOT EXISTS idx_ir_student    ON instructor_recommendations(stude
 
 CREATE OR REPLACE TRIGGER update_ir_updated_at
   BEFORE UPDATE ON instructor_recommendations
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
 
 -- ============================================================
