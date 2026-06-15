@@ -64,15 +64,21 @@ import { AdminConsultingPage } from '@/pages/admin/ConsultingPage'
 import { ArticlesAdminPage } from '@/pages/admin/ArticlesAdminPage'
 
 // Instructor pages
-import { InstructorDashboardPage } from '@/pages/instructor/DashboardPage'
-import { PresencaPage } from '@/pages/instructor/PresencaPage'
-import { AvaliacaoPraticaPage } from '@/pages/instructor/AvaliacaoPraticaPage'
-import {
-  TurmasPage, AgendaPage as InstrAgendaPage, AvaliacoesTeóricasPage, MateriaisPage,
-  CertificadosPage as InstrCertificadosPage, TalentosPage, RecomendacoesPage,
-  PareceresTecnicosPage, RelatoriosTurmasPage, RelatoriosAlunosPage,
-  RelatoriosDesempenhoPage, PerfilPage as InstrPerfilPage,
-} from '@/pages/instructor/_stubs'
+import { InstructorDashboardPage }    from '@/pages/instructor/DashboardPage'
+import { PresencaPage }               from '@/pages/instructor/PresencaPage'
+import { AvaliacaoPraticaPage }       from '@/pages/instructor/AvaliacaoPraticaPage'
+import { TurmasPage }                 from '@/pages/instructor/TurmasPage'
+import { AgendaPage as InstrAgendaPage } from '@/pages/instructor/AgendaPage'
+import { AvaliacoesTeoricasPage as AvaliacoesTeóricasPage } from '@/pages/instructor/AvaliacoesTeoricasPage'
+import { MateriaisPage }              from '@/pages/instructor/MateriaisPage'
+import { CertificadosPage as InstrCertificadosPage } from '@/pages/instructor/CertificadosPage'
+import { TalentosPage }               from '@/pages/instructor/TalentosPage'
+import { RecomendacoesPage }          from '@/pages/instructor/RecomendacoesPage'
+import { PareceresTecnicosPage }      from '@/pages/instructor/PareceresTecnicosPage'
+import { RelatoriosTurmasPage }       from '@/pages/instructor/RelatoriosTurmasPage'
+import { RelatoriosAlunosPage }       from '@/pages/instructor/RelatoriosAlunosPage'
+import { RelatoriosDesempenhoPage }   from '@/pages/instructor/RelatoriosDesempenhoPage'
+import { PerfilPage as InstrPerfilPage } from '@/pages/instructor/PerfilPage'
 
 // Admin — Escola dashboards
 import { EscolaDashboardPage } from '@/pages/admin/escola/DashboardPage'
