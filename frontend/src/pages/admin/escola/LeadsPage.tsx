@@ -156,19 +156,34 @@ export function EscolaLeadsPage() {
   const stageOptions = stages.map((s) => ({ value: s.id, label: s.name }))
   const courseOptions = courses.map((c) => ({ value: c.id, label: c.title }))
 
+  const now = new Date()
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
+  const converted = leads.filter((l) => l.converted).length
+  const thisMonth = leads.filter((l) => l.created_at >= monthStart).length
+
   if (loading) return <div className="flex justify-center py-20"><Spinner size="lg" /></div>
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-[var(--color-text)]">
-            Leads{' '}
-            <span className="text-[var(--color-text-muted)] font-normal text-lg">({leads.length})</span>
-          </h1>
+          <h1 className="text-2xl font-black text-[var(--color-text)]">Leads</h1>
           <p className="text-sm text-[var(--color-text-muted)]">Potenciais alunos captados</p>
         </div>
         <Button onClick={openCreate} leftIcon={<Plus size={16} />}>Novo Lead</Button>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
+        {[
+          { label: 'Total', value: leads.length, color: COLOR },
+          { label: 'Este mês', value: thisMonth, color: '#8B5CF6' },
+          { label: 'Convertidos', value: converted, color: '#22c55e' },
+        ].map((stat) => (
+          <div key={stat.label} className="rounded-xl border p-4" style={{ borderColor: stat.color + '25', background: 'var(--color-surface)' }}>
+            <p className="text-2xl font-black" style={{ color: stat.color }}>{stat.value}</p>
+            <p className="text-xs text-[var(--color-text-muted)] mt-0.5">{stat.label}</p>
+          </div>
+        ))}
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">

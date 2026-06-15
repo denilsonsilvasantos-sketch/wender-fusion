@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Search, ClipboardList } from 'lucide-react'
+import { Search, ClipboardList, Plus } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import type { Enrollment } from '@/types'
-import { Card, Badge, Input, Select, Spinner } from '@/components/ui'
+import { Button, Card, Badge, Input, Select, Spinner } from '@/components/ui'
 import { formatDate } from '@/lib/utils'
 
 const COLOR = '#FF8C00'
@@ -49,9 +49,14 @@ export function EscolaMatriculasPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-black text-[var(--color-text)]">Matrículas</h1>
-        <p className="text-sm text-[var(--color-text-muted)]">{enrollments.length} matrículas registradas</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-black text-[var(--color-text)]">Matrículas</h1>
+          <p className="text-sm text-[var(--color-text-muted)]">{enrollments.length} matrículas registradas</p>
+        </div>
+        <Button variant="outline" size="sm" leftIcon={<Plus size={14} />} disabled title="Matrícula manual em breve">
+          Nova Matrícula
+        </Button>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
