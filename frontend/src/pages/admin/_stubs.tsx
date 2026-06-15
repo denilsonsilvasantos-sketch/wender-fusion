@@ -1,9 +1,8 @@
 import type { LucideIcon } from 'lucide-react'
 import {
-  Users, Filter, ClipboardList, Megaphone, UserCheck, BookOpen,
-  Award, Briefcase, DollarSign, TrendingUp, FileText, Building2,
-  Calculator, Wrench, Layers, Zap, Globe, BarChart2, Calendar,
-  FolderOpen, Folder, Settings, GitBranch,
+  Users, FileText, Building2,
+  Calculator, Layers, Globe, BarChart2, Calendar,
+  FolderOpen, Folder, Settings, DollarSign,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
@@ -38,57 +37,6 @@ function StubPage({ config }: { config: StubConfig }) {
       </div>
     </div>
   )
-}
-
-// ── Escola ────────────────────────────────────────────────────────────────────
-
-export function EscolaLeadsPage() {
-  return <StubPage config={{
-    title: 'Leads — Escola', icon: Users, color: '#FF8C00', back: '/admin/escola',
-    backLabel: 'Escola', description: 'Capture e gerencie leads de potenciais alunos.',
-  }} />
-}
-
-export function EscolaFunilPage() {
-  return <StubPage config={{
-    title: 'Funil de Matrículas', icon: Filter, color: '#FF8C00', back: '/admin/escola',
-    backLabel: 'Escola', description: 'Acompanhe a jornada dos leads até a matrícula.',
-  }} />
-}
-
-export function EscolaMatriculasPage() {
-  return <StubPage config={{
-    title: 'Matrículas', icon: ClipboardList, color: '#FF8C00', back: '/admin/escola',
-    backLabel: 'Escola', description: 'Gerencie todas as matrículas e pagamentos.',
-  }} />
-}
-
-export function EscolaCampanhasPage() {
-  return <StubPage config={{
-    title: 'Campanhas de Marketing', icon: Megaphone, color: '#FF8C00', back: '/admin/escola',
-    backLabel: 'Escola', description: 'Crie e monitore campanhas de captação de alunos.',
-  }} />
-}
-
-export function EscolaTurmasPage() {
-  return <StubPage config={{
-    title: 'Turmas', icon: Users, color: '#FF8C00', back: '/admin/escola',
-    backLabel: 'Escola', description: 'Gerencie turmas ativas e histórico de turmas.',
-  }} />
-}
-
-export function EscolaInstrutoresPage() {
-  return <StubPage config={{
-    title: 'Instrutores', icon: UserCheck, color: '#FF8C00', back: '/admin/escola',
-    backLabel: 'Escola', description: 'Cadastre e gerencie os instrutores da escola.',
-  }} />
-}
-
-export function EscolaMarketingPage() {
-  return <StubPage config={{
-    title: 'Marketing', icon: TrendingUp, color: '#FF8C00', back: '/admin/escola',
-    backLabel: 'Escola', description: 'Analíticos de marketing, UTMs e métricas de captação.',
-  }} />
 }
 
 // ── Industrial ────────────────────────────────────────────────────────────────

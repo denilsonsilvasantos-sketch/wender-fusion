@@ -76,14 +76,19 @@ import {
 
 // Admin — Escola dashboards
 import { EscolaDashboardPage } from '@/pages/admin/escola/DashboardPage'
+import { EscolaLeadsPage } from '@/pages/admin/escola/LeadsPage'
+import { EscolaFunilPage } from '@/pages/admin/escola/FunilPage'
+import { EscolaMatriculasPage } from '@/pages/admin/escola/MatriculasPage'
+import { EscolaTurmasPage } from '@/pages/admin/escola/TurmasPage'
+import { EscolaInstrutoresPage } from '@/pages/admin/escola/InstrutoresPage'
+import { EscolaCampanhasPage } from '@/pages/admin/escola/CampanhasPage'
+import { EscolaMarketingPage } from '@/pages/admin/escola/MarketingPage'
 
 // Admin — Industrial dashboards
 import { IndustrialDashboardPage as AdminIndustrialDashboardPage } from '@/pages/admin/industrial/DashboardPage'
 
-// Admin — Stubs (all "em desenvolvimento" pages)
+// Admin — Stubs (módulos ainda em desenvolvimento)
 import {
-  EscolaLeadsPage, EscolaFunilPage, EscolaMatriculasPage, EscolaCampanhasPage,
-  EscolaTurmasPage, EscolaInstrutoresPage, EscolaMarketingPage,
   IndustrialLeadsPage, IndustrialPropostasPage, IndustrialContratosPage,
   IndustrialClientesPage, IndustrialOrcamentosPage, IndustrialProducaoPage,
   IndustrialPortalPage, IndustrialFinanceiroPage,
