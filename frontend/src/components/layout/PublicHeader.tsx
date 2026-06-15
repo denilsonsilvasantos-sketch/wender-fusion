@@ -1,16 +1,17 @@
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Menu, X, Calculator, Newspaper, Info, BookOpen, Home } from 'lucide-react'
+import { Menu, X, Calculator, Newspaper, Info, BookOpen, Home, QrCode } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
-  { to: '/',             label: 'Início',       icon: Home,       end: true  },
-  { to: '/cursos',       label: 'Cursos',        icon: BookOpen,   end: false },
-  { to: '/calculadora',  label: 'Calculadora',   icon: Calculator, end: false },
-  { to: '/artigos',      label: 'Artigos',       icon: Newspaper,  end: false },
-  { to: '/sobre',        label: 'Sobre',         icon: Info,       end: false },
+  { to: '/',             label: 'Início',               icon: Home,       end: true  },
+  { to: '/cursos',       label: 'Cursos',                icon: BookOpen,   end: false },
+  { to: '/calculadora',  label: 'Calculadora',           icon: Calculator, end: false },
+  { to: '/artigos',      label: 'Artigos',               icon: Newspaper,  end: false },
+  { to: '/sobre',        label: 'Sobre',                 icon: Info,       end: false },
+  { to: '/validar',      label: 'Validar Certificado',   icon: QrCode,     end: false },
 ]
 
 export function PublicHeader() {

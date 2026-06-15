@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Award, Users, Clock, Flame, Zap, Shield, Star, CheckCircle, Briefcase, BookOpen, Phone, MapPin, Mail } from 'lucide-react'
+import { ArrowRight, Award, Users, Clock, Flame, Zap, Shield, Star, CheckCircle, Briefcase, BookOpen, Phone, MapPin, Mail, QrCode, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui'
 import { supabase } from '@/lib/supabase'
 import type { Course } from '@/types'
@@ -324,6 +324,39 @@ export function HomePage() {
                 <p className="text-sm leading-relaxed" style={{ color: '#e5e7eb' }}>{desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── VALIDAR CERTIFICADO ──────────────────────────────────────── */}
+      <section className="py-10" style={{ background: '#1A1A1A' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center gap-6 rounded-2xl px-8 py-8 border"
+            style={{ background: '#242424', borderColor: '#FF8C0030', boxShadow: '0 0 40px #FF8C0010' }}>
+            <div className="flex items-center gap-5 flex-1 min-w-0">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
+                style={{ background: '#FF8C0015' }}>
+                <ShieldCheck size={28} style={{ color: '#FF8C00' }} />
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-lg font-black text-white mb-1">Validar Certificado</h3>
+                <p className="text-sm leading-relaxed" style={{ color: '#e5e7eb' }}>
+                  Verifique a autenticidade de um certificado Welder &amp; Fusion — pelo QR Code ou digitando o código.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <div className="hidden sm:flex flex-col items-center gap-1 text-center">
+                <QrCode size={20} style={{ color: '#FF8C0080' }} />
+                <span className="text-xs" style={{ color: '#FF8C0080' }}>QR Code</span>
+              </div>
+              <Link to="/validar">
+                <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 active:scale-95"
+                  style={{ background: '#FF8C00', color: '#000' }}>
+                  Validar agora <ArrowRight size={15} />
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
