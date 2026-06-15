@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -12,10 +12,23 @@ interface ModalProps {
 }
 
 export function Modal({ open, onClose, title, children, size = 'md', footer }: ModalProps) {
+  // Prevent backdrop from closing modal when the click is from re-focusing the window
+  const ignoringFocusClick = useRef(false)
+
   useEffect(() => {
     if (open) document.body.style.overflow = 'hidden'
     else document.body.style.overflow = ''
     return () => { document.body.style.overflow = '' }
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
+    const onFocus = () => {
+      ignoringFocusClick.current = true
+      setTimeout(() => { ignoringFocusClick.current = false }, 300)
+    }
+    window.addEventListener('focus', onFocus)
+    return () => window.removeEventListener('focus', onFocus)
   }, [open])
 
   useEffect(() => {
@@ -30,7 +43,10 @@ export function Modal({ open, onClose, title, children, size = 'md', footer }: M
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={() => { if (!ignoringFocusClick.current) onClose() }}
+      />
       <div className={cn('relative w-full bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-[var(--shadow-lg)] flex flex-col max-h-[90vh]', sizes[size])}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)]">
           {title && <h2 className="text-base font-semibold text-[var(--color-text)]">{title}</h2>}

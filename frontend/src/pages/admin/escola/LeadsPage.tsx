@@ -48,6 +48,18 @@ const EMPTY_FORM: FormState = {
   name: '', email: '', phone: '', source: '', stage_id: '', course_interest: '', notes: '',
 }
 
+const SS_KEY = 'leads-modal-draft'
+
+function draftLoad(): { form: FormState; editingId: string | null } | null {
+  try { const v = sessionStorage.getItem(SS_KEY); return v ? JSON.parse(v) : null } catch { return null }
+}
+function draftSave(form: FormState, editingId: string | null) {
+  try { sessionStorage.setItem(SS_KEY, JSON.stringify({ form, editingId })) } catch {}
+}
+function draftClear() {
+  try { sessionStorage.removeItem(SS_KEY) } catch {}
+}
+
 export function EscolaLeadsPage() {
   const [leads, setLeads] = useState<Lead[]>([])
   const [stages, setStages] = useState<SalesFunnelStage[]>([])
@@ -57,10 +69,15 @@ export function EscolaLeadsPage() {
   const search = searchParams.get('q') ?? ''
   const filterSource = searchParams.get('source') ?? ''
   const filterStage = searchParams.get('stage') ?? ''
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(() => !!draftLoad())
   const [editing, setEditing] = useState<Lead | null>(null)
   const [saving, setSaving] = useState(false)
-  const [form, setForm] = useState<FormState>(EMPTY_FORM)
+  const [form, setForm] = useState<FormState>(() => draftLoad()?.form ?? EMPTY_FORM)
+
+  // Persist draft whenever form or modal state changes
+  useEffect(() => {
+    if (modalOpen) draftSave(form, editing?.id ?? null)
+  }, [form, modalOpen, editing])
 
   function set(field: keyof FormState) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
@@ -85,13 +102,26 @@ export function EscolaLeadsPage() {
       supabase.from('sales_funnel_stages').select('*').order('order_index'),
       supabase.from('courses').select('id, title').eq('status', 'published').order('title'),
     ])
-    setLeads((leadsData || []) as Lead[])
+    const loadedLeads = (leadsData || []) as Lead[]
+    setLeads(loadedLeads)
     setStages((stagesData || []) as SalesFunnelStage[])
     setCourses((coursesData || []) as Pick<Course, 'id' | 'title'>[])
+    // Restore editing lead if modal was open before page reload
+    const saved = draftLoad()
+    if (saved?.editingId) {
+      const lead = loadedLeads.find(l => l.id === saved.editingId)
+      if (lead) setEditing(lead)
+    }
     setLoading(false)
   }
 
   useEffect(() => { load() }, [])
+
+  function closeModal() {
+    draftClear()
+    setModalOpen(false)
+    setEditing(null)
+  }
 
   function openCreate() {
     setEditing(null)
@@ -133,7 +163,7 @@ export function EscolaLeadsPage() {
         await supabase.from('leads').insert(payload)
         toast.success('Lead criado!')
       }
-      setModalOpen(false)
+      closeModal()
       load()
     } catch {
       toast.error('Erro ao salvar lead')
@@ -298,12 +328,12 @@ export function EscolaLeadsPage() {
 
       <Modal
         open={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={closeModal}
         title={editing ? 'Editar Lead' : 'Novo Lead'}
         size="lg"
         footer={
           <div className="flex justify-end gap-2">
-            <Button variant="ghost" onClick={() => setModalOpen(false)}>Cancelar</Button>
+            <Button variant="ghost" onClick={closeModal}>Cancelar</Button>
             <Button loading={saving} onClick={save}>Salvar</Button>
           </div>
         }
