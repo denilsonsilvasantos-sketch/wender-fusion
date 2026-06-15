@@ -39,15 +39,28 @@ import { JobsPage } from '@/pages/student/JobsPage'
 import { TalentPage } from '@/pages/student/TalentPage'
 import { GamificacaoPage } from '@/pages/student/GamificacaoPage'
 import { MeuCurriculoPage } from '@/pages/student/MeuCurriculoPage'
-import {
-  MeusCursosPage, CronogramaPage, ApostilasPage, VideoaulasPage, AvaliacoesPage,
-  PresencaPage as StudentPresencaPage, CertificadosPage as StudentCertificadosPage,
-  ConquistasPage, RankingPage, HistoricoAcademicoPage,
-  BancoTalentosPage, VagasPage, CandidaturasPage, RecomendacoesPage as StudentRecomendacoesPage,
-  CalculadoraPage, BibliotecaPage, NormasPage, DownloadsPage,
-  PerfilPage as StudentPerfilPage, DocumentosPage as StudentDocumentosPage,
-  PagamentosPage, SuportePage,
-} from '@/pages/student/_stubs'
+import { MeusCursosPage }        from '@/pages/student/MeusCursosPage'
+import { CronogramaPage }        from '@/pages/student/CronogramaPage'
+import { ApostilasPage }         from '@/pages/student/ApostilasPage'
+import { VideoaulasPage }        from '@/pages/student/VideoaulasPage'
+import { AvaliacoesPage }        from '@/pages/student/AvaliacoesPage'
+import { PresencaPage as StudentPresencaPage } from '@/pages/student/PresencaPage'
+import { CertificadosPage as StudentCertificadosPage } from '@/pages/student/CertificadosPage'
+import { ConquistasPage }        from '@/pages/student/ConquistasPage'
+import { RankingPage }           from '@/pages/student/RankingPage'
+import { HistoricoAcademicoPage } from '@/pages/student/HistoricoAcademicoPage'
+import { BancoTalentosPage }     from '@/pages/student/BancoTalentosPage'
+import { VagasPage }             from '@/pages/student/VagasPage'
+import { CandidaturasPage }      from '@/pages/student/CandidaturasPage'
+import { RecomendacoesPage as StudentRecomendacoesPage } from '@/pages/student/RecomendacoesPage'
+import { CalculadoraPage }       from '@/pages/student/CalculadoraPage'
+import { BibliotecaPage }        from '@/pages/student/BibliotecaPage'
+import { NormasPage }            from '@/pages/student/NormasPage'
+import { DownloadsPage }         from '@/pages/student/DownloadsPage'
+import { PerfilPage as StudentPerfilPage } from '@/pages/student/PerfilPage'
+import { DocumentosPage as StudentDocumentosPage } from '@/pages/student/DocumentosPage'
+import { PagamentosPage }        from '@/pages/student/PagamentosPage'
+import { SuportePage }           from '@/pages/student/SuportePage'
 
 // Admin — core pages
 import { AdminDashboardPage } from '@/pages/admin/DashboardPage'
