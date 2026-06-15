@@ -95,11 +95,14 @@ import { IndustrialProducaoPage }  from '@/pages/admin/industrial/ProducaoPage'
 import { IndustrialPortalPage }    from '@/pages/admin/industrial/PortalPage'
 import { IndustrialFinanceiroPage } from '@/pages/admin/industrial/FinanceiroPage'
 
-// Admin — Stubs (módulos ainda em desenvolvimento)
-import {
-  FinanceiroGeralPage, AgendaPage, DocumentosPage, RelatoriosPage,
-  UsuariosPage, ConfiguracoesPage,
-} from '@/pages/admin/_stubs'
+// Admin — Compartilhado (módulos compartilhados entre Escola e Industrial)
+import { SharedCRMGeralPage }        from '@/pages/admin/shared/CRMGeralPage'
+import { SharedFinanceiroGeralPage } from '@/pages/admin/shared/FinanceiroGeralPage'
+import { SharedAgendaPage }          from '@/pages/admin/shared/AgendaPage'
+import { SharedDocumentosPage }      from '@/pages/admin/shared/DocumentosPage'
+import { SharedRelatoriosPage }      from '@/pages/admin/shared/RelatoriosPage'
+import { SharedUsuariosPage }        from '@/pages/admin/shared/UsuariosPage'
+import { SharedConfiguracoesPage }   from '@/pages/admin/shared/ConfiguracoesPage'
 
 // Industrial portal pages
 import { IndustrialDashboardPage } from '@/pages/industrial/DashboardPage'
@@ -290,14 +293,14 @@ export const router = createBrowserRouter([
           { path: '/admin/industrial/financeiro', element: <IndustrialFinanceiroPage /> },
 
           // ── 🌐 COMPARTILHADO ─────────────────────────────────────────────
-          { path: '/admin/crm', element: <AdminCRMPage /> },
-          { path: '/admin/financeiro-geral', element: <FinanceiroGeralPage /> },
-          { path: '/admin/agenda', element: <AgendaPage /> },
-          { path: '/admin/documentos', element: <DocumentosPage /> },
-          { path: '/admin/relatorios', element: <RelatoriosPage /> },
-          { path: '/admin/artigos', element: <ArticlesAdminPage /> },
-          { path: '/admin/usuarios', element: <UsuariosPage /> },
-          { path: '/admin/configuracoes', element: <ConfiguracoesPage /> },
+          { path: '/admin/crm',              element: <SharedCRMGeralPage /> },
+          { path: '/admin/financeiro-geral', element: <SharedFinanceiroGeralPage /> },
+          { path: '/admin/agenda',           element: <SharedAgendaPage /> },
+          { path: '/admin/documentos',       element: <SharedDocumentosPage /> },
+          { path: '/admin/relatorios',       element: <SharedRelatoriosPage /> },
+          { path: '/admin/artigos',          element: <ArticlesAdminPage /> },
+          { path: '/admin/usuarios',         element: <SharedUsuariosPage /> },
+          { path: '/admin/configuracoes',    element: <SharedConfiguracoesPage /> },
 
           // ── Rotas legadas mantidas ────────────────────────────────────────
           { path: '/admin/cursos', element: <AdminCoursesPage /> },
