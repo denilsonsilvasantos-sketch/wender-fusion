@@ -47,38 +47,31 @@ interface ValidResult {
 async function fetchCertificate(code: string): Promise<ValidResult | null> {
   const normalized = code.trim().toUpperCase()
 
-  // Try Supabase first
+  // Usa a função SECURITY DEFINER do Supabase (bypass de RLS, acesso público seguro)
   try {
     const { data, error } = await supabase
-      .from('certificates')
-      .select(`
-        certificate_number, validation_code, issued_at, revoked, revoked_reason,
-        course:course_id ( title, duration_hours ),
-        student:student_id ( name )
-      `)
-      .or(`validation_code.eq.${normalized},certificate_number.eq.${normalized}`)
-      .single()
+      .rpc('validate_certificate', { p_code: normalized })
 
-    if (!error && data) {
+    if (!error && data && data.length > 0) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const d = data as any
+      const d = data[0] as any
       return {
-        valid: !d.revoked,
+        valid:              d.valid,
         certificate_number: d.certificate_number,
-        validation_code: d.validation_code,
-        student_name: d.student?.name,
-        course_title: d.course?.title,
-        course_hours: d.course?.duration_hours,
-        issued_at: d.issued_at,
-        revoked: d.revoked,
-        revoked_reason: d.revoked_reason,
+        validation_code:    d.validation_code,
+        student_name:       d.student_name,
+        course_title:       d.course_title,
+        course_hours:       d.course_hours,
+        issued_at:          d.issued_at,
+        revoked:            d.revoked,
+        revoked_reason:     d.revoked_reason,
       }
     }
   } catch {
-    // Supabase unavailable — fall through to mock
+    // Supabase indisponível — usa dados de demonstração
   }
 
-  // Mock fallback
+  // Fallback: dados mock para demonstração
   return MOCK_CERTS[normalized] ?? null
 }
 
