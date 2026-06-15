@@ -1,8 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
 import {
-  Users, FileText, Building2,
-  Calculator, Layers, Globe, BarChart2, Calendar,
-  FolderOpen, Folder, Settings, DollarSign,
+  Users, BarChart2, Calendar,
+  FolderOpen, Folder, Settings,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
@@ -37,64 +36,6 @@ function StubPage({ config }: { config: StubConfig }) {
       </div>
     </div>
   )
-}
-
-// ── Industrial ────────────────────────────────────────────────────────────────
-
-export function IndustrialLeadsPage() {
-  return <StubPage config={{
-    title: 'Leads — Industrial', icon: Users, color: '#3B82F6', back: '/admin/industrial',
-    backLabel: 'Serviços', description: 'Capture leads de potenciais clientes industriais.',
-  }} />
-}
-
-export function IndustrialPropostasPage() {
-  return <StubPage config={{
-    title: 'Propostas Comerciais', icon: FileText, color: '#3B82F6', back: '/admin/industrial',
-    backLabel: 'Serviços', description: 'Crie e gerencie propostas para clientes industriais.',
-  }} />
-}
-
-export function IndustrialContratosPage() {
-  return <StubPage config={{
-    title: 'Contratos', icon: FileText, color: '#3B82F6', back: '/admin/industrial',
-    backLabel: 'Serviços', description: 'Gerencie contratos de prestação de serviços.',
-  }} />
-}
-
-export function IndustrialClientesPage() {
-  return <StubPage config={{
-    title: 'Clientes Industriais', icon: Building2, color: '#3B82F6', back: '/admin/industrial',
-    backLabel: 'Serviços', description: 'Cadastro e CRM de clientes industriais.',
-  }} />
-}
-
-export function IndustrialOrcamentosPage() {
-  return <StubPage config={{
-    title: 'Orçamentos', icon: Calculator, color: '#3B82F6', back: '/admin/industrial',
-    backLabel: 'Serviços', description: 'Elabore orçamentos detalhados de serviços de soldagem.',
-  }} />
-}
-
-export function IndustrialProducaoPage() {
-  return <StubPage config={{
-    title: 'Produção', icon: Layers, color: '#3B82F6', back: '/admin/industrial',
-    backLabel: 'Serviços', description: 'Acompanhe o andamento da produção e soldagem.',
-  }} />
-}
-
-export function IndustrialPortalPage() {
-  return <StubPage config={{
-    title: 'Portal do Cliente', icon: Globe, color: '#3B82F6', back: '/admin/industrial',
-    backLabel: 'Serviços', description: 'Configurações do portal de acesso dos clientes.',
-  }} />
-}
-
-export function IndustrialFinanceiroPage() {
-  return <StubPage config={{
-    title: 'Financeiro — Industrial', icon: DollarSign, color: '#3B82F6', back: '/admin/industrial',
-    backLabel: 'Serviços', description: 'Contas a receber, pagamentos e fluxo de caixa industrial.',
-  }} />
 }
 
 // ── Compartilhado ─────────────────────────────────────────────────────────────

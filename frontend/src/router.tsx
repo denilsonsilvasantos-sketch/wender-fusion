@@ -84,14 +84,19 @@ import { EscolaInstrutoresPage } from '@/pages/admin/escola/InstrutoresPage'
 import { EscolaCampanhasPage } from '@/pages/admin/escola/CampanhasPage'
 import { EscolaMarketingPage } from '@/pages/admin/escola/MarketingPage'
 
-// Admin — Industrial dashboards
+// Admin — Industrial pages
 import { IndustrialDashboardPage as AdminIndustrialDashboardPage } from '@/pages/admin/industrial/DashboardPage'
+import { IndustrialLeadsPage }    from '@/pages/admin/industrial/LeadsPage'
+import { IndustrialPropostasPage } from '@/pages/admin/industrial/PropostasPage'
+import { IndustrialContratosPage } from '@/pages/admin/industrial/ContratosPage'
+import { IndustrialClientesPage }  from '@/pages/admin/industrial/ClientesPage'
+import { IndustrialOrcamentosPage } from '@/pages/admin/industrial/OrcamentosPage'
+import { IndustrialProducaoPage }  from '@/pages/admin/industrial/ProducaoPage'
+import { IndustrialPortalPage }    from '@/pages/admin/industrial/PortalPage'
+import { IndustrialFinanceiroPage } from '@/pages/admin/industrial/FinanceiroPage'
 
 // Admin — Stubs (módulos ainda em desenvolvimento)
 import {
-  IndustrialLeadsPage, IndustrialPropostasPage, IndustrialContratosPage,
-  IndustrialClientesPage, IndustrialOrcamentosPage, IndustrialProducaoPage,
-  IndustrialPortalPage, IndustrialFinanceiroPage,
   FinanceiroGeralPage, AgendaPage, DocumentosPage, RelatoriosPage,
   UsuariosPage, ConfiguracoesPage,
 } from '@/pages/admin/_stubs'
