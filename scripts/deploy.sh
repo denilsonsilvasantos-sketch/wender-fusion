@@ -4,6 +4,12 @@ set -e
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
+# Skip everything if nothing changed
+if git diff --quiet HEAD && git diff --cached --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+  echo "Nenhuma mudança — pulando deploy."
+  exit 0
+fi
+
 MSG="${1:-deploy: $(date '+%Y-%m-%d %H:%M')}"
 
 echo "── Build ─────────────────────────────────────"

@@ -165,13 +165,24 @@ function SidebarSection({
   )
 }
 
+function ssGet<T>(key: string, fallback: T): T {
+  try { const v = sessionStorage.getItem(key); return v ? JSON.parse(v) : fallback } catch { return fallback }
+}
+function ssSet(key: string, value: unknown) {
+  try { sessionStorage.setItem(key, JSON.stringify(value)) } catch {}
+}
+
 // ── Main AdminLayout ──────────────────────────────────────────────────────────
 export function AdminLayout() {
   const { profile, signOut } = useAuth()
   const { pathname } = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [openSections, setOpenSections] = useState<Set<string>>(new Set(['escola', 'industrial', 'shared']))
-  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set())
+  const [openSections, setOpenSections] = useState<Set<string>>(
+    () => new Set(ssGet('sidebar-sections', ['escola', 'industrial', 'shared']))
+  )
+  const [openGroups, setOpenGroups] = useState<Set<string>>(
+    () => new Set(ssGet('sidebar-groups', []))
+  )
 
   // Auto-open group when navigating to a child
   useEffect(() => {
@@ -179,7 +190,12 @@ export function AdminLayout() {
       for (const item of sec.items) {
         if (item.type === 'group') {
           if (item.children.some(c => pathname === c.to || pathname.startsWith(c.to + '/'))) {
-            setOpenGroups(prev => prev.has(item.key) ? prev : new Set([...prev, item.key]))
+            setOpenGroups(prev => {
+              if (prev.has(item.key)) return prev
+              const n = new Set([...prev, item.key])
+              ssSet('sidebar-groups', [...n])
+              return n
+            })
           }
         }
       }
@@ -189,10 +205,18 @@ export function AdminLayout() {
   useEffect(() => { setSidebarOpen(false) }, [pathname])
 
   function toggleSection(k: string) {
-    setOpenSections(prev => { const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n })
+    setOpenSections(prev => {
+      const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k)
+      ssSet('sidebar-sections', [...n])
+      return n
+    })
   }
   function toggleGroup(k: string) {
-    setOpenGroups(prev => { const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n })
+    setOpenGroups(prev => {
+      const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k)
+      ssSet('sidebar-groups', [...n])
+      return n
+    })
   }
 
   const sidebar = (

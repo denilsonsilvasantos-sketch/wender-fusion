@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Plus, Edit2, Trash2, Search, CheckCircle2, Phone, Mail } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { supabase } from '@/lib/supabase'
@@ -52,9 +53,10 @@ export function EscolaLeadsPage() {
   const [stages, setStages] = useState<SalesFunnelStage[]>([])
   const [courses, setCourses] = useState<Pick<Course, 'id' | 'title'>[]>([])
   const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState('')
-  const [filterSource, setFilterSource] = useState('')
-  const [filterStage, setFilterStage] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const search = searchParams.get('q') ?? ''
+  const filterSource = searchParams.get('source') ?? ''
+  const filterStage = searchParams.get('stage') ?? ''
   const [modalOpen, setModalOpen] = useState(false)
   const [editing, setEditing] = useState<Lead | null>(null)
   const [saving, setSaving] = useState(false)
@@ -63,6 +65,15 @@ export function EscolaLeadsPage() {
   function set(field: keyof FormState) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
       setForm((f) => ({ ...f, [field]: e.target.value }))
+  }
+
+  function updateParam(key: string, value: string) {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev)
+      if (value) next.set(key, value)
+      else next.delete(key)
+      return next
+    }, { replace: true })
   }
 
   async function load() {
@@ -190,20 +201,20 @@ export function EscolaLeadsPage() {
         <Input
           placeholder="Buscar por nome ou e-mail..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => updateParam('q', e.target.value)}
           leftIcon={<Search size={16} />}
           className="flex-1"
         />
         <Select
           value={filterSource}
-          onChange={(e) => setFilterSource(e.target.value)}
+          onChange={(e) => updateParam('source', e.target.value)}
           placeholder="Todos os canais"
           options={SOURCE_OPTIONS}
           className="sm:w-44"
         />
         <Select
           value={filterStage}
-          onChange={(e) => setFilterStage(e.target.value)}
+          onChange={(e) => updateParam('stage', e.target.value)}
           placeholder="Todos os estágios"
           options={stageOptions}
           className="sm:w-44"
